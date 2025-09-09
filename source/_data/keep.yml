@@ -18,13 +18,13 @@ base_info:
   author: Yeu Jaung
 
   # Author avatar, You can use local image path or image link
-  avatar: /images/file.svg
+  avatar: https://p.sda1.dev/26/ad4f2b23fb99885d32f6f8bae244a1c8/IMG_0139.JPG
 
   # Website LOGO, You can use local image path or image link
-  logo: /images/file.svg
+  logo: https://p.sda1.dev/26/ad4f2b23fb99885d32f6f8bae244a1c8/IMG_0139.JPG
 
   # Website favicon, You can use local image path or image link
-  favicon: /images/file.svg
+  favicon: https://p.sda1.dev/26/ad4f2b23fb99885d32f6f8bae244a1c8/IMG_0139.JPG
 
 
 # ---------------------------------------------------------------------------------------
