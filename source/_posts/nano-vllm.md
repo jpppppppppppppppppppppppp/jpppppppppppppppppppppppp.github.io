@@ -1,9 +1,18 @@
 ---
 title: nano-vllm 学习笔记
+date: 2025/9/9 20:46:25
+home_cover: https://p.sda1.dev/26/0186e079ea9478e12f463e4d80a9d5c3/cover.jpg
+post_cover: https://p.sda1.dev/26/ac89d2ec92626ebc7dd79366d9b9da98/post.JPG
+copyright_info: false
+tags:
+    - MLSys
+categories:
+    - Notes
 mathjax: true
+excerpt: 第一次学习 MLSys, 谨做记录和总结.
 ---
 
-第一次学习 MlSys, 谨做记录和总结.
+第一次学习 MLSys, 谨做记录和总结.
 
 ### Tensor Parallelism
 

@@ -112,7 +112,7 @@ home:
   category: true           # Option values: true | false
 
   # Show tags in home page post block
-  tag: true                # Option values: true | false
+  tag: false                # Option values: true | false
 
   # Set the datetime type of home page post block
   post_datetime: updated    # Option values: updated | created
