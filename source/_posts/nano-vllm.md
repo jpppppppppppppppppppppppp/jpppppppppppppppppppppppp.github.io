@@ -12,7 +12,7 @@ mathjax: true
 第一种是行分割:
 
 $$
-\begin{bmatrix}W_1&W_2\end{bmatrix}\times\begin{bmatrix}X_1 \\ X_2\end{bmatrix}=\begin{bmatrix}W_1\times X_1 + W_2\times X_2\end{bmatrix}=Y.
+\begin{bmatrix}W_1&W_2\end{bmatrix}\times\begin{bmatrix}X_1\\X_2\end{bmatrix}=\begin{bmatrix}W_1\times X_1+W_2\times X_2\end{bmatrix}=Y.
 $$
 
 最后要在所有卡上做一个 all_reduce 的操作对结果做汇总.
@@ -20,7 +20,7 @@ $$
 第二种是列分割:
 
 $$
-\begin{bmatrix}W_1 \\ W_2\end{bmatrix}\times X=\begin{bmatrix}W_1\times X \\ W_2\times X\end{bmatrix}=Y.
+\begin{bmatrix}W_1\\W_2\end{bmatrix}\times X=\begin{bmatrix}W_1\times X\\W_2\times X\end{bmatrix}=Y.
 $$
 
 最后要在所有卡上做一个 all_gather.
@@ -156,10 +156,10 @@ prefill 会让 kv_cache_block_manager try_allocate 而 decode 会让 kv_cache_bl
 用二阶矩来衡量输出的稳定性, 对于一个单层的无激活函数的全连接线性网络层来说 (假设输入 channel 数为 $m$ , 输出 channel 数为 $n$ ), 简单起见, 我们用零初始化 bias, 并且将 $w_{ij}$ 的均值也设为 $0$. 我们计算二阶矩:
 
 $$
-\mathbb{E}[y_j^2] = \mathbb{E}[(\sum_{i=1} w_{ij} x_i)^2] = \sum_{i_1, i_2} \mathbb{E}[w_{i_1, j} w_{i_2, j}] \mathbb{E}[x_{i_1} x_{i_2}] = \sum_{i} \mathbb{E}[x_i ^ 2]\mathbb{E}[w_{i, j}^2]=m\mathbb{E}[w_{i, j}^2].
+\mathbb{E}[y_j^2]=\mathbb{E}[(\sum_{i=1}w_{ij}x_i)^2]=\sum_{i_1,i_2}\mathbb{E}[w_{i_1,j}w_{i_2,j}]\mathbb{E}[x_{i_1}x_{i_2}]=\sum_{i}\mathbb{E}[x_i^2]\mathbb{E}[w_{i,j}^2]=m\mathbb{E}[w_{i,j}^2].
 $$
 
-所以为了使 $\mathbb{E}[y_j^2]$ 为 $1$, 那么 $\mathbb{E}[w_{i, j}^2]=\displaystyle\frac{1}{m}$, 这就是 LeCun 初始化.
+所以为了使 $\mathbb{E}[y_j^2]$ 为 $1$, 那么 $\mathbb{E}[w_{i,j}^2]=\displaystyle\frac{1}{m}$, 这就是 LeCun 初始化.
 
 如果考虑激活函数, 比如采用 relu, 那么可以假设有大概一般的输出 $y_j$ 被归零了, 从而初始化的方差为 $\displaystyle\frac{2}{m}$, 这就是专门针对 relu 网络的 He 初始化.
 
@@ -168,7 +168,7 @@ $$
 以 sigmoid 为例, 假设我们依然以均值为 $0$, 方差为 $\displaystyle\frac{1}{m}$ 来初始化, 那么激活前的输出也是均值为 $0$, 方差为 $1$, 用标准正态分布估计 sigmoid 后的二阶矩:
 
 $$
-\int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi}} e^{-\frac{x^2}{2}} \frac{1}{(1+e^{-x})^2} dx \approx 0.293379.
+\int_{-\infty}^{\infty}\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}\frac{1}{(1+e^{-x})^2}dx\approx0.293379.
 $$
 
 ``` mathematica
@@ -182,7 +182,7 @@ NIntegrate[1/Sqrt[2*Pi]*Exp[-x^2/2]*1/(1+Exp[-x])^2, {x, -Infinity, Infinity}]
 2017 这篇论文 [Self-Normalizing Neural Networks](https://arxiv.org/abs/1706.02515) 提出了 SELU 激活函数, 其定义为
 
 $$
-\text{SELU}(x)=\lambda\begin{cases}x&x>0\\\alpha e^x-\alpha&x\le 0\end{cases},
+\text{SELU}(x)=\lambda\begin{cases}x&x>0\\\alpha e^x-\alpha&x\le0\end{cases},
 $$
 
 其中 $\lambda \approx 1.0507, \alpha \approx 1.6733$. 论文中给出的 $\lambda, \alpha$ 的值可以使得标准正态分布经过 SELU 激活函数后, 均值和方差都不变. 只能算得上一种好的初始化方法.
