@@ -12,19 +12,19 @@ base_info:
   primary_color: "#0066cc"
 
   # Blog website title
-  title: My Homepage
+  title: Yu's Blogs
 
   # Blog website author name
-  author: Yeu Jaung
+  author: Yu Jiang
 
   # Author avatar, You can use local image path or image link
-  avatar: https://p.sda1.dev/26/ad4f2b23fb99885d32f6f8bae244a1c8/IMG_0139.JPG
+  avatar: https://p.sda1.dev/26/f0b8257603263cc81ffd6b60ed4446f3/icon.JPG
 
   # Website LOGO, You can use local image path or image link
-  logo: https://p.sda1.dev/26/ad4f2b23fb99885d32f6f8bae244a1c8/IMG_0139.JPG
+  logo: https://p.sda1.dev/26/f0b8257603263cc81ffd6b60ed4446f3/icon.JPG
 
   # Website favicon, You can use local image path or image link
-  favicon: https://p.sda1.dev/26/ad4f2b23fb99885d32f6f8bae244a1c8/IMG_0139.JPG
+  favicon: https://p.sda1.dev/26/f0b8257603263cc81ffd6b60ed4446f3/icon.JPG
 
 
 # ---------------------------------------------------------------------------------------
@@ -34,10 +34,10 @@ base_info:
 # e.g. to enable categories, you need to execute `hexo new page categories`
 # Use `||` to set icon for navigation menu, e.g. `home: / || fa-solid fa-home`
 menu:
-  home: /                       # || fa-solid fa-home
-  archives: /archives           # || fa-solid fa-box-archive
-  tags: /tags                   # || fa-solid fa-tags
-  categories: /categories       # || fa-solid fa-layer-group
+  home: /                        || fa-solid fa-home
+  archives: /archives            || fa-solid fa-box-archive
+  tags: /tags                    || fa-solid fa-tags
+  categories: /categories        || fa-solid fa-layer-group
   # links: /links               # || fa-solid fa-link
   # photos: /photos             # || fa-solid fa-image
   # tools: /tools               # || fa-solid fa-tools
@@ -49,17 +49,17 @@ menu:
 # Docs: https://keep-docs.xpoet.cn/basis/configuration-guide/first_screen.html
 # ---------------------------------------------------------------------------------------
 first_screen:
-  enable: false  # Option values: true | false
+  enable: true  # Option values: true | false
 
   # First screen background image in light mode, You can use local image path or image link
-  background_img: /images/bg.svg
+  background_img: https://p.sda1.dev/26/bcfdcf5004186d80683e07e3535db9a9/background.jpg
 
   # First screen background image in dark mode, You can use local image path or image link
-  background_img_dark: /images/bg.svg
+  background_img_dark: https://p.sda1.dev/26/bcfdcf5004186d80683e07e3535db9a9/background.jpg
 
   # First screen description
   # You can use the "||" to begin a newline, maximum is two lines.
-  description: Keep writing and Keep loving.
+  description: 为了许愿而祈祷是傲慢的表现  应该在请求原谅时祈祷 #Keep writing and Keep loving.
 
   # If enable hitokoto, first screen description is different every time when you enter the website
   hitokoto: false      # Option values: true | false
@@ -69,13 +69,14 @@ first_screen:
 # Docs: https://keep-docs.xpoet.cn/basis/configuration-guide/social_contact.html
 # ---------------------------------------------------------------------------------------
 social_contact:
-  enable: false      # Option values: true | false
+  enable: true      # Option values: true | false
   links:
     # Fill in your social platform links here, e.g. `github: https://github.com/XPoet`
     # If you want to click open the picture, you need to add a prefix `img | `,
     # at the same time change your link to the image link.
     # e.g. `weixin: img | ./images/qrcode.png`
-    github:          # GitHub
+    github:          https://github.com/jpppppppppppppppppppppppp # GitHub
+    bilibili:        # BiliBili
     weixin:          # WeChat
     qq:              # QQ
     weibo:           # WeiBo
@@ -91,13 +92,13 @@ social_contact:
 # ---------------------------------------------------------------------------------------
 scroll:
   # Show progress bar in top when page scroll
-  progress_bar: false  # Option values: true | false
+  progress_bar: true  # Option values: true | false
 
   # Show percent when page scroll
   percent: true       # Option values: true | false
 
   # Hide header in top when page scroll
-  hide_header: true    # Option values: true | false
+  hide_header: false    # Option values: true | false
 
 
 # ---------------------------------------------------------------------------------------
@@ -309,12 +310,12 @@ pjax:
 # Docs: https://keep-docs.xpoet.cn/basis/configuration-guide/footer.html
 # ---------------------------------------------------------------------------------------
 footer:
-  since: 2020           # The starting year of your website, Can be null
+  since: 2025           # The starting year of your website, Can be null
   word_count: false     # Option values: true | false
 
   site_deploy:
-    enable: false        # Option values: true | false
-    provider: github     # Option values: github | vercel | netlify | cloudflare | gitee | aliyun | tencent_cloud | upyun
+    enable: true        # Option values: true | false
+    provider:           # Option values: github | vercel | netlify | cloudflare | gitee | aliyun | tencent_cloud | upyun
     url:                 # Your deployment provider url, Can be null
 
   record:
@@ -331,9 +332,9 @@ footer:
 # Docs: https://keep-docs.xpoet.cn/basis/configuration-guide/inject.html
 # ---------------------------------------------------------------------------------------
 inject:
-  enable: false  # Option values: true | false
+  enable: true  # Option values: true | false
   css:
-    -
+    - /css/custom.css
       # e.g.
       # - /css/custom-1.css
       # - /css/custom-2.css
