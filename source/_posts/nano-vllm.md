@@ -182,7 +182,7 @@ NIntegrate[1/Sqrt[2*Pi]*Exp[-x^2/2]*1/(1+Exp[-x])^2, {x, -Infinity, Infinity}]
 2017 这篇论文 [Self-Normalizing Neural Networks](https://arxiv.org/abs/1706.02515) 提出了 SELU 激活函数, 其定义为
 
 $$
-\text{SELU}(x) = \lambda\begin{cases} x & x > 0 \\ \alpha e^x - \alpha & x \le 0 \end{cases},
+\text{SELU}(x)=\lambda\begin{cases}x&x>0\\\alpha e^x-\alpha&x\le 0\end{cases},
 $$
 
 其中 $\lambda \approx 1.0507, \alpha \approx 1.6733$. 论文中给出的 $\lambda, \alpha$ 的值可以使得标准正态分布经过 SELU 激活函数后, 均值和方差都不变. 只能算得上一种好的初始化方法.
@@ -206,7 +206,7 @@ N[Solve[{x1 == 0, x2 == 1}, {\[Lambda], \[Alpha]}], 20]
 关于残差连接 $x+F(x)$, 假设 $x$ 与 $F(x)$ 两者独立, 那么 $x+F(x)$ 的方差为 $\sigma_1^2+\sigma_2^2$, 会进一步放大方差, 一种朴素的方法是直接在残差相加之后加入 Normalization 操作:
 
 $$
-x_{t+1} = Norm(x _t + F(x_t)).
+x_{t+1}=Norm(x_t+F(x_t)).
 $$
 
 这种 `Post Norm` 的结构, 是原版 Transformer 和 BERT 所采用的, 这种虽然稳定了正向传播的方差, 但是会削弱残差连接中的恒定项, 所以反而失去了残差易于训练的优点, 通常要 Warmup 并设置足够小的学习率才能收敛.
@@ -214,13 +214,13 @@ $$
 一个针对性的改进是 `Pre Norm`, 其形式为:
 
 $$
-x_{t+1} = x_t + F(Norm(x_t)).
+x_{t+1}=x_t+F(Norm(x_t)).
 $$
 
 迭代展开后有:
 
 $$
-x_{t+1} = x_0 + F_0(x_0) + F_1(x_1/\sqrt{2}) + \dots + F_t(x_t/\sqrt{t+1}).
+x_{t+1}=x_0+F_0(x_0)+F_1(x_1/\sqrt{2})+\dots+F_t(x_t/\sqrt{t+1}).
 $$
 
 至少每一个残差项都是平权的, 作用会相比 `Post Norm` 更大, 所以也更容易优化. 当然, 这样的输出方差会很大, 在预测层之前需要加一个 Normalization.
@@ -228,7 +228,7 @@ $$
 为什么 `Pre Norm` 的效果会不如 `Post Norm`? 回顾我们的迭代展开式, 每一项都是同一量级的, 因为有 $x_{t+1}=O(t+1)$, 当深度很深的时候, $x_{t+1}$ 与 $x_t$ 的相对差别是比较小的, 因此:
 
 $$
-F_{t-1}(Norm(x_{t-1})) + F_t(Norm(x_t)) \approx F_{t-1}(Norm(x_{t-1})) + F_t(Norm(x_{t-1})).
+F_{t-1}(Norm(x_{t-1}))+F_t(Norm(x_t))\approx F_{t-1}(Norm(x_{t-1}))+F_t(Norm(x_{t-1})).
 $$
 
 因此原本一个 $t-1$ 层模型的输出和 $t$ 输出的结果相加, 近似于一个更宽的 $t$ 层模型, 所以在 `Pre Norm` 中多层叠加的结果在更深的模型中是增加宽度而非增加深度, 层数越多, 层数越"虚".
