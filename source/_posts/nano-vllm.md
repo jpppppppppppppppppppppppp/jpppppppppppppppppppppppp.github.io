@@ -12,7 +12,7 @@ mathjax: true
 第一种是行分割:
 
 $$
-\begin{bmatrix}W_1&W_2\end{bmatrix}\times\begin{bmatrix}X_1\\X_2\end{bmatrix}=\begin{bmatrix}W_1\times X_1+W_2\times X_2\end{bmatrix}=Y.
+\begin{bmatrix}W_1&W_2\end{bmatrix}\times\begin{bmatrix}X_1\\\\X_2\end{bmatrix}=\begin{bmatrix}W_1\times X_1+W_2\times X_2\end{bmatrix}=Y.
 $$
 
 最后要在所有卡上做一个 all_reduce 的操作对结果做汇总.
@@ -20,7 +20,7 @@ $$
 第二种是列分割:
 
 $$
-\begin{bmatrix}W_1\\W_2\end{bmatrix}\times X=\begin{bmatrix}W_1\times X\\W_2\times X\end{bmatrix}=Y.
+\begin{bmatrix}W_1\\\\W_2\end{bmatrix}\times X=\begin{bmatrix}W_1\times X\\\\W_2\times X\end{bmatrix}=Y.
 $$
 
 最后要在所有卡上做一个 all_gather.
