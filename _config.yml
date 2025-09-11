@@ -3,13 +3,13 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Yeu Jaung
+title: Yu Jiang
 subtitle: My Homepage
 description: '/dev/null'
-keywords: Yeu Jaung
-author: Yeu Jaung
+keywords: Yu Jiang
+author: Yu Jiang
 language: en
-timezone: 'Asia/Shanghai'
+timezone: 'CST6CDT'
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
