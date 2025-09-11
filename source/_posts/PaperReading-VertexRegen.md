@@ -12,12 +12,12 @@ tags:
 categories:
     - PaperReading
 mathjax: true
-excerpt: "[ICCV2025] VertexRegen: Mesh Generation with Continuous Level of Detail"
+excerpt: "[ICCV2025] VertexRegen: Mesh Generation with Continuous Level of Detail."
 ---
 
 Link: <a href="http://arxiv.org/abs/2508.09062">VertexRegen: Mesh Generation with Continuous Level of Detail</a>.
 
-一种 Coarse-to-Fine 的点云生成方法, 每一步做 edge_collapse 的逆操作, 即 vertex_split, 每一个中间结果都是合理的 Mesh.
+一种 Coarse-to-Fine 的从点云生成 Mesh 的方法, 每一步做 edge_collapse 的逆操作, 即 vertex_split, 每一个中间结果都是合理的 Mesh.
 
 <img src="https://p.sda1.dev/26/503d125478047ed98607ba7582f57d58/teaser.jpg" >
 
@@ -39,6 +39,8 @@ Link: <a href="http://arxiv.org/abs/2508.09062">VertexRegen: Mesh Generation wit
 第一个提出以点云作为 Mesh Generation 的条件, 用 VQVAE 对输入编码, 整体采用 Self Attention.
 
 </details>
+
+---
 
 每一次 edge_collapse 都会消失一个顶点和两个面, 所以逆操作只需要四个点就能表示.
 
