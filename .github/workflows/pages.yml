@@ -20,13 +20,6 @@ jobs:
           # Examples: 20, 18.19, >=16.20.2, lts/Iron, lts/Hydrogen, *, latest, current, node
           # Ref: https://github.com/actions/setup-node#supported-version-syntax
           node-version: "22"
-      - name: change_update_time
-        run: |
-          find source/_posts -name "*.md" | while read file; do
-            timestamp=$(git log -1 --format="%ct" "$file")
-            formatted_timestamp=$(date -u -d "@$timestamp" "+%Y%m%d%H%M.%S")
-            touch -t "$formatted_timestamp" "$file"
-          done
       - name: Cache NPM dependencies
         uses: actions/cache@v4
         with:

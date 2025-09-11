@@ -1,6 +1,7 @@
 ---
 title: 'PaperReading: VertexRegen'
 date: 2025-09-10 15:46:30
+updated: 2025-09-10 17:55:24
 home_cover: https://p.sda1.dev/26/2255c0cb28fa7442ce0cd016cebdddfa/cover.PNG
 post_cover: https://p.sda1.dev/26/02929423c97c2a2a2fb5267d9babf274/post.PNG
 copyright_info: true
