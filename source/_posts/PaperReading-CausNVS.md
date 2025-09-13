@@ -1,5 +1,5 @@
 ---
-title: PaperReading-CausNVS
+title: 'PaperReading: CausNVS'
 date: 2025-09-11 15:17:23
 updated: 2025-09-11 18:41:40
 home_cover: https://p.sda1.dev/26/c916c973e873eb2986d59e381be3f460/cover.jpeg
