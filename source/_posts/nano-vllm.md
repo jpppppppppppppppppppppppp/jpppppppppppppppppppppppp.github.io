@@ -1,7 +1,7 @@
 ---
 title: "Note: nano-vllm 学习笔记"
 date: 2025/9/9 17:36:53
-updated: 2025/9/10 15:39:19
+updated: 2025/9/20 0:01:14
 home_cover: https://p.sda1.dev/26/0186e079ea9478e12f463e4d80a9d5c3/cover.jpg
 post_cover: https://p.sda1.dev/26/ac89d2ec92626ebc7dd79366d9b9da98/post.JPG
 copyright_info: true
@@ -248,8 +248,46 @@ $$
 ### Prepare
 
 ```python
+> nanovllm/engine/scheduler.py:l 34 --> Scheduler.schedule
+self.block_manager.allocate(seq)
+
+> nanovllm/engine/block_manager.py:def BlockManager.allocate
+def allocate(self, seq: Sequence):
+    assert not seq.block_table
+    h = -1
+    cache_miss = False
+    for i in range(seq.num_blocks):
+        token_ids = seq.block(i)
+        h = self.compute_hash(token_ids, h) if len(token_ids) == self.block_size else -1
+        block_id = self.hash_to_block_id.get(h, -1)
+        if block_id == -1 or self.blocks[block_id].token_ids != token_ids:
+            cache_miss = True
+        if cache_miss:
+            block_id = self.free_block_ids[0]
+            block = self._allocate_block(block_id)
+        else:
+            seq.num_cached_tokens += self.block_size
+            if block_id in self.used_block_ids:
+                block = self.blocks[block_id]
+                block.ref_count += 1
+            else:
+                block = self._allocate_block(block_id)
+        if h != -1:
+            block.update(h, token_ids)
+            self.hash_to_block_id[h] = block_id
+        seq.block_table.append(block_id)
+```
+在这里实现了 prefix caching, 每一次处理请求, 都会逐块计算哈希, 判断是否在缓存块中.
+
+```python
 > nanovllm/engine/model_runner.py:l 209 --> ModelRunner.run
 input_ids, positions = self.prepare_prefill(seqs) if is_prefill else self.prepare_decode(seqs)
 ```
 
-如果是 prefill, model 需要做 varlen 的 attention,
+如果是 prefill, model 需要做 varlen 的 attention, 首先将所有未处理的 input_ids 拼接在一起, 作为输入 q 的总长度, 每一个序列的总长度相加是 kv 的长度, positions 是相对每一个序列的开始到结束的区间. slot_mapping 记录了每一个新进入的 q 对应的 kv cache 在 pool 里的位置, 通过 block_id * block_size 得到开始位置.
+
+
+
+
+
+
