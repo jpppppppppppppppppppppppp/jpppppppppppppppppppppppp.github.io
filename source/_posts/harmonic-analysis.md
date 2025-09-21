@@ -2,8 +2,8 @@
 title: "Note: Harmonic Analysis"
 date: 2025-09-20 16:07:09
 updated: 2025-09-21 0:54:05
-home_cover: https://p.sda1.dev/26/0186e079ea9478e12f463e4d80a9d5c3/cover.jpg
-post_cover: https://p.sda1.dev/26/ac89d2ec92626ebc7dd79366d9b9da98/post.JPG
+home_cover: https://p.sda1.dev/27/3b163beb87dacac2e7af5d12fa1e5c27/cover.PNG
+post_cover: https://p.sda1.dev/27/112269185d77bddf4f1efd879257d4c2/post.JPG
 copyright_info: true
 tags:
     - Math
