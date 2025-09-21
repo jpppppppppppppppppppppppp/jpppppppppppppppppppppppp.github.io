@@ -1,7 +1,7 @@
 ---
 title: "Note: triton 学习笔记"
-date: 2025/09/16 17:39:53
-updated: 2025/09/17 21:02:04
+date: 2025-09-16 17:39:53
+updated: 2025-09-17 21:02:04
 home_cover: https://p.sda1.dev/27/9fa85a2c8d0fdfae2fc5082170299317/cover.jpg
 post_cover: https://p.sda1.dev/27/946a46691e4fea8fca7063f89d75fbe8/post.png
 copyright_info: true
