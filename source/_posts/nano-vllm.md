@@ -1,7 +1,7 @@
 ---
 title: "Note: nano-vllm 学习笔记"
 date: 2025-09-09 17:36:53
-updated: 2025-09-20 0:01:14
+updated: 2025-09-21 21:15:21
 home_cover: https://p.sda1.dev/26/0186e079ea9478e12f463e4d80a9d5c3/cover.jpg
 post_cover: https://p.sda1.dev/26/ac89d2ec92626ebc7dd79366d9b9da98/post.JPG
 copyright_info: true
@@ -37,8 +37,7 @@ $$
 
 在训练阶段, 无论是何种方式切分, 都会在 forward 和 backward 各产生一次额外通信. 如果有连续的矩阵乘法, 通过先列分割再行分割可以把一对 all_gather/split 抵消.
 
-<details>
-  <summary>model weight loader 的实现:</summary>
+model weight loader 的实现:
 
 ```python
 > nanovllm/engine/model_runner.py:l 32 --> ModelRunner.__init__
@@ -111,10 +110,7 @@ self.tp_rank = dist.get_rank()
 self.tp_size = dist.get_world_size()
 ```
 
-</details>
-
-<details>
-  <summary>forward 的实现:</summary>
+forward 的实现:
 
 Embedding:
 
@@ -149,14 +145,6 @@ def forward(self, x: torch.Tensor) -> torch.Tensor:
 ```
 
 Attention 后的 MLP 是两层线性层, 激活函数是 SiLU, 元素之间独立, 线性层采用先列切分再行切分的方法减少一次通信.
-
-</details>
-
-### 关于 Scheduler
-
-prefill 会让 kv_cache_block_manager try_allocate 而 decode 会让 kv_cache_block_manager try_append.
-
-如果 try_append 失败, 则会把已经保存的 kv_cache_block deallocate.
 
 ### 关于 Transformer
 
@@ -277,17 +265,106 @@ def allocate(self, seq: Sequence):
             self.hash_to_block_id[h] = block_id
         seq.block_table.append(block_id)
 ```
-在这里实现了 prefix caching, 每一次处理请求, 都会逐块计算哈希, 判断是否在缓存块中.
+在这里实现了 prefix caching, 每一次处理请求, 都会逐块计算哈希, 判断是否在缓存块中. 计算哈希的时候会把 prefix 的哈希也考虑进去, 不会发生 AAA 和 AAABBBAAA 的后面的 AAA 复用缓存的问题.
 
 ```python
 > nanovllm/engine/model_runner.py:l 209 --> ModelRunner.run
 input_ids, positions = self.prepare_prefill(seqs) if is_prefill else self.prepare_decode(seqs)
 ```
 
-如果是 prefill, model 需要做 varlen 的 attention, 首先将所有未处理的 input_ids 拼接在一起, 作为输入 q 的总长度, 每一个序列的总长度相加是 kv 的长度, positions 是相对每一个序列的开始到结束的区间. slot_mapping 记录了每一个新进入的 q 对应的 kv cache 在 pool 里的位置, 通过 block_id * block_size 得到开始位置.
+如果是 prefill, model 需要做 varlen 的 attention, 首先将所有未处理的 input_ids 拼接在一起, 作为输入 q 的总长度, 每一个序列的总长度相加是 kv 的长度, positions 是相对每一个序列的开始到结束的区间, 用来构建 mask 矩阵. slot_mapping 记录了每一个新进入的 q 对应的 kv cache 在 pool 里的位置, 通过 block_id * block_size 得到开始位置. block_table 记录了每一个 seq 对应的 kv cache block_id(s).
 
+如果是 decode, 则只需要添加最后的 input_id, 总体相似.
 
+### KV Cache 管理
 
+接下来我们看如何对 kv cache 进行管理.
 
+在初始化 ModelRunner 的时候, 加载完模型后会用最大的 batch workload 来 warmup, 根据峰值的占用计算剩余空间, 得到块数量.
 
+```python
+> nanovllm/engine/model_runner.py:def ModelRunner.allocate_kv_cache
+def allocate_kv_cache(self):
+    config = self.config
+    hf_config = config.hf_config
+    free, total = torch.cuda.mem_get_info()
+    used = total - free
+    peak = torch.cuda.memory_stats()["allocated_bytes.all.peak"]
+    current = torch.cuda.memory_stats()["allocated_bytes.all.current"]
+    num_kv_heads = hf_config.num_key_value_heads // self.world_size
+    block_bytes = 2 * hf_config.num_hidden_layers * self.block_size * num_kv_heads * hf_config.head_dim * hf_config.torch_dtype.itemsize
+    config.num_kvcache_blocks = int(total * config.gpu_memory_utilization - used - peak + current) // block_bytes
+    assert config.num_kvcache_blocks > 0
+    self.kv_cache = torch.zeros(2, hf_config.num_hidden_layers, config.num_kvcache_blocks, self.block_size, num_kv_heads, hf_config.head_dim)
+    layer_id = 0
+    for module in self.model.modules():
+        if hasattr(module, "k_cache") and hasattr(module, "v_cache"):
+            module.k_cache = self.kv_cache[0, layer_id]
+            module.v_cache = self.kv_cache[1, layer_id]
+            layer_id += 1
+```
+
+根据计算的结果开合适的块数量, 并同步到 Scheduler 的 config 中, 随后把每一层的块都放在 Attention 模块中. 值得注意的是, 这些操作是随着 ModelRunner 的初始化做的, 所以是每个节点独立的, 因此开的块大小也是根据 TP 分好的.
+
+在计算 attention 之前, 会根据 slot_mapping 把输入的 kv 写入缓存块中. 并将整个 kv_cache 丢进 FLA, 根据 block_table 来寻址.
+
+### 关于 Scheduler
+
+prefill 会让 kv_cache_block_manager try_allocate 而 decode 会让 kv_cache_block_manager try_append.
+
+如果 try_append 失败, 则会把已经保存的 kv_cache_block deallocate.
+
+### Graph 模式
+
+为什么 prefill 不用 Graph 模式加速, 而 decode 阶段使用? CUDA Graph 是用来优化和加速启动 kernel 的开销, 而 prefill 是 compute-bound 的, kernel 启动的成本并不是瓶颈, 且输入长度不固定, 很难复用图.
+
+首先, 捕获图, 输入的 batch_size 是固定大小, block_table 开最大.
+
+```python
+> nanovllm/engine/model_runner.py:l 228 --> ModelRunner.capture_cudagraph
+self.graph_bs = [1, 2, 4, 8] + list(range(16, max_bs + 1, 16))
+self.graphs = {}
+self.graph_pool = None
+
+for bs in reversed(self.graph_bs):
+    graph = torch.cuda.CUDAGraph()
+    set_context(False, slot_mapping=slot_mapping[:bs], context_lens=context_lens[:bs], block_tables=block_tables[:bs])
+    outputs[:bs] = self.model(input_ids[:bs], positions[:bs])    # warmup
+    with torch.cuda.graph(graph, self.graph_pool):
+        outputs[:bs] = self.model(input_ids[:bs], positions[:bs])    # capture
+    if self.graph_pool is None:
+        self.graph_pool = graph.pool()
+    self.graphs[bs] = graph
+    torch.cuda.synchronize()
+    reset_context()
+
+self.graph_vars = dict(
+    input_ids=input_ids,
+    positions=positions,
+    slot_mapping=slot_mapping,
+    context_lens=context_lens,
+    block_tables=block_tables,
+    outputs=outputs,
+)
+```
+
+在 decode 阶段, batch_size 会向上取整, 然后按需填充 batch_size 和 block_table.
+
+```python
+> nanovllm/engine/model_runner.py:l 193 --> ModelRunner.run_model
+bs = input_ids.size(0)
+context = get_context()
+graph = self.graphs[next(x for x in self.graph_bs if x >= bs)]
+graph_vars = self.graph_vars
+for k, v in graph_vars.items():
+    if k != "outputs":
+        v.zero_()
+graph_vars["input_ids"][:bs] = input_ids
+graph_vars["positions"][:bs] = positions
+graph_vars["slot_mapping"][:bs] = context.slot_mapping
+graph_vars["context_lens"][:bs] = context.context_lens
+graph_vars["block_tables"][:bs, :context.block_tables.size(1)] = context.block_tables
+graph.replay()
+return self.model.compute_logits(graph_vars["outputs"][:bs])
+```
 
