@@ -62,7 +62,7 @@ $$
 {% note info %}
 Weierstrass M-test:
 
-设 $\{f_n\}$ 是定义在集合 $E\subset\mathbb{R}$ 上的函数列, 如果存在数列 $\{a_n\}$ 使得对任意 $x\in E$ 和任意 $n$, 都有 $|f_n(x)|\leq a_n$, 且 $\displaystyle\sum_{n=1}^\infty a_n<\infty$, 那么 $\displaystyle\sum_{n=1}^\infty f_n(x)$ 在 $E$ 上一致收敛.
+设 $\\{f_n\\}$ 是定义在集合 $E\subset\mathbb{R}$ 上的函数列, 如果存在数列 $\\{a_n\\}$ 使得对任意 $x\in E$ 和任意 $n$, 都有 $|f_n(x)|\leq a_n$, 且 $\displaystyle\sum_{n=1}^\infty a_n<\infty$, 那么 $\displaystyle\sum_{n=1}^\infty f_n(x)$ 在 $E$ 上一致收敛.
 {% endnote %}
 
 下面就是证明傅里叶系数绝对收敛. 可以用分部积分法对系数进行改造:
