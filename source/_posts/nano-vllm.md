@@ -148,7 +148,7 @@ Attention 后的 MLP 是两层线性层, 激活函数是 SiLU, 元素之间独�
 
 ### 关于 Transformer
 
-<details>
+<details open>
   <summary>模型的初始化与标准化</summary>
 
 用二阶矩来衡量输出的稳定性, 对于一个单层的无激活函数的全连接线性网络层来说 (假设输入 channel 数为 $m$ , 输出 channel 数为 $n$ ), 简单起见, 我们用零初始化 bias, 并且将 $w_{ij}$ 的均值也设为 $0$. 我们计算二阶矩:

@@ -23,7 +23,7 @@ Link: <a href="http://arxiv.org/abs/2508.09062">VertexRegen: Mesh Generation wit
 
 过去的工作有以下问题: 密铺 (over-tesselation), 不平滑的表面 (bumpy artifacts) 和缺失几何细节 (insufficient geometric detail).
 
-<details>
+<details open>
   <summary>Recently Mesh Autoregressive Generation Works:</summary>
 
 <a href="https://arxiv.org/abs/2412.09548">[NVIDIA] Meshtron: High-Fidelity, Artist-Like 3D Mesh Generation at Scale</a>

@@ -22,7 +22,7 @@ Link: <a href="https://arxiv.org/abs/2509.06579">CausNVS: Autoregressive Multi-v
 
 过去的固定长度的 diffusion paradigm 没有良好的因果关系, 不能适应 on-the-fly 的场景, 使用自回归有以下几个困难:
 
-<details>
+<details open>
   <summary>Recently Generation Works:</summary>
 
 首先是 Multi-view Diffusion Model 的相关工作:
