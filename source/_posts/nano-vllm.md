@@ -1,7 +1,7 @@
 ---
 title: "Note: nano-vllm 学习笔记"
 date: 2025-09-09 17:36:53
-updated: 2025-09-21 21:15:21
+updated: 2025-09-25 23:51:30
 home_cover: https://p.sda1.dev/26/0186e079ea9478e12f463e4d80a9d5c3/cover.jpg
 post_cover: https://p.sda1.dev/26/ac89d2ec92626ebc7dd79366d9b9da98/post.JPG
 copyright_info: true
@@ -368,3 +368,14 @@ graph.replay()
 return self.model.compute_logits(graph_vars["outputs"][:bs])
 ```
 
+### Prefix Caching
+
+前面提到了 nano-vllm 实现了基于 PageAttention 的 prefix caching, 下面简单学习一下.
+
+Prefix Caching 主要减少 Latency, 在以下场景中有明显的作用: **Few-shot Learning**, **Self-consistency**, **Multi-turn Chat**, **Tree-of-Thought**.
+
+主要的算法是 <a href="https://arxiv.org/abs/2312.07104">Radix Attention</a>, 通过前缀哈希共享建树, 并用 LRU 逐块.
+
+<img src="https://p.sda1.dev/27/68f13262d99f4a4bc6f7bd6b23bfbbea/example_radix_attn_page-0001.jpg" />
+
+通过前缀哈希, 构造前缀树, 很巧妙地保持了一致性.
