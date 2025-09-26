@@ -28,7 +28,7 @@ excerpt: 出于纯粹的好奇心, 选了吴耀琨老师的调和分析课程, �
 第一节课吴老师举了一个具体的应用例子, 是 Weyl's Equidistribution Theorem.
 
 {% note info %}
-Weyl's Equidistribution Theorem:
+Weyl\'s Equidistribution Theorem:
 
 取一个无理数 $\gamma\in\mathbb{R}\backslash\mathbb{Q}$, 一个周期为 $2\pi$ 的连续函数 $f:\mathbb{T}\mapsto\mathbb{C}$, $\mathbb{T}=\mathbb{R}/2\pi\mathbb{Z}$, 那么
 
