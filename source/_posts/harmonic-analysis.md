@@ -1,7 +1,7 @@
 ---
 title: "Note: Harmonic Analysis"
 date: 2025-09-20 16:07:09
-updated: 2025-09-23 21:43:22
+updated: 2025-09-27 1:13:02
 home_cover: https://p.sda1.dev/27/3b163beb87dacac2e7af5d12fa1e5c27/cover.PNG
 post_cover: https://p.sda1.dev/27/112269185d77bddf4f1efd879257d4c2/post.JPG
 copyright_info: true
@@ -130,7 +130,7 @@ $$
 类似地, 我们可以仿照这个例子构造 $k\geq 2$ 的反例. 但是, 下面这个定理及其推论表明, 这样的函数一定在 $C^{k-2}(\mathbb{T})$ 里.
 
 {% note info %}
-Theorem 1.3:
+<span id="theo1.3"></span>Theorem 1.3:
 
 可积函数 $f:\mathbb{T}\mapsto\mathbb{C}$ 是以 $2\pi$ 为周期, 且 $l\geq 0$. 如果 $\displaystyle\sum_{n\in\mathbb{Z}}|\hat{f}(n)||n|^l<+\infty$, 那么函数 $f\in C^l$.
 
@@ -200,7 +200,41 @@ $$
 $$
 {% endnote %}
 
+##### 定理 1.4
 
+根据上面的内容, 我们可以得到, 函数越光滑, 其傅里叶系数衰减越快, 那能否得到傅里叶级数收敛越快呢? 下面的定理给出了肯定的答复.
+
+{% note info %}
+Theorem 1.4:
+
+对于一个连续可微的函数 $f\in C^k(\mathbb{T})$, 其中 $k\geq2$, 那傅里叶级数的收敛速度是有保障的, 且不依赖于 $\theta$ :
+$$
+|S_N(f)(\theta) - f(\theta)|\leq C/N^{k-1}.
+\tag{1.2}
+$$
+
+如果 $k=1$, 既 $f\in C^1(\mathbb{T})$, 那么也是能保证的:
+$$
+|S_N(f)(\theta) - f(\theta)|\leq C/\sqrt{N}.
+$$
+{% endnote %}
+
+证明略. 下面给出一个逆定理的反例, 如果函数的部分和收敛速度符合式子 <a href="#1.2">(1.2)</a>, 那么函数不一定在 $C^k(\mathbb{T})$ 里, 甚至不在 $C^{k-1}(\mathbb{T})$ 里.
+
+函数 $f:\mathbb{T}\mapsto\mathbb{R}$ 如此设计: $f(\theta)=\displaystyle\frac{\pi}{2}-|\theta|$, 这个函数连续但是在 $\theta\in \pi\mathbb{Z}$ 处不可导. 所以不属于 $C^2$ (甚至不属于 $C^1$). 它的傅里叶系数如下:
+$$
+\hat{f}(n)=\begin{cases}
+0,&\text{if }n\text{ is even;}\\\\
+2/(\pi n^2),&\text{if }n\text{ is odd.}
+\end{cases}
+$$
+
+所以 $\displaystyle\sum_{n\in\mathbb{Z}}|\hat{f}(n)|<\infty$, 所以根据<a href="#theo1.3">定理 1.3</a>, $S_N(f)$ 一致收敛到 $f$, 对于残差有以下估计:
+$$
+|S_N(f)(\theta)-f(\theta)|\leq\frac{2\pi^{-1}}{N-1}.
+$$
+
+这构成了逆定理的一个反例.
 
 ---
 
