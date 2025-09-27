@@ -74,7 +74,7 @@ $$
 
 所以先用 pre-filling 阶段对数据集进行排序, 并根据每个 step 的训练结果调整数据的采样概率.
 
-<img src="https://p.sda1.dev/27/844e4a6b14f7028ff45ec05f8feacee9/neuron_train.jpg" />
+<img src="https://p.sda1.dev/27/17aa0b1bad0696b919a5509714121b0e/overview.jpg" />
 
 总体上我感觉这篇文章内容十分流畅清晰.
 

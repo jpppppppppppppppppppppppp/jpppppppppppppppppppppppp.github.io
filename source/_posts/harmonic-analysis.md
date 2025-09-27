@@ -49,7 +49,7 @@ Weyl\'s Equidistribution Theorem:
 {% note info %}
 Theorem 1.1:
 
-取连续且二阶连续可导函数, $f\in C^2(\mathbb{T})$, 其中 $\mathbb{T}$ 是单位圆, 那么对于任意 $\theta\in\mathbb{T}$, 部分和的极限
+取二阶连续可导函数, $f\in C^2(\mathbb{T})$, 其中 $\mathbb{T}$ 是单位圆, 那么对于任意 $\theta\in\mathbb{T}$, 部分和的极限
 $$
 \lim_{N\to\infty}S_N(f)(\theta)=\sum_{n=-\infty}^\infty\hat{f}(n)e^{in\theta}=: S(f)(\theta)
 $$
