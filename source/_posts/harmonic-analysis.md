@@ -1,7 +1,7 @@
 ---
 title: "Note: Harmonic Analysis"
 date: 2025-09-20 16:07:09
-updated: 2025-09-27 1:13:02
+updated: 2025-09-30 17:52:26
 home_cover: https://p.sda1.dev/27/3b163beb87dacac2e7af5d12fa1e5c27/cover.PNG
 post_cover: https://p.sda1.dev/27/112269185d77bddf4f1efd879257d4c2/post.JPG
 copyright_info: true
@@ -39,6 +39,120 @@ Weyl\'s Equidistribution Theorem:
 第一问就是验证每一个傅里叶级数的基都是满足该极限的, 再利用 Fej&eacute;r 求和说明任意函数可以用三角级数逼近; 第二问则是将第一问要求的连续函数换成了不连续的指示函数, 用线性函数上下夹逼即可.
 
 吴老师说这是在 Weyl 做表示论的时候提出的该定理, 很难想象是啥表示论的难题需要这个..
+
+### 第二节课
+
+一开始吴老师回顾了在不同的群上，时域和频域是什么: 比如在时域为 $\mathbb{R}/L\mathbb{Z}$ 上, 频域是 $\mathbb{Z}$; 在时域为 $\mathbb{Z}$ 上, 频域是 $\mathbb{R}/L\mathbb{Z}$; 在时域为 $\mathbb{R}$ 上, 频域也是 $\mathbb{R}$; 在时域为 $\mathbb{Z}/N\mathbb{Z}$ 上, 频域也是 $\mathbb{Z}/N\mathbb{Z}$. 我们可以发现, 不管在什么群上, 都会出现 $e^{2\pi inx/N}$ 这样的表示, 后面吴老师向我们推导了一般有限阿贝尔群上的傅里叶变换.
+
+有一个有限阿贝尔群 $A$, 我们需要找到一个群 $A$ 上的 "简单的信号" 组合. 我们考虑 $A$ 的对偶群 $\hat{A}=Hom(A, \mathbb{C}^*)$, 意思是群 $A$ 和复数乘法群的同态群, 即满足条件 $f(a+b)=f(a)f(b)$ 的函数构成的群. 很显然如果 $f, g\in\hat{A}$, 那么 $fg\in\hat{A}$. 而且 $\hat{A}$ 也是一个有限阿贝尔群, 其阶和 $A$ 相同. 因为 $A$ 是个循环群, 所以 $f$ 一定由单位根组成的 $f(n)=\omega^n$.
+
+$\hat{A}\subseteq \mathbb{C}^A$, 可以在 $\mathbb{C}^A$ 上定义内积: $\left<f, g\right>\_A=\displaystyle\frac{1}{|A|}\displaystyle\sum_{a\in A}f(a)\overline{g(a)}=\mathbb{E}_{A}[f\bar{g}]$.
+
+先证明几个小性质: 取 $\hat{A}$ 中的一个函数 $\chi\in\hat{A}$, 如果 $\chi$ 为常函数 $\mathbb{1}$, 那么 $\mathbb{E}\_A[\chi]=1$; 反之, 则存在 $b\in A$, 使得 $\chi(b)\neq 1$. 那么
+$$
+\begin{aligned}
+\mathbb{E}\_A[\chi]&=\frac{1}{|A|} \sum_{a\in A}\chi(a)\\\\
+&=\frac{1}{|A|}\sum_{a\in A}\chi(a+b)\\\\
+&=\chi(b)\frac{1}{|A|}\sum_{a\in A}\chi(a)=0.
+\end{aligned}
+$$
+
+下面可以很容易地得到对偶群里的正交关系: $\left<\chi,\chi'\right>\_A=\mathbb{E}\_A[\chi\overline{\chi'}]=\delta_{\chi,\chi'}$. 吴老师说这个叫做不可约表示. 所以傅里叶变化 $f\in \mathbb{C}^A \mapsto \displaystyle\sum_{\chi\in\hat{A}}\mathcal{F}(f)_\chi\chi$ 就是构建了算子 $\mathcal{F}:\mathbb{C}^A\mapsto\mathbb{C}^{\hat{A}}$.
+
+如果 $A$ 和 $\hat{A}$ 在某种意义上相同, 我们可以研究傅里叶变换的特征值. 比如如果 $A=\mathbb{R}$ 上, 特征向量是 $f(s)=e^{-\pi s^2}$. 今天讲有限阿贝尔群上的特征值.
+
+取函数 $\hat{f}\in\mathbb{C}^{\hat{A}}$, 做这个函数在 $\hat{\hat{A}}=A$ 上的分解, 因为 $a(\chi_1\chi_2)=a(\chi_1)a(\chi_2)$, 所以 $A$ 是 $\hat{\hat{A}}$ 上的一种表示.
+$$
+\hat{f}=\sum_{a\in A}\hat{\hat{f}}(a)a,
+$$
+
+带入内积
+$$
+\begin{aligned}
+\hat{\hat{f}}(a)&=\left<\hat{f},a\right>_{\hat{A}}=\mathbb{E}\_{\hat{A}}\left[\hat{f}\bar{a}\right]=\displaystyle\frac{1}{|\hat{A}|}\displaystyle\sum\_{\chi\in\hat{A}}\hat{f}(\chi)\bar{a}(\chi)\\\\
+&=\frac{1}{|\hat{A}|}\sum\_{\chi\in\hat{A}}a^{-1}(\chi)\frac{1}{|A|}\sum\_{b\in A}f(b)\overline{\chi(b)}\\\\
+&=\frac{1}{|A|}\sum\_{b\in A}f(b)\frac{1}{|\hat{A}|}\sum\_{\chi\in\hat{A}}\chi(a^{-1}b^{-1})\\\\
+&=\frac{1}{|A|}\sum\_{b\in A}f(b)\mathbb{E}\_{\chi\in\hat{A}}\chi(a^{-1}b^{-1})\\\\
+&=\frac{1}{|A|}\sum\_{b\in A}f(b)\delta\_{a^{-1}, b^{-1}}=\frac{1}{|A|}f(a^{-1}).
+\end{aligned}
+$$
+
+所以 $\hat{\hat{\hat{\hat{f}}}}(a)=\displaystyle\frac{1}{|A|^2}f(a)$, 特征值是 $|A|^{-1/2}(-i)^n$.
+
+吴老师用矩阵的方法推有限循环群的傅里叶变换, $A=\mathbb{Z}/N\mathbb{Z}$.
+
+$$
+\begin{pmatrix}
+\hat{f}(0) \\\\
+\hat{f}(1) \\\\
+\vdots \\\\
+\hat{f}(N-1)
+\end{pmatrix}=\frac{1}{N}\begin{pmatrix}
+\omega^{-0\cdot 0} & \omega^{-0\cdot 1} & \cdots & \omega^{-0\cdot (N-1)} \\\\
+\omega^{-1\cdot 0} & \omega^{-1\cdot 1} & \cdots & \omega^{-1\cdot (N-1)} \\\\
+\vdots & \vdots & \ddots & \vdots \\\\
+\omega^{-(N-1)\cdot 0} & \omega^{-(N-1)\cdot 1} & \cdots & \omega^{-(N-1)(N-1)}
+\end{pmatrix}\begin{pmatrix}
+f(0) \\\\
+f(1) \\\\
+\vdots \\\\
+f(N-1)
+\end{pmatrix}
+$$
+
+那就是求中间矩阵 $\Omega$ 的特征值. Schur 定理我们说, 这个矩阵的特征值是 $\sqrt{N}$, $i\sqrt{N}$, $-\sqrt{N}$, $-i\sqrt{N}$. 而且甚至重数也是确定的: $\lfloor\displaystyle\frac{N+4}{4}\rfloor$, $\lfloor\displaystyle\frac{N+1}{4}\rfloor$, $\lfloor\displaystyle\frac{N+2}{4}\rfloor$, $\lfloor\displaystyle\frac{N-1}{4}\rfloor$.
+
+一个很重要的特征向量是:
+
+取 $N$ 是一个奇素数 $p$, $A=\mathbb{Z}/p\mathbb{Z}$, 函数 $h_p(x)=\left(\displaystyle\frac{x}{p}\right)=\begin{cases}0 & a\equiv0(\bmod p),\\\\+1&a\not\equiv0(\bmod p), \exists x\in\mathbb{Z}, x^2\equiv a(\bmod p)\\\\-1&\forall x\in\mathbb{Z}, x^2\not\equiv a(\bmod p). \end{cases}$ 是傅里叶变换的特征函数.
+
+可以用<a href="https://en.wikipedia.org/wiki/Euler%27s_criterion">欧拉判别法</a>验证它的乘法性质 $h_p\in \hat{A}$. 下面是它的傅里叶变换的性质:
+
+(A) $\widehat{h_p}=\widehat{h_p}(1) h_p$;
+
+$$
+\widehat{h_p}(m)=\frac{1}{p}\sum_{k=0}^{p-1}h_p(k)e^{-2\pi ikm/p}
+$$
+
+1. $m=0$ 时, $\widehat{f}(m)=\displaystyle\frac{1}{p}\displaystyle\sum_{k=0}^{p-1}h_p(k)=0$. 因为 $\mathbb{E}_{\hat{A}}[\chi]=0$.
+2. $m\neq0$ 时, 换元 $b=km$,
+$$
+\begin{aligned}
+\widehat{h_p}(m)&=\displaystyle\frac{1}{p}\displaystyle\sum_{b=0}^{p-1}h_p(bm^{-1})e^{-2\pi ib/p}\\\\
+&=h_p(m)\frac{1}{p}\sum_{b=0}^{p-1}h_p(b)e^{-2\pi ib/p}\\\\
+&=h_p(m)\widehat{h_p}(1).
+\end{aligned}
+$$
+
+(B) 高斯核函数:
+$$
+\begin{aligned}
+g(m, p)&=\sum_{k=0}^{p-1}e^{2\pi im k^2/p}=1+\sum_{k=1}^{p-1}e^{2\pi im k^2/p}\\\\
+&=1+\sum_{k=1}^{p-1}(1+h_p(k))e^{2\pi im k/p},
+\end{aligned}
+$$
+
+最后一个等号成立是因为, 我们知道 $\mathbb{E}_{\hat{A}}[h_p]=0$, 这意味着 $k^2$ 在 $\bmod p$ 意义下会遍历二次剩余群两次, 因为 $k^2\equiv (p-k)^2(\bmod p)$. 所以
+
+$$
+g(m, p)=\sum_{k=1}^{p-1}h_p(k)e^{2\pi im k/p}=p\cdot\widehat{h_p}(m).
+$$
+
+\(C\) 如果 $(r,s)=1$ 互素, 那么 $g(mr,s)g(ms,r)=g(m,rs)$. 需要使用中国剩余定理.
+
+综合这三条, 可以证明二次互反律: $p$, $q$ 是奇素数, 那么 $\left(\displaystyle\frac{p}{q}\right)\left(\displaystyle\frac{q}{p}\right)=(-1)^{\frac{(p-1)(q-1)}{4}}$.
+
+$$
+\begin{aligned}
+trace(\Omega_{pq})&=g(1, pq)\overset{\(C\)}{=}g(p,q)g(q,p)\overset{(B)}{=}pq\widehat{h_p}(q)\widehat{h_q}(p)\\\\
+&\overset{(A)}{=}pq\widehat{h_p}(1)h_p(q)\widehat{h_q}(1)h_q(p)\overset{(B)}{=}\left(\displaystyle\frac{p}{q}\right)\left(\displaystyle\frac{q}{p}\right)g(1,p)g(1,q)\\\\
+&=\left(\displaystyle\frac{p}{q}\right)\left(\displaystyle\frac{q}{p}\right)trace(\Omega_p)trace(\Omega_q)
+\end{aligned}
+$$
+
+最后根据 Schur 定理计算矩阵 $\Omega$ 的迹, 从而得证.
+
+吴老师的碎碎念: 这个矩阵的特征值高斯不会求, 但是我们并不想用简单的方法来计算它. 高斯用了很多种方法去证明二次互反律, 他觉得是最漂亮的结果, 所以给了很多的证明, 因为不同的证明意味着后面有不同非常深刻的推广, 甚至最复杂的证明才有可能走到最深刻的数学里面去. 很简单的证明不一定比复杂的证明来的好, 因为简单的证明在一般的场景基本用不下去.
 
 ### 教材阅读
 
