@@ -33,7 +33,7 @@ Weyl\'s Equidistribution Theorem:
 取一个无理数 $\gamma\in\mathbb{R}\backslash\mathbb{Q}$, 一个周期为 $2\pi$ 的连续函数 $f:\mathbb{T}\mapsto\mathbb{C}$, $\mathbb{T}=\mathbb{R}/2\pi\mathbb{Z}$, 那么
 
 1. $n^{-1}\displaystyle\sum_{r=1}^nf(2\pi r\gamma)\to\displaystyle\frac{1}{2\pi}\displaystyle\int_{\mathbb{T}}f(t)dt$,
-2. $0\leq a\leq b\leq1$, $n^{-1}\displaystyle\sum_{r=1}^n\mathbb{1}_{2\pi r\gamma\in[a,b]}\to b-a$.
+2. $0\leq a\leq b\leq1$, $n^{-1}\displaystyle\sum_{r=1}^n\mathbb{1}[2\pi r\gamma\in[a,b]]\to b-a$.
 {% endnote %}
 
 第一问就是验证每一个傅里叶级数的基都是满足该极限的, 再利用 Fej&eacute;r 求和说明任意函数可以用三角级数逼近; 第二问则是将第一问要求的连续函数换成了不连续的指示函数, 用线性函数上下夹逼即可.
@@ -152,7 +152,7 @@ $$
 
 最后根据 Schur 定理计算矩阵 $\Omega$ 的迹, 从而得证.
 
-吴老师的碎碎念: 这个矩阵的特征值高斯不会求, 但是我们并不想用简单的方法来计算它. 高斯用了很多种方法去证明二次互反律, 他觉得是最漂亮的结果, 所以给了很多的证明, 因为不同的证明意味着后面有不同非常深刻的推广, 甚至最复杂的证明才有可能走到最深刻的数学里面去. 很简单的证明不一定比复杂的证明来的好, 因为简单的证明在一般的场景基本用不下去.
+吴老师的碎碎念: 这个矩阵的迹高斯不会求, 但是我们的重点并不是用简单的方法来计算它. 高斯用了很多种方法去证明二次互反律, 这是他觉得最漂亮的结果, 所以给了很多的证明, 因为不同的证明意味着后面有不同非常深刻的推广, 最复杂的证明才有可能走到最深刻的数学里面去. 很简单的证明不一定比复杂的证明来的好, 因为简单的证明在一般的场景基本用不下去.
 
 ### 教材阅读
 
