@@ -2,8 +2,8 @@
 title: 'PaperReading: Sparse VideoGen2'
 date: 2025-10-01 20:57:16
 updated: 2025-10-01 20:57:16
-home_cover: https://p.sda1.dev/27/be11eba4b34fc4fdf7394442f90dbfb5/cover.jpg
-post_cover: https://p.sda1.dev/27/fbc8d67219a2abc03a75ff380f6d4fc1/post.PNG
+home_cover: https://p.sda1.dev/27/869d472a6fed782d7cd472c73fadd420/cover.jpeg
+post_cover: https://p.sda1.dev/27/00617cf5060c0a25763cef4a0cb40e27/post.jpg
 copyright_info: true
 tags:
   - Video Generation
