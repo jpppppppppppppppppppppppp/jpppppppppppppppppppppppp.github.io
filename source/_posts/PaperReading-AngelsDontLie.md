@@ -12,7 +12,7 @@ tags:
 categories:
     - PaperReading
 mathjax: true
-excerpt: "[NIPS2025Spotlight] Angles don't lie: Unlocking Training-Efficient RL Through the Model's Own Signals."
+excerpt: "[NIPS2025] Angles don't lie: Unlocking Training-Efficient RL Through the Model's Own Signals."
 ---
 
 Link: <a href="https://arxiv.org/abs/2506.02281">Angles Don\'t Lie: Unlocking Training-Efficient RL Through the Model\'s Own Signals</a>.
