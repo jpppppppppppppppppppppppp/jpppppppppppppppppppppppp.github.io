@@ -6,7 +6,6 @@ home_cover: https://p.sda1.dev/27/be11eba4b34fc4fdf7394442f90dbfb5/cover.jpg
 post_cover: https://p.sda1.dev/27/fbc8d67219a2abc03a75ff380f6d4fc1/post.PNG
 copyright_info: true
 tags:
-    - Reinforcement Learning
     - Post Training
     - Large Language Model
 categories:

@@ -1,7 +1,7 @@
 ---
 title: "Note: Harmonic Analysis"
 date: 2025-09-20 16:07:09
-updated: 2025-09-30 17:52:26
+updated: 2025-10-05 22:16:51
 home_cover: https://p.sda1.dev/27/3b163beb87dacac2e7af5d12fa1e5c27/cover.PNG
 post_cover: https://p.sda1.dev/27/112269185d77bddf4f1efd879257d4c2/post.JPG
 copyright_info: true
@@ -22,8 +22,6 @@ excerpt: 出于纯粹的好奇心, 选了吴耀琨老师的调和分析课程, �
 拿 Taylor series 作为更加熟悉的例子, $f(x)\sim\displaystyle\sum_{n=0}^{\infty}\frac{f^{(n)}(a)}{n!}(x-a)^n$, 在十八世纪, 数学家发现在传统微积分里的函数, 比如对数指数幂, 都能在各点有很好的收敛性, 直到 1821 年, Cauchy 给出反例 $f(x)=\begin{cases}e^{-1/x^2}&x\neq0,\\\\0&x=0.\end{cases}$, 这个函数在 $x=0$ 的任意阶导数都为零, 所以展开式只在这一点收敛. 原因是在复数域上 $z=0$ 是它的奇点, 但是在实数域上是无穷次可微的. 类似地, 我们要发问: 已知傅里叶系数, 或者说一个函数在这组基上的投影, 能否重建原函数? 如果能重建, 收敛的速度如何呢?
 
 对于第一个问题, 答案是肯定的, 如果重建的方法是 partial sum, $S_N(f)(x)=\displaystyle\sum_{n=-N}^N\hat{f}(n)e^{2\pi inx/L}$, 是有反例不收敛的, Fej&eacute;r 说使用前项和的平均可以重建原函数, 具体内容在教材的第四章, 等我看到了再补充具体内容.
-
-#### 一个简单的应用例子
 
 第一节课吴老师举了一个具体的应用例子, 是 Weyl's Equidistribution Theorem.
 
@@ -156,7 +154,7 @@ $$
 
 ### 教材阅读
 
-#### 收敛性相关:
+#### 周期函数的傅里叶级数的收敛性:
 
 ##### 定理 1.1
 
@@ -215,7 +213,7 @@ $$
 假定我们先承认 Fej&eacute;r 定理, 即连续函数的部分和的 Ces&agrave;ro 一致收敛于原函数, 那么我们可以得到:
 
 {% note info %}
-Theorem 1.2:
+<span id="theo1.2"></span>Theorem 1.2:
 
 $f\in C^2(\mathbb{T})$, 那么 $S_N(f)$ 一致收敛于 $f$.
 {% endnote %}
@@ -225,6 +223,14 @@ $f\in C^2(\mathbb{T})$, 那么 $S_N(f)$ 一致收敛于 $f$.
 $$
 \lim_{n\to\infty}(a_1+a_2+\dots+a_n)/n=\lim_{n\to\infty}a_n.
 $$
+{% endnote %}
+
+更强的结论是:
+
+{% note info %}
+<span id="theo1.2.2"></span>Theorem 1.2.2:
+
+$f\in C^1(\mathbb{T})$, 那么 $S_N(f)$ 一致收敛于 $f$.
 {% endnote %}
 
 ##### 定理 1.3
@@ -350,9 +356,52 @@ $$
 
 这构成了逆定理的一个反例.
 
+##### 总结与其他
+
+根据<a href="#theo1.2">定理 1.2</a> 和 <a href="#theo1.2.2">定理 1.2.2</a> 的内容, 我们可以知道, 周期函数的傅里叶级数的收敛性要求略强于连续, 但是弱于可微. 下面这个定理证明了这一点.
+
+{% note info %}
+Theorem by Du Bois-Reymond, 1873:
+
+存在一个连续函数 $f:\mathbb{T}\mapsto\mathbb{R}$, 使得傅里叶级数的部分和在 $x=0$ 处不收敛.
+$$
+\lim\sup_{N\to\infty} |S_N(f)(0)| = \infty.
+$$
+{% endnote %}
+
+跟进一步, 数学家证明了存在一个勒贝格可积的函数处处不收敛:
+
+{% note info %}
+Theorem by Kolmogorov, 1926:
+
+存在一个可积函数 $f:\mathbb{T}\mapsto\mathbb{C}$, 使得傅里叶级数的部分和处处不收敛.
+$$
+\lim\sup_{N\to\infty} |S_N(f)(\theta)| = \infty,\quad\forall\theta\in\mathbb{T}.
+$$
+{% endnote %}
+
+尽管他的构造是勒贝格可积的函数, 但是并不是连续函数, 实际上在任何一个区间内该函数都是无界的. 人们觉得这个结果离构造出连续函数的例子已经不远了, 直到半个世纪后, Carleson 于1966年证明了对于连续函数( 更强地, 是黎曼可积的函数 )或者平方可积的函数, 傅里叶级数几乎处处收敛. 而 Kolmogorov 的例子并不是平方可积的, 也不是黎曼可积的. 收敛性问题就此完结.
+
+#### 傅里叶变换的天堂
+
+在非周期条件下的函数, 也可以定义傅里叶变换和傅里叶逆变换为:
+$$
+\hat{f}(\xi)=\int_{\mathbb{R}}f(x)e^{-2\pi i\xi x}dx,\quad (g)^\vee(x)=\int_{\mathbb{R}}g(\xi)e^{2\pi i\xi x}d\xi.
+$$
+
+那么傅里叶反演定理就是问, 在什么条件下, $(\hat{f})^\vee=f$ 成立.
+
+我们可以逐步扩大积分范围, 先仅考虑函数 $f$ 在 $[-L/2,L/2)$ 上的情况, 假设它是以 $L$ 为周期的函数, 假设 $f$ 的性质足够好, 那么展开的傅里叶级数收敛. $f(x)=\displaystyle\sum_{n\in\mathbb{Z}}a_L(n)e^{2\pi inx/L}$, 这里系数为 $a_L(n)=\displaystyle\frac{1}{L}\int_{-L/2}^{L/2}f(y)e^{-2\pi iny/L}dy$. 可以做换元 $\xi_n=n/L$, 且 $\Delta\xi=1/L$, 那么可以重写为 $f(x)=\displaystyle\sum_{n\in\mathbb{Z}}F_L(\xi_n)\Delta\xi$, 其中 $F_L(\xi)=e^{2\pi i\xi x}\displaystyle\int_{-L/2}^{L/2}f(y)e^{-2\pi i\xi y}dy$.
+
+这个表达式像极了黎曼和, 但是这个函数内部和区间划分都和 $1/L$ 有关. 如果函数 $f$ 是紧支撑的, 即存在数 $M$, 在区间 $[-M, M]$ 外函数的取值都是零. 那么在充分大的情况下, 函数 $F_L$ 就与 $L$ 无关了. 那么我们也可以期待求和式也会收敛成积分式. 为了更加严谨, 我们需要给出 $f$ 性质"良好"的定义.
+
+##### Schwartz Class
+
+
+
 ---
 
-推荐阅读:
+### 推荐阅读:
 
 - <span id="ref1"></span> Pereyra, M. C., & Ward, L. A. (2012). <a href="https://fig.if.usp.br/~marchett/fismat2/harmonic-analysis-fourier-wavelet_pereyra-ward.pdf"> Harmonic analysis: from Fourier to wavelets (Vol. 63).</a> American Mathematical Soc.
 
