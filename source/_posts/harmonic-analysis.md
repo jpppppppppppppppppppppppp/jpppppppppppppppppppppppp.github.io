@@ -1,7 +1,7 @@
 ---
 title: "Note: Harmonic Analysis"
 date: 2025-09-20 16:07:09
-updated: 2025-10-05 22:16:51
+updated: 2025-10-06 23:31:01
 home_cover: https://p.sda1.dev/27/3b163beb87dacac2e7af5d12fa1e5c27/cover.PNG
 post_cover: https://p.sda1.dev/27/112269185d77bddf4f1efd879257d4c2/post.JPG
 copyright_info: true
@@ -397,7 +397,36 @@ $$
 
 ##### Schwartz Class
 
+我们给出 Schwartz Class 的定义, 并在后文给出傅里叶反演定理在 Schwartz Class 上成立的证明. Schwartz Class $\mathcal{S}(\mathbb{R})\subset C^{\infty}(\mathbb{R})$ 包含了各阶导函数都快速衰减的光滑函数, 即对于任意的整数 $k,l\geq0$, 都有 $\displaystyle\lim_{|x|\to\infty}|x|^k|f^{(l)}(x)|=0$. 容易验证, 这个条件与下面这个条件等价: $\displaystyle\sup_{x\in\mathbb{R}}|x|^k|f^{(l)}(x)|<\infty$. 这个函数空间对于很多操作都是封闭的, 例如乘法和求导, 以及和多项式函数的乘法, 以及卷积. 因为衰减的很快, 所以总是可积的.
 
+值得注意的是, 如果仅仅是函数 $f$ 快于任何多项式函数衰减, 其本身可能并不属于 Schwartz Class, 例如 $f(x)=e^{-x}\cdot e^{-ie^{2x}}$, 其导函数并不收敛. 下面是一些属于 Schwartz Class 的函数:
+
+一个是存在紧支撑的函数: $B(x)=\begin{cases}e^{-1/(x-a)}e^{-1/(b-x)},&x\in[a,b];\\\\0,&\text{otherwise}.\end{cases}$, 其光滑性容易验证. 另一个非常重要的例子是高斯函数 $G(x)=e^{-\pi x^2}$, 它的傅里叶变换是其本身: $\hat{G}(\xi)=G(\xi)=e^{-\pi \xi^2}$.
+
+#### 天堂之外
+
+这一章将放松对函数必须是 Schwartz Class 的要求, 讨论快速衰减的连续函数, 已经用分布的角度去看更加一般的函数.
+
+##### 快速衰减的连续函数
+
+定义: 连续函数 $f$, 存在常数 $A,\varepsilon>0$, 使得对于任意 $x\in\mathbb{R}$, 有 $|f(x)|\leq \displaystyle\frac{A}{1+|x|^{1+\varepsilon}}$. 分母即要求在无穷远处衰减得足够快, 所以可积, 又要求在零附近有界. 这些函数一定属于 $L^p(\mathbb{R})$, 因为当 $p=2$ 时,
+$$
+\Vert f\Vert_2^2=\int_{\mathbb{R}}|f(x)|^2dx\leq \left(\sup_{x\in\mathbb{R}}|f(x)|\right)\int_{\mathbb{R}}|f(x)|dx=\Vert f\Vert_\infty\Vert f\Vert_1.
+$$
+
+$p$ 更高时同理.
+
+##### 缓增分布
+
+我不知道这个 ( Tempered Distribution ) 的中文名是什么, 只能机翻了, 后面都用分布来替代.
+
+分布 $T:\mathcal{S}(\mathbb{R})\mapsto\mathbb{C}$ 是 Schwartz Class 上的一个连续线性泛函, 这个线性泛函构成的空间记为 $\mathcal{S}'(\mathbb{R})$, 这构成了 Schwartz 空间的对偶空间. 两个泛函在分布意义下相同是指对于所有的 $\phi\in\mathcal{S}(\mathbb{R})$, 有 $T(\phi)=U(\phi)$. 一列泛函在分布意义下收敛是指 $\displaystyle\lim_{n\to\infty}T_n(\phi)=T(\phi)$.
+
+泛函的连续性需要更加详细的说明, 首先要定义 $\mathcal{S}(\mathbb{R})$ 上的收敛, 对于函数 $\phi\in\mathcal{S}(\mathbb{R})$, 对于任意自然数 $k,l$, $\rho_{k,l}(\phi)=\displaystyle\sup_{x\in\mathbb{R}}|x|^k|\phi^{(l)}(x)|$ 都是有限的, $\rho_{k,l}$ 构成了半范数, 它是正的, 齐次的, 满足三角不等式的. 我们用这个定义 $\mathcal{S}(\mathbb{R})$ 上的函数收敛: 一列函数 $\\{\phi_n\\}$ 收敛到 $\phi\in\mathcal{S}(\mathbb{R})$, 当且仅当对于任意的 $k,l\geq0$, 都有 $\displaystyle\lim_{n\to\infty}\rho_{k,l}(\phi_n-\phi)=0$.
+
+从而定义泛函 $T$ 的连续性: 对于任意收敛到 $\phi\in\mathcal{S}(\mathbb{R})$ 的函数列 $\\{\phi_n\\}$, 都有 $\displaystyle\lim_{n\to\infty}T(\phi_n)=T(\phi)$.
+
+一个经典的分布是 $T_f(\phi)=\int_{\mathbb{R}}f(x)\phi(x)dx$. 这里只要求 $f$ 不是增长过快的函数即可. 如果 $f$ 是一个有界连续函数, 或者是多项式函数, 那么 $T_f$ 都是连续的, 从而构成一个分布. 并且由 $\varepsilon(f)=T_f$ 给出的映射 $\varepsilon:\mathcal{S}(\mathbb{R})\mapsto\mathcal{S}'(\mathbb{R})$ 是双射.
 
 ---
 
