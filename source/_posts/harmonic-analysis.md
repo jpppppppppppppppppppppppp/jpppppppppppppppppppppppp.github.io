@@ -1,7 +1,7 @@
 ---
 title: "Note: Harmonic Analysis"
 date: 2025-09-20 16:07:09
-updated: 2025-10-06 23:31:01
+updated: 2025-10-08 0:33:41
 home_cover: https://p.sda1.dev/27/3b163beb87dacac2e7af5d12fa1e5c27/cover.PNG
 post_cover: https://p.sda1.dev/27/112269185d77bddf4f1efd879257d4c2/post.JPG
 copyright_info: true
@@ -426,7 +426,46 @@ $p$ 更高时同理.
 
 从而定义泛函 $T$ 的连续性: 对于任意收敛到 $\phi\in\mathcal{S}(\mathbb{R})$ 的函数列 $\\{\phi_n\\}$, 都有 $\displaystyle\lim_{n\to\infty}T(\phi_n)=T(\phi)$.
 
-一个经典的分布是 $T_f(\phi)=\int_{\mathbb{R}}f(x)\phi(x)dx$. 这里只要求 $f$ 不是增长过快的函数即可. 如果 $f$ 是一个有界连续函数, 或者是多项式函数, 那么 $T_f$ 都是连续的, 从而构成一个分布. 并且由 $\varepsilon(f)=T_f$ 给出的映射 $\varepsilon:\mathcal{S}(\mathbb{R})\mapsto\mathcal{S}'(\mathbb{R})$ 是双射.
+一个经典的分布构造是 $T_f(\phi)=\int_{\mathbb{R}}f(x)\phi(x)dx$. 这里只要求 $f$ 不是增长过快的函数即可. 如果 $f$ 是一个有界连续函数, 或者是多项式函数, 那么 $T_f$ 都是连续的, 从而构成一个分布. 并且由 $\varepsilon(f)=T_f$ 给出的映射 $\varepsilon:\mathcal{S}(\mathbb{R})\mapsto\mathcal{S}'(\mathbb{R})$ 是双射.
+
+##### 分布上的时域与频域的关系
+
+以求导举例, 我们可以定义对分布的操作: $T'\_f(\phi)=T_{f\'}(\phi)=\displaystyle\int_{\mathbb{R}}f'(x)\phi(x)dx=-\displaystyle\int_{\mathbb{R}}f(x)\phi'(x)dx=-T_f(\phi')$.
+
+下面举一个更加复杂的例子: $\widehat{\psi*T}(\phi)=\mathcal{M}_{\hat{\psi}}\hat{T}(\phi)$.
+
+首先我们有 $\widehat{\psi\*T}(\phi)=\psi\*T(\hat{\phi})=T(\widetilde{\psi}\*\hat{\phi})$.
+
+$$
+\begin{aligned}
+\widetilde{\psi}\*\hat{\phi}(\xi)&=\int_{\mathbb{R}}\widetilde{\psi}(y)\hat{\phi}(\xi-y)dy\\\\
+&=\int_{\mathbb{R}}\psi(-y)\left(\int_{\mathbb{R}}\phi(t)e^{-2\pi i(\xi-y)t}dt\right)dy\\\\
+&=\int_{\mathbb{R}}\left(\int_{\mathbb{R}}\psi(-y)e^{-2\pi i(-y)t}dy\right)\phi(t)e^{-2\pi i\xi t}dt\\\\
+&=\int_{\mathbb{R}}\hat{\psi}(t)\phi(t)e^{-2\pi i\xi t}dt=\widehat{\hat{\psi}\phi}(\xi).
+\end{aligned}
+$$
+
+所以 $\widehat{\psi\*T}(\phi)=T(\widetilde{\psi}\*\hat{\phi})=T(\widehat{\hat{\psi}\phi})=\hat{T}(\hat{\psi}\phi)=\mathcal{M}_{\hat{\psi}}\hat{T}(\phi)$.
+
+##### Delta Distribution
+
+分布里有一些对象是无法用函数导出的, 最经典的例子是 Delta Distribution, 我们考察常函数 $f(x)\equiv1$, 试着计算它在分布意义下的傅里叶变换:
+
+$$
+\widehat{T_1}(\phi)=T_1(\hat{\phi})=\int_{\mathbb{R}}\hat{\phi}(\xi)d\xi=\int_{\mathbb{R}}\hat{\phi}(\xi)\cdot e^{2\pi i\xi0} d\xi=(\hat{\phi})^\vee(0)=\phi(0),
+$$
+
+其中最后一个等号成立是因为在 Schwartz Class 上傅里叶反演定理成立. 我们可以定义 Delta Distribution 为 $\delta(\phi)=\phi(0)$. 容易证明它满足连续性, 所以确实是一个分布. 我们甚至可以计算它的傅里叶变换 $\hat{\delta}$:
+
+$$
+\hat{\delta}(\phi)=\delta(\hat{\phi})=\hat{\phi}(0)=\int_{\mathbb{R}}\phi(x)dx=T_1(\phi).
+$$
+
+下面我们来计算一下 $\delta(\phi)$ 的各阶导数以及它们的傅里叶变换. 导数很容易计算 $\delta^{(k)}(\phi)=(-1)^k\delta(\phi^{(k)})=(-1)^k\phi^{(k)}(0)$. 它的傅里叶变化为: $\widehat{\delta^{(k)}}(\phi)=(2\pi i\xi)^k\hat{\delta}(\phi)=(2\pi i\xi)^kT_1(\phi)=T_{(2\pi i\xi)^k}(\phi)$, 所以在分布的意义下可以认为 $\delta^{(k)}$ 等于 $(2\pi i\xi)^k$.
+
+接下来要验证 $\delta$ 本身恰好是 Heaviside 函数的导数 $H'$. 函数 $H$ 定义如下: $H(x)=\begin{cases}1,&x>0;\\\\0,&x\leq0.\end{cases}$, 它的分布意义下的导数为 $T'\_{H}(\phi)=-T_H(\phi')=-\displaystyle\int_0^\infty 1\cdot\phi'(\xi)d\xi=-[\phi(\xi)]^\infty_0=\phi(0)$, 这说明 $\delta=T'\_H$. 类似地, 对于每一个分布, 虽然它本身可能并不是一个函数, 但是它一定是某个函数的若干阶导数.
+
+
 
 ---
 
