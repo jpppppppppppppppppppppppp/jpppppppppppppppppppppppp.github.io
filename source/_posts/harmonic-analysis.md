@@ -465,7 +465,7 @@ $$
 
 接下来要验证 $\delta$ 本身恰好是 Heaviside 函数的导数 $H'$. 函数 $H$ 定义如下: $H(x)=\begin{cases}1,&x>0;\\\\0,&x\leq0.\end{cases}$, 它的分布意义下的导数为 $T'\_{H}(\phi)=-T_H(\phi')=-\displaystyle\int_0^\infty 1\cdot\phi'(\xi)d\xi=-[\phi(\xi)]^\infty_0=\phi(0)$, 这说明 $\delta=T'\_H$. 类似地, 对于每一个分布, 虽然它本身可能并不是一个函数, 但是它一定是某个函数的若干阶导数.
 
-
+另一个有趣的性质是 $\delta$ 是卷积的单位元, 即对于任意的 $\psi\in\mathcal{S}(\mathbb{R})$, 都有 $\psi\*\delta=T\_\psi$.
 
 ---
 
