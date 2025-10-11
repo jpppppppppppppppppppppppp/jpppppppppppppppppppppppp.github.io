@@ -483,7 +483,7 @@ $$
 \end{aligned}
 $$
 
-两边同时除以 $\displaystyle\max_{e\in\hat{G}}\hat{f}(e)$ 即可.
+这里用到了有限群上的 Parseval 恒等式: $\left<f, f\right>=\displaystyle\sum_{e\in\hat{G}}\left<f, e\right>\hat{f}(e)=|G|\left<\hat{f},\hat{f}\right>$. 两边同时除以 $\displaystyle\max_{e\in\hat{G}}\hat{f}(e)$ 即可.
 
 ---
 
