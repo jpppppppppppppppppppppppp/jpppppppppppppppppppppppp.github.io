@@ -1,7 +1,7 @@
 ---
 title: "Note: Harmonic Analysis"
 date: 2025-09-20 16:07:09
-updated: 2025-10-08 0:33:41
+updated: 2025-10-10 16:30:37
 home_cover: https://p.sda1.dev/27/3b163beb87dacac2e7af5d12fa1e5c27/cover.PNG
 post_cover: https://p.sda1.dev/27/112269185d77bddf4f1efd879257d4c2/post.JPG
 copyright_info: true
@@ -156,7 +156,7 @@ $$
 
 #### 周期函数的傅里叶级数的收敛性:
 
-##### 定理 1.1
+##### 连续性与收敛性
 
 {% note info %}
 Theorem 1.1:
@@ -208,8 +208,6 @@ $$
 从而傅里叶系数绝对收敛, 进一步原傅里叶级数一致收敛.
 {% endnote %}
 
-##### 定理 1.2
-
 假定我们先承认 Fej&eacute;r 定理, 即连续函数的部分和的 Ces&agrave;ro 一致收敛于原函数, 那么我们可以得到:
 
 {% note info %}
@@ -233,7 +231,7 @@ $$
 $f\in C^1(\mathbb{T})$, 那么 $S_N(f)$ 一致收敛于 $f$.
 {% endnote %}
 
-##### 定理 1.3
+##### 衰减速度与光滑性
 
 从式子 <a href="#1.1">(1.1)</a>, 对于函数 $f\in C^k$, 可以对他求 k 阶导, 所以:
 
@@ -282,8 +280,6 @@ $$
 后面的归纳类似.
 {% endnote %}
 
-##### Riemann-Lebesgue Lemma
-
 从上面可以知道, 对于连续可微函数 (换言之, 光滑的函数), 傅里叶级数都会快速地衰减到零. 如果限制条件只有连续呢, 下面的引理说明其傅里叶级数也会衰减到零.
 
 {% note info %}
@@ -320,7 +316,7 @@ $$
 $$
 {% endnote %}
 
-##### 定理 1.4
+##### 收敛速度与光滑性
 
 根据上面的内容, 我们可以得到, 函数越光滑, 其傅里叶系数衰减越快, 那能否得到傅里叶级数收敛越快呢? 下面的定理给出了肯定的答复.
 
@@ -466,6 +462,28 @@ $$
 接下来要验证 $\delta$ 本身恰好是 Heaviside 函数的导数 $H'$. 函数 $H$ 定义如下: $H(x)=\begin{cases}1,&x>0;\\\\0,&x\leq0.\end{cases}$, 它的分布意义下的导数为 $T'\_{H}(\phi)=-T_H(\phi')=-\displaystyle\int_0^\infty 1\cdot\phi'(\xi)d\xi=-[\phi(\xi)]^\infty_0=\phi(0)$, 这说明 $\delta=T'\_H$. 类似地, 对于每一个分布, 虽然它本身可能并不是一个函数, 但是它一定是某个函数的若干阶导数.
 
 另一个有趣的性质是 $\delta$ 是卷积的单位元, 即对于任意的 $\psi\in\mathcal{S}(\mathbb{R})$, 都有 $\psi\*\delta=T\_\psi$.
+
+##### Exercise: 离散版本的不确定性原理
+
+Discrete Uncertainty Principle: 在一个有限阿贝尔群 $G$ 上, 实函数 $f\in L^2(G)$, 那么该函数的支撑集和其傅里叶变换的支撑集大小满足以下不等式:
+
+$$
+\\#\text{supp}(f)\times\\#\text{supp}(\hat{f})\geq\\#G=n.
+$$
+
+首先定义符号函数 $s(a)=\text{sign}(f(a))$, 可以观察每一项傅里叶变换的系数: $\hat{f}(e)=\mathbb{E}\_{g\in G}[f\overline{e}]\leq\mathbb{E}\_{g\in G}[|f|]=\mathbb{E}\_{g\in G}[f\overline{s}]$, 两边同时取最大值:
+
+$$
+\begin{aligned}
+\max_{e\in\hat{G}}\hat{f}(e) &\leq\mathbb{E}\_{g\in G}[f\overline{s}]=\left<f,s\right>\\\\
+&\leq {\left<f,f\right>}^{\frac{1}{2}}{\left<s,s\right>}^{\frac{1}{2}}\\\\
+&=|G|^{\frac{1}{2}}{\left<\hat{f},\hat{f}\right>}^{\frac{1}{2}}\sqrt{\frac{1}{|G|}\sum_{g\in G}s(g)^2}\\\\
+&=\frac{1}{\sqrt{G}}\sqrt{\sum_{e\in\hat{G}}\hat{f}(e)^2}\sqrt{\sum_{g\in G}s(g)^2}\\\\
+&\leq \frac{\max\hat{f}(e)}{\sqrt{G}}\sqrt{\\#\text{supp}(\hat{f})}\sqrt{\\#\text{supp}(f)},
+\end{aligned}
+$$
+
+两边同时除以 $\displaystyle\max_{e\in\hat{G}}\hat{f}(e)$ 即可.
 
 ---
 
