@@ -1,7 +1,7 @@
 ---
 title: "Note: Harmonic Analysis"
 date: 2025-09-20 16:07:09
-updated: 2025-10-10 16:30:37
+updated: 2025-10-13 1:45:11
 home_cover: https://p.sda1.dev/27/3b163beb87dacac2e7af5d12fa1e5c27/cover.PNG
 post_cover: https://p.sda1.dev/27/112269185d77bddf4f1efd879257d4c2/post.JPG
 copyright_info: true
@@ -151,6 +151,48 @@ $$
 最后根据 Schur 定理计算矩阵 $\Omega$ 的迹, 从而得证.
 
 吴老师的碎碎念: 这个矩阵的迹高斯不会求, 但是我们的重点并不是用简单的方法来计算它. 高斯用了很多种方法去证明二次互反律, 这是他觉得最漂亮的结果, 所以给了很多的证明, 因为不同的证明意味着后面有不同非常深刻的推广, 最复杂的证明才有可能走到最深刻的数学里面去. 很简单的证明不一定比复杂的证明来的好, 因为简单的证明在一般的场景基本用不下去.
+
+### 第三节课
+
+今天主要围绕有限阿贝尔群上的傅里叶变换上的性质.
+
+第一部分是卷积的性质. $f\*g(x)=\mathbb{E}\_{y\in G}f(y)g(x-y)$, 傅里叶变换 $\mathcal{F}:\mathbb{C}^G\mapsto\mathbb{C}^{\hat{G}}$ 给出了 $(\mathbb{C}^G,\*)$ 和 $(\mathbb{C}^{\hat{G}},\cdot)$ 的同构:
+
+$$
+\begin{aligned}
+\widehat{f\*g}(\chi)&=\mathbb{E}\_{x\in G}f\*g(x)\overline{\chi(x)}\\\\
+&=\mathbb{E}\_{x\in G}\mathbb{E}\_{y\in G}f(y)g(x-y)\overline{\chi(y)}\overline{\chi(x-y)}\\\\
+&=\hat{f}\cdot\hat{g}(\chi).
+\end{aligned}
+$$
+
+反过来, 傅里叶变换把逐点乘变成类似的卷积: $\widehat{f\cdot g}(\chi)=|G|\hat{f}\*\hat{g}(\chi)$.
+
+假设满足(1), 即 $\tau_x(Rf)=R(\tau_x f)$, 取任意函数 $f$, $f(x)=\displaystyle\sum_{a\in G}f(a)\delta(x-a)$, 那么
+$$
+\begin{aligned}
+Rf(x)&=R(\sum_{a\in G}f(a)\tau_a\delta)(x)=\sum_{a\in G}f(a)R(\tau_a\delta)(x)\\\\
+&=\sum_{a\in G}f(a)R\delta(x-a)=f\*g(x),
+\end{aligned}
+$$
+
+其中 $g(x)=|G|R\delta(x)$.
+
+假设满足(3), 即 $R\psi_a=\lambda_a\psi_a,\forall\psi_a\in\hat{G}$. 对于一个函数 $f$, 先做分解 $f=\displaystyle\sum_{\psi_a\in\hat{G}}\hat{f}(\psi_a)\psi_a$. 那么:
+
+$$
+\begin{aligned}
+Rf(x)&=\sum_{\psi_a\in\hat{G}}\hat{f}(\psi_a)R\psi_a(x)=\sum_{\psi_a\in\hat{G}}\hat{f}(\psi_a)\lambda\_a\psi_a(x)\\\\
+&=\frac{1}{|G|}\sum_{\psi_a\in\hat{G}}\lambda\_a\psi_a(x)\sum_{y\in G}f(y)\overline{\psi_a(y)}\\\\
+&=\frac{1}{|G|}\sum_{y\in G}f(y)\sum_{\psi_a\in\hat{G}}\lambda\_a\psi_a(x-y)=f\*g(x),
+\end{aligned}
+$$
+
+其中 $g(x)=\displaystyle\sum_{\psi_a\in\hat{G}}\lambda\_a\psi_a(x)$.
+
+这里用到的想法是利用空间 $\mathbb{C}^G$ 的两组基, 一组是常见的 delta function, 另一组是满足傅里叶反演的 character function.
+
+从(1)推(3), 可以利用 delta function 构成基的特性, 将 translation 推展到任意函数, $R(f)\*g=R(f*g)$, 从而取 $g=\psi_a\in\hat{G}$, 可以推出 $\widehat{R(f)}(\psi_a)\psi_a=\hat{f}(\psi_a)R(\psi_a)$, 这说明 $\psi_a$ 是 $R$ 的特征函数.
 
 ### 教材阅读
 
