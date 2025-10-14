@@ -1,7 +1,7 @@
 ---
 title: "Note: Harmonic Analysis"
 date: 2025-09-20 16:07:09
-updated: 2025-10-13 1:45:11
+updated: 2025-10-14 15:49:34
 home_cover: https://p.sda1.dev/27/3b163beb87dacac2e7af5d12fa1e5c27/cover.PNG
 post_cover: https://p.sda1.dev/27/112269185d77bddf4f1efd879257d4c2/post.JPG
 copyright_info: true
@@ -10,6 +10,7 @@ tags:
 categories:
     - Notes
 mathjax: true
+tikzjax: true
 excerpt: 出于纯粹的好奇心, 选了吴耀琨老师的调和分析课程, 谨做笔记.
 ---
 
@@ -166,7 +167,13 @@ $$
 \end{aligned}
 $$
 
-反过来, 傅里叶变换把逐点乘变成类似的卷积: $\widehat{f\cdot g}(\chi)=|G|\hat{f}\*\hat{g}(\chi)$.
+反过来, 傅里叶变换把逐点乘变成类似的卷积: $\widehat{f\cdot g}(\chi)=|G|\hat{f}\*\hat{g}(\chi)$. 实际上卷积算子 $\mathcal{R}=\\{R_h:h\in\mathbb{C}^G\\}$ 是一个可交换代数, 且与 $L(G)=(\mathbb{C}^G,\*)$ 同构, $R_{h_1}R_{h_2}=R_{h2}R_{h_1}=R_{h_1\*h_2}$.
+
+如果 $R\in\text{End}(\mathbb{C}^G)$, 也就是说 $R:\mathbb{C}^G\mapsto\mathbb{C}^G$ 是线性映射, 那么下面三个条件等价:
+
+1. $R$ 关于 translation 可交换, 即 $\tau_x(Rf)=R(\tau_x f),\forall x\in G, f\in\mathbb{C}^G$, 其中 $\tau_x f(y)=f(y-x)$.
+2. $R$ 是卷积算子, 即存在 $g\in\mathbb{C}^G$, 使得 $Rf=f\*g,\forall f\in\mathbb{C}^G$.
+3. $\hat{G}$ 中的每一个 $\psi_a$ 都是 $R$ 的特征函数, 即存在 $\lambda_a\in\mathbb{C}$, 使得 $R\psi_a=\lambda_a\psi_a,\forall \psi_a\in\hat{G}$.
 
 假设满足(1), 即 $\tau_x(Rf)=R(\tau_x f)$, 取任意函数 $f$, $f(x)=\displaystyle\sum_{a\in G}f(a)\delta(x-a)$, 那么
 $$
@@ -193,6 +200,55 @@ $$
 这里用到的想法是利用空间 $\mathbb{C}^G$ 的两组基, 一组是常见的 delta function, 另一组是满足傅里叶反演的 character function.
 
 从(1)推(3), 可以利用 delta function 构成基的特性, 将 translation 推展到任意函数, $R(f)\*g=R(f*g)$, 从而取 $g=\psi_a\in\hat{G}$, 可以推出 $\widehat{R(f)}(\psi_a)\psi_a=\hat{f}(\psi_a)R(\psi_a)$, 这说明 $\psi_a$ 是 $R$ 的特征函数.
+
+另一个有趣的结论是, 如果把卷积算子写成矩阵形式 $R_h$, 它的迹可以用结论 (3) 来计算: $\text{trace}(R_h)=\displaystyle\sum_{\psi\in\hat{G}}\hat{h}(\psi)=h(0)$.
+
+下面话题进入了离散的泊松求和公式, 是在描述在一个 lattice 上定义的函数求和的一些性质. 首先 $A$ 是一个有限的阿贝尔群, $B\leq A$ 是它的一个子群, 对于商群 $A/B$ 上的函数 $f\in L(A/B)$, 可以把它提升到 $A$ 上, $\tilde{f}=f\circ\pi$, 其中 $\pi;A\mapsto A/B$ 是自然的投影映射. 
+
+```tikz
+\usepackage{tikz-cd}
+\begin{document}
+\Large
+\begin{tikzcd}[column sep=huge, row sep=huge]
+    A \arrow[d, "\pi"] \arrow[rd, "\tilde{f}"] & \\
+    A/B \arrow[r, "f"] & C
+\end{tikzcd}
+\end{document}
+```
+
+当 $\psi\in\widehat{A/B}$, 由于投影映射 $\pi$ 是群同构, 对偶群也是群同构, 所以 $\tilde{\psi}\in\hat{A}$ 也是特征标. 泊松求和公式就是说, 函数 $f\in L(A)$ 定义在 $A$ 上, 那么它在子群上的求和和它在商群上的傅里叶变换求和是有关系的:
+
+$$
+\frac{1}{|B|}\sum_{b\in B}f(b)=\sum_{\psi\in\widehat{A/B}}\hat{f}(\tilde{\psi}).
+$$
+
+构建函数 $f^\sharp(a)=\displaystyle\sum_{b\in B}f(a+b)$, 观察它的傅里叶系数:
+
+$$
+\begin{aligned}
+\widehat{f^\sharp}(\chi)&=\frac{1}{|A|}\sum_{a\in A}f^\sharp(a)\overline{\chi(a)}\\\\
+&=\sum_{b\in B}\frac{1}{|A|}\sum_{a\in A}f(a+b)\overline{\chi(a+b)}\chi(b)\\\\
+&=\hat{f}(\chi)\sum_{b\in B}\chi(b)=|B|\hat{f}(\chi)\left<1,\chi\right>_B\\\\
+&=\begin{cases}
+|B|\hat{f}(\chi) & \text{if }\chi\vert_B=1,\\\\
+0 & \text{otherwise}.
+\end{cases}
+\end{aligned}
+$$
+
+那么做傅里叶反演: $f^\sharp(a)=|B|\displaystyle\sum_{\psi\in\widehat{A/B}}\hat{f}(\tilde{\psi})\tilde{\psi}(a)$.
+
+设 $S$ 是 $B$ 陪集的代表元, 那么有:
+
+$$
+\begin{aligned}
+\frac{1}{|A|}\sum_{c\in S}|B|\cdot\left\vert\sum_{b\in B}f(c+b)\right\vert^2&=\frac{1}{|A|}\sum_{c\in S}\sum_{b\in B}\left\vert f^\sharp(c+b)\right\vert^2\\\\
+&=\frac{1}{|A|}\sum_{a\in A}\left\vert f^\sharp(a)\right\vert^2\stackrel{Plancherel}{=}\sum_{\chi\in\hat{A}}\left\vert\widehat{f^\sharp}(\chi)\right\vert^2\\\\
+&=|B|^2\sum_{\psi\in\widehat{A/B}}\left\vert\hat{f}(\tilde{\psi})\right\vert^2.
+\end{aligned}
+$$
+
+下面介绍了一下不确定性原理 Uncertainty Principle. 见 <a href="#Uncertainty_Principle">Discrete Uncertainty Principle</a>.
 
 ### 教材阅读
 
@@ -507,7 +563,7 @@ $$
 
 ##### Exercise: 离散版本的不确定性原理
 
-Discrete Uncertainty Principle: 在一个有限阿贝尔群 $G$ 上, 实函数 $f\in L^2(G)$, 那么该函数的支撑集和其傅里叶变换的支撑集大小满足以下不等式:
+<span id="Uncertainty_Principle"></span>Discrete Uncertainty Principle: 在一个有限阿贝尔群 $G$ 上, 实函数 $f\in L^2(G)$, 那么该函数的支撑集和其傅里叶变换的支撑集大小满足以下不等式:
 
 $$
 \\#\text{supp}(f)\times\\#\text{supp}(\hat{f})\geq\\#G=n.
