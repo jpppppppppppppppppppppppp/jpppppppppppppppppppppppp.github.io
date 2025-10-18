@@ -15,7 +15,7 @@ excerpt: Openai-triton tutorial 学习笔记.
 
 第一次学习 Triton 是在今年八月份, 看到了 <a href="Native Sparse Attention: Hardware-Aligned and Natively Trainable Sparse Attention">NSA</a>, 才去学习了 triton 的写法, 虽然自己实现了一个包括正向和反向的 kernel, 但是还是有很多问题, 比如数值上和 PyTorch 对拍结果不一致, 以及性能上还没有十分满意. 所以借此机会, 依靠官方的材料, 重新学习一遍.
 
-Grouped ordering matmul: 一种 L2 Cache Optimizations, 在计算矩阵乘法的时候, 并非简单的遍历边, 而是以一种 Zigzag 的方式遍历, 这样可以在计算相同数量的结果的情况下, 减少访存的数量, 从而提高缓存的命中率. 比如计算乘法 $C=A @ B$, 其中 $A\in\mathbb{R}^{m\times k}, B\in\mathbb{R}^{k\times n}, C\in\mathbb{R}^{m\times n}$， 这里的形状都以分块后考虑. 如果采用行列遍历的方式, 我们计算 $C$ 的第一行, 需要访问 $A$ 的第一行和完整的矩阵 $B$, 访存数量是 $k+kn$; 而如果采用 grouped 的方式, 计算 $C$ 的 $\sqrt{n}\times\sqrt{n}$ 大小的 group, 访存需求是 $2\sqrt{n}k$, 远小于 $k(1+n)$. 更容易命中缓存, 会有 ~10% 的提升.
+Grouped ordering matmul: 一种 L2 Cache Optimizations, 在计算矩阵乘法的时候, 并非简单的遍历边, 而是以一种 Zigzag 的方式遍历, 这样可以在计算相同数量的结果的情况下, 减少访存的数量, 从而提高缓存的命中率. 比如计算乘法 $C=A @ B$, 其中 $A\in\mathbb{R}^{m\times k}, B\in\mathbb{R}^{k\times n}, C\in\mathbb{R}^{m\times n}$, 这里的形状都以分块后考虑. 如果采用行列遍历的方式, 我们计算 $C$ 的第一行, 需要访问 $A$ 的第一行和完整的矩阵 $B$, 访存数量是 $k+kn$; 而如果采用 grouped 的方式, 计算 $C$ 的 $\sqrt{n}\times\sqrt{n}$ 大小的 group, 访存需求是 $2\sqrt{n}k$, 远小于 $k(1+n)$. 更容易命中缓存, 会有 ~10% 的提升.
 
 LayerNorm: 为了方便, 我们省去 $\varepsilon$ 的书写, $Y_{i,j}=\displaystyle\frac{X_{i,j}-\mu_i}{\sigma_i}*w_j+b_j$. 正向传播比较容易, 在 row 上做任务的分发. 下面主要记录一下反向传播过程的推导. 我们把归一化后的 $X_{i,j}$ 记为 $\widehat{X_{i,j}}=\displaystyle\frac{X_{i,j}-\mu_i}{\sigma_i}$.
 

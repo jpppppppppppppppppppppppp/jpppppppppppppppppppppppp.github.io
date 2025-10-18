@@ -1,5 +1,5 @@
 ---
-title: "Note: Harmonic Analysis"
+title: "[MATH3610] Harmonic Analysis"
 date: 2025-09-20 16:07:09
 updated: 2025-10-14 15:49:34
 home_cover: https://p.sda1.dev/27/3b163beb87dacac2e7af5d12fa1e5c27/cover.PNG
@@ -39,9 +39,11 @@ Weyl\'s Equidistribution Theorem:
 
 吴老师说这是在 Weyl 做表示论的时候提出的该定理, 很难想象是啥表示论的难题需要这个..
 
+---
+
 ### 第二节课
 
-一开始吴老师回顾了在不同的群上，时域和频域是什么: 比如在时域为 $\mathbb{R}/L\mathbb{Z}$ 上, 频域是 $\mathbb{Z}$; 在时域为 $\mathbb{Z}$ 上, 频域是 $\mathbb{R}/L\mathbb{Z}$; 在时域为 $\mathbb{R}$ 上, 频域也是 $\mathbb{R}$; 在时域为 $\mathbb{Z}/N\mathbb{Z}$ 上, 频域也是 $\mathbb{Z}/N\mathbb{Z}$. 我们可以发现, 不管在什么群上, 都会出现 $e^{2\pi inx/N}$ 这样的表示, 后面吴老师向我们推导了一般有限阿贝尔群上的傅里叶变换.
+一开始吴老师回顾了在不同的群上, 时域和频域是什么: 比如在时域为 $\mathbb{R}/L\mathbb{Z}$ 上, 频域是 $\mathbb{Z}$; 在时域为 $\mathbb{Z}$ 上, 频域是 $\mathbb{R}/L\mathbb{Z}$; 在时域为 $\mathbb{R}$ 上, 频域也是 $\mathbb{R}$; 在时域为 $\mathbb{Z}/N\mathbb{Z}$ 上, 频域也是 $\mathbb{Z}/N\mathbb{Z}$. 我们可以发现, 不管在什么群上, 都会出现 $e^{2\pi inx/N}$ 这样的表示, 后面吴老师向我们推导了一般有限阿贝尔群上的傅里叶变换.
 
 有一个有限阿贝尔群 $A$, 我们需要找到一个群 $A$ 上的 "简单的信号" 组合. 我们考虑 $A$ 的对偶群 $\hat{A}=Hom(A, \mathbb{C}^*)$, 意思是群 $A$ 和复数乘法群的同态群, 即满足条件 $f(a+b)=f(a)f(b)$ 的函数构成的群. 很显然如果 $f, g\in\hat{A}$, 那么 $fg\in\hat{A}$. 而且 $\hat{A}$ 也是一个有限阿贝尔群, 其阶和 $A$ 相同. 因为 $A$ 是个循环群, 所以 $f$ 一定由单位根组成的 $f(n)=\omega^n$.
 
@@ -153,6 +155,8 @@ $$
 
 吴老师的碎碎念: 这个矩阵的迹高斯不会求, 但是我们的重点并不是用简单的方法来计算它. 高斯用了很多种方法去证明二次互反律, 这是他觉得最漂亮的结果, 所以给了很多的证明, 因为不同的证明意味着后面有不同非常深刻的推广, 最复杂的证明才有可能走到最深刻的数学里面去. 很简单的证明不一定比复杂的证明来的好, 因为简单的证明在一般的场景基本用不下去.
 
+---
+
 ### 第三节课
 
 今天主要围绕有限阿贝尔群上的傅里叶变换上的性质.
@@ -249,6 +253,8 @@ $$
 $$
 
 下面介绍了一下不确定性原理 Uncertainty Principle. 见 <a href="#Uncertainty_Principle">Discrete Uncertainty Principle</a>.
+
+---
 
 ### 教材阅读
 
