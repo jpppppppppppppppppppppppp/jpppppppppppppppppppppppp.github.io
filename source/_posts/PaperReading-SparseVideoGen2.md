@@ -6,9 +6,7 @@ home_cover: https://p.sda1.dev/27/869d472a6fed782d7cd472c73fadd420/cover.jpeg
 post_cover: https://p.sda1.dev/27/00617cf5060c0a25763cef4a0cb40e27/post.jpg
 copyright_info: true
 tags:
-  - Video Generation
-  - Diffusion
-  - Efficient Inference
+  - Machine Learning Systems
 categories:
   - PaperReading
 mathjax: true

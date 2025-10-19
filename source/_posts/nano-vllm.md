@@ -6,7 +6,7 @@ home_cover: https://p.sda1.dev/26/0186e079ea9478e12f463e4d80a9d5c3/cover.jpg
 post_cover: https://p.sda1.dev/26/ac89d2ec92626ebc7dd79366d9b9da98/post.JPG
 copyright_info: true
 tags:
-    - MLSys
+    - Machine Learning Systems
 categories:
     - Notes
 mathjax: true
