@@ -1,7 +1,7 @@
 ---
 title: "[MATH3610] Harmonic Analysis"
 date: 2025-09-20 16:07:09
-updated: 2025-10-14 15:49:34
+updated: 2025-10-19 23:12:52
 home_cover: https://p.sda1.dev/27/3b163beb87dacac2e7af5d12fa1e5c27/cover.PNG
 post_cover: https://p.sda1.dev/27/112269185d77bddf4f1efd879257d4c2/post.JPG
 copyright_info: true
@@ -253,6 +253,58 @@ $$
 $$
 
 下面介绍了一下不确定性原理 Uncertainty Principle. 见 <a href="#Uncertainty_Principle">Discrete Uncertainty Principle</a>.
+
+---
+
+### 第四节课
+
+这节课首先吴老师先回顾了一下关于 $L^p$ 空间的一些性质.
+
+首先是 H&ouml;lder 不等式, 两个正数 $s,t$ 满足 $\displaystyle\frac{1}{s}+\displaystyle\frac{1}{t}=1$, 且函数 $f\in L^s(I), g\in L^t(I)$, 那么不等式成立:
+
+$$
+\left\vert\int_{I}f(x)g(x)dx\right\vert\leq\|f\|\_{s}\|g\|\_{t}.
+$$
+
+通过这个可以推出 $L_p$ 空间的包含关系: 即 $1\leq p<q<\infty$, 那么 $h\in L^q(I)\Rightarrow h\in L^p(I)$. 这是因为 $\|h\|\_{p}\leq |I|^{\frac{1}{p}-\frac{1}{q}}\|h\|\_{q}$.
+
+另一个不等式是 Young's Convolution 不等式: $f\in L^p(\mathbb{R}^n), g\in L^q(\mathbb{R}^n)$, 那么 $f*g\in L^r(\mathbb{R}^n)$, 需要满足关系 $\displaystyle\frac{1}{r}=\frac{1}{p}+\frac{1}{q}-1$. 这说明可以把 $L^1(I)$ 看成一个代数结构, 它关于卷积是封闭的.
+
+考虑一维的 torus $\mathbb{T}=\mathbb{R}/2\pi\mathbb{Z}$, 它的对偶群是 $\mathbb{T}^\*=\mathbb{Z}$. 函数 $f$ 的部分和:
+
+$$
+\begin{aligned}
+S_N(f)&=\sum_{n=-N}^N\hat{f}(n)e^{in\theta}\\\\
+&=\sum_{n=-N}^N\left(\frac{1}{2\pi}\int_{-\pi}^\pi f(t)e^{-int}dt\right)e^{in\theta}\\\\
+&=\frac{1}{2\pi}\int_{-\pi}^\pi f(t)\left(\sum_{n=-N}^Ne^{in(\theta-t)}\right)dt\\\\
+&=\frac{1}{2\pi}\int_{-\pi}^\pi f(t)D_N(\theta-t)dt=f\*D_N(\theta),
+\end{aligned}
+$$
+
+这个叫做 Dirichlet Kernel. 我们要问 $(D_N\*f)(\theta)$ 是否等于 $f(\theta)$, 我们可以知道 $\delta_0\*f=f$. 下面给出 good kernels 的定义: 有一族 kernels $\\{K_n(x)\\}^\infty_{n=1}$ 定义在 $\mathbb{T}$ 上, 且满足以下性质:
+
+1. 归一化: $\forall n, \mathbb{E}K_n=1$.
+2. 有界性: 存在常数 $M>0$, 使得 $\forall n, \displaystyle\int_{-\pi}^\pi |K_n(x)|dx<M$.
+3. 集中性: 对于任意 $\delta>0$, 有 $\displaystyle\lim_{n\to\infty}\displaystyle\int_{\delta\leq|x|\leq\pi}|K_n(x)|dx\to0$.
+
+一个重要的定理是: 函数 $f:\mathbb{T}\mapsto\mathbb{C}$ 可积且有界, 那么 $\displaystyle\lim_{n\to\infty}(K_n\*f)(\theta)=f(\theta)$, 其中 $f$ 在 $\theta$ 处连续. 更进一步, 如果 $f$ 处处连续, 那么是一致收敛的.
+
+而 Dirichlet Kernel 并不是一个 good kernel:
+
+$$
+\begin{aligned}
+D_N(\theta)&=\sum_{n=-N}^N\omega^n=\omega^{-N}\frac{1-\omega^{2N+1}}{1-\omega}\\\\
+&=\frac{\omega^{-(N+1/2)}-\omega^{N+1/2}}{\omega^{-1/2}-\omega^{1/2}}=\frac{\sin(\frac{2N+1}{2}\theta)}{\sin(\frac{\theta}{2})}\leq 2N+1.
+\end{aligned}
+$$
+
+Dirichlet Kernel 不满足要求(2). 它的积分结果 $\displaystyle\int_{-\pi}^\pi |D_N(x)|dx\sim O(\log N)$. 当然这并非说明 Dirichlet Kernel 一定就不收敛了, 只是不能用这个方法来说明它的收敛性.
+
+下面要介绍 Fej&eacute;r Kernel: $\displaystyle\frac{S_0(f)+\dots+S_{N-1}(f)}{N}=\sigma_N(f)=f\*F_N$.
+
+由于卷积的线性结合性: $F_N=\displaystyle\frac{D_0+\dots+D_{N-1}}{N}$.
+
+它满足要求(1)很容易验证. 可以先计算出来 $F_N(\theta)=\displaystyle\frac{(\sin\frac{N\theta}{2}/\sin\frac{\theta}{2}^2)}{N}$, 要求(2)只需要先验证 $F_N\geq0$ 恒成立, 要求(3)通过放缩即可.
 
 ---
 

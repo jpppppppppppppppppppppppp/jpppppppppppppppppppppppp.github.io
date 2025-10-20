@@ -9,7 +9,6 @@ tags:
     - 2D Generation
     - AutoRegressive
     - Diffusion
-    - Multi-view
 categories:
     - PaperReading
 mathjax: true
