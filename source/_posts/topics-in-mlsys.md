@@ -1,7 +1,7 @@
 ---
 title: '[CMU15-779] Advanced Topics in Machine Learning Systems'
 date: 2025-10-16 13:39:55
-updated: 2025-10-19 0:51:43
+updated: 2025-10-22 18:44:38
 home_cover: https://p.sda1.dev/28/9b814b6ee15ab26ef15fddece5ed8d41/cover.jpeg
 post_cover: https://p.sda1.dev/28/70882c53fb39a654dcd771e0cce750c2/post.JPG
 copyright_info: true
@@ -357,3 +357,47 @@ __global__ void reduce_v5(float* g_idata, float* g_odata, int n) {
 进行评估后, 访存带宽达到了 635GB/s, 在时间上相比最初的实现, 从 1.24ms 降到了 212us, 减少了 83\%.
 
 ---
+
+### Advanced CUDA Programming
+
+这一章本来想看看有没有什么可以跑的代码样例, 但是翻遍全网, 都没有找到很好的例子, 只能等到后续学习 CUDA 的时候结合相关实现来看了.
+
+如上一章节所讲, 每个 SM 上有四个 warp scheduler, 我们希望 warps 之间独立的代码越多越好, 来避免资源空转. 在传统的计算范式中, 我们通过 __syncthreads() 在数据加载后和结果写回前进行同步, 但是这样子会导致在数据加载阶段计算资源的空转. 我们希望能够实现指令级并行, 访存资源和计算资源能够同时被利用.
+
+第一种并行的方法是 Multi-stage Pipeline, 通过异步拷贝来分离数据加载和计算.
+
+<img src="https://p.sda1.dev/28/00f5840d85f7de5669998627f28b7a88/06-warp-specialization_page-0011.jpg" />
+
+通过发起异步拷贝请求和查询拷贝状态, 来实现数据加载和计算的重叠, ppt 中演示了一个例子:
+
+<img src="https://p.sda1.dev/28/1310c8fd1769b8b5518b24252453b655/06-warp-specialization_page-0012.jpg" />
+
+<img src="https://p.sda1.dev/28/41ee91431b35ece026d5815cff82e323/06-warp-specialization_page-0013.jpg" />
+
+这种实现方式有三个缺点:
+
+1. 同步颗粒度太粗, 以整个 warp 为单位同步, 有可能会阻塞组内线程的运行.
+2. 准备拷贝的时候, 需要计算地址.
+3. 指令流耦合严重.
+
+第二种并行方式是 Warp Specialization, 让不同的 warps 充当专门的 consumer 和 producer, 通过共享内存进行通信. 例如:
+
+<img src="https://p.sda1.dev/28/05e29ffdd7a6f597cf363a66b937c032/06-warp-specialization_page-0019.jpg" />
+
+在 Hopper 架构中, 引入新的模块: Tensor Memory Accelerator(TMA), 专门负责搬运张量数据, 并且可以独立计算地址, 减轻寄存器的负担.
+
+这个技术在 FlashAttention-3 中有应用, 如果有机会学习的话, 会在那里阅读相关的代码, 能够更深一步地认识它.
+
+<img src="https://p.sda1.dev/28/65ba83b85715c6efe06f7d7dacb4827d/06-warp-specialization_page-0027.jpg" />
+
+下一个技术是 Mega-Kernel, 是一种持久化 kernel, 与现有的 Kernel-Per-Operator 模式不同, 一个算子对应一个 kernel, 容易因为形状不对齐等原因导致所有任务无法同时结束. 而 Mega-Kernel 则是将多个算子融合到一个 kernel 中, 通过动态调度的方式来分配任务.
+
+<img src="https://p.sda1.dev/28/3dec8286d8312492a977843b839c56cf/07-mega-kernel_page-0008.jpg" />
+
+第一个要考虑的问题是算子的排序和数据依赖, 通过提前对任务绘制依赖图, 可以通过这个来决定是否参与调度. 可以参考这篇文章<a href="https://arxiv.org/abs/2405.05751">Mirage: A Multi-Level Superoptimizer for Tensor Programs</a>.
+
+<img src="https://p.sda1.dev/28/6292a350f894a6b2930e8b3e5cd69d1f/07-mega-kernel_page-0025.jpg" />
+
+依然有很多 Open Problems, 比如如何分解任务, 现在大多都依赖于 Prefilling-based + Heuristic Tuning 来划分任务, 如何在不同的硬件设备上也通用地划分. 另一个问题是如何调度, 调度的开销能否减少, 已经如何兼顾 balance.
+
+本章节的内容只能草草过一遍, 希望有机会能够进一步探索.

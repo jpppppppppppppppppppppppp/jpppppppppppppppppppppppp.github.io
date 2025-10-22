@@ -1,7 +1,7 @@
 ---
 title: "[MATH3610] Harmonic Analysis"
 date: 2025-09-20 16:07:09
-updated: 2025-10-19 23:12:52
+updated: 2025-10-21 15:05:24
 home_cover: https://p.sda1.dev/27/3b163beb87dacac2e7af5d12fa1e5c27/cover.PNG
 post_cover: https://p.sda1.dev/27/112269185d77bddf4f1efd879257d4c2/post.JPG
 copyright_info: true
@@ -305,6 +305,38 @@ Dirichlet Kernel 不满足要求(2). 它的积分结果 $\displaystyle\int_{-\pi
 由于卷积的线性结合性: $F_N=\displaystyle\frac{D_0+\dots+D_{N-1}}{N}$.
 
 它满足要求(1)很容易验证. 可以先计算出来 $F_N(\theta)=\displaystyle\frac{(\sin\frac{N\theta}{2}/\sin\frac{\theta}{2}^2)}{N}$, 要求(2)只需要先验证 $F_N\geq0$ 恒成立, 要求(3)通过放缩即可.
+
+通过可微性, 可以得到 Dirichlet Kernel 的收敛性定理:
+
+$$
+\begin{aligned}
+S_N(f)(\theta_0)-f(\theta_0)&=\frac{1}{2\pi}\int_{-\pi}^\pi \left(f(\theta_0-t)-f(\theta_0)\right)D_N(t)dt\\\\
+&=\frac{1}{2\pi}\int_{-\pi}^\pi tF(t)D_N(t)dt,
+\end{aligned}
+$$
+
+其中定义 $F(t)=\begin{cases}\displaystyle\frac{f(\theta_0-t)-f(\theta_0)}{t}&t\neq0\\\\-f'(\theta_0)&t=0\end{cases}$, 可微性是为了让 $F(t)$ 在 $t=0$ 处有定义, 该条件可以弱化为 Lipschitz 条件. 根据 Reimann-Lebesgue 引理, 对于 $f\in L^1$, 那么 $\hat{f}(n)\to0$. 现在我们要把上面的式子拆成两个在 $L^1$ 内的函数:
+
+$$
+g_1=\frac{t\cdot F(t)\cdot\cos\frac{t}{2}}{\sin\frac{t}{2}},\quad g_2=t\cdot F(t),
+$$
+
+并且:
+
+$$
+\begin{aligned}
+tD_N(t)&=t\cdot\frac{\sin((N+\frac{1}{2})t)}{\sin\frac{t}{2}}\\\\
+&=\frac{t}{\sin\frac{t}{2}}\left[\sin(Nt)\cos\frac{t}{2}+\cos(Nt)\sin\frac{t}{2}\right]
+\end{aligned}
+$$
+
+所以原式等于:
+
+$$
+=\frac{1}{2\pi}\int_{-\pi}^\pi [g_1(t) \sin(Nt)+g_2(t)\cos(Nt)]dt
+$$
+
+可以通过 $\widehat{g_1}$ 和 $\widehat{g_2}$ 组合得到, 所以在 $\theta_0$ 处收敛.
 
 ---
 
