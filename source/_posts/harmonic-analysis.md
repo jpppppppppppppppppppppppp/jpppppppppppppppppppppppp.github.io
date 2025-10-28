@@ -1,7 +1,7 @@
 ---
 title: "[MATH3610] Harmonic Analysis"
 date: 2025-09-20 16:07:09
-updated: 2025-10-21 15:05:24
+updated: 2025-10-27 16:07:24
 home_cover: https://p.sda1.dev/27/3b163beb87dacac2e7af5d12fa1e5c27/cover.PNG
 post_cover: https://p.sda1.dev/27/112269185d77bddf4f1efd879257d4c2/post.JPG
 copyright_info: true
@@ -270,7 +270,7 @@ $$
 
 另一个不等式是 Young's Convolution 不等式: $f\in L^p(\mathbb{R}^n), g\in L^q(\mathbb{R}^n)$, 那么 $f*g\in L^r(\mathbb{R}^n)$, 需要满足关系 $\displaystyle\frac{1}{r}=\frac{1}{p}+\frac{1}{q}-1$. 这说明可以把 $L^1(I)$ 看成一个代数结构, 它关于卷积是封闭的.
 
-考虑一维的 torus $\mathbb{T}=\mathbb{R}/2\pi\mathbb{Z}$, 它的对偶群是 $\mathbb{T}^\*=\mathbb{Z}$. 函数 $f$ 的部分和:
+考虑一维的 torus $\mathbb{T}=\mathbb{R}/2\pi\mathbb{Z}$, 它的对偶群是 $\mathbb{T}^\*=\mathbb{Z}$. 函数 $f$ 的傅里叶级数部分和:
 
 $$
 \begin{aligned}
@@ -281,7 +281,7 @@ S_N(f)&=\sum_{n=-N}^N\hat{f}(n)e^{in\theta}\\\\
 \end{aligned}
 $$
 
-这个叫做 Dirichlet Kernel. 我们要问 $(D_N\*f)(\theta)$ 是否等于 $f(\theta)$, 我们可以知道 $\delta_0\*f=f$. 下面给出 good kernels 的定义: 有一族 kernels $\\{K_n(x)\\}^\infty_{n=1}$ 定义在 $\mathbb{T}$ 上, 且满足以下性质:
+这个叫做 Dirichlet Kernel. 我们要问 $(D_N\*f)(\theta)$ 是否等于 $f(\theta)$, 我们可以假定 $\delta_0\*f=f$. 下面给出 good kernels 的定义, 用来逼近理想中的 $\delta_0$: 有一族 kernels $\\{K_n(x)\\}^\infty_{n=1}$ 定义在 $\mathbb{T}$ 上, 且满足以下性质:
 
 1. 归一化: $\forall n, \mathbb{E}K_n=1$.
 2. 有界性: 存在常数 $M>0$, 使得 $\forall n, \displaystyle\int_{-\pi}^\pi |K_n(x)|dx<M$.
@@ -337,6 +337,53 @@ $$
 $$
 
 可以通过 $\widehat{g_1}$ 和 $\widehat{g_2}$ 组合得到, 所以在 $\theta_0$ 处收敛.
+
+---
+
+### 第五节课
+
+今天上课首先补全了上周的 Reimann-Lebesgue 引理的证明. 命题是: 对于一个可积函数 $f\in L^1(\mathbb{T})$, 有 $\displaystyle\lim_{n\to\infty}\hat{f}(n)=0$. 相比于连续函数, 可以用一致连续来证明, 但是对于可积函数, 我们需要使用关于积分的性质.
+
+我们要利用 $L^1(\mathbb{T})$ 中 step function 是稠密的, 然后我们用它作为简单函数去逼近任意的函数, 从而证明命题.
+
+step function 是 indicator function 的有限线性组合, 即 $I=[a,b)\subseteq[-\pi,\pi)$, 导出函数 $\chi\_I$. 我们首先验证 $\chi\_I$ 满足该引理:
+
+$$
+\begin{aligned}
+\left\|\widehat{\chi\_I}(n)\right\|&=\left\|\frac{1}{2\pi}\int_{-\pi}^\pi\chi\_I(t)e^{-int}dt\right\|\\\\
+&=\frac{1}{2\pi}\left\|\int_a^b e^{-int}dt\right\|=\frac{1}{2\pi|n|}\left\|e^{-inb}-e^{-ina}\right\|\leq\frac{1}{\pi|n|},
+\end{aligned}
+$$
+
+显然成立. 接下来用它来逼近给定的函数 $f=f_m+\varepsilon\_m$, 其中 $f_m$ 是 step function, $\varepsilon\_m$ 是残差项, 满足 $\displaystyle\int_{-\pi}^\pi \|\varepsilon\_m(x)\|dx<\displaystyle\frac{1}{m}$, 从而经过简单的方所可以得到 $f$ 的傅里叶系数是收敛至零的.
+
+作为这个引理的应用, 我们可以证明 $(L^1(T), \*)$ 这个代数结构上没有单位元 ($\*$ 是卷积符号).
+
+下面话题进入了 Possion Kernel, $\left\\{P_r(\theta)=\displaystyle\sum_{r\in\mathbb{Z}}r^{\|n\|}e^{in\theta}\right\\}\_{r\to1^-}$, 我们要说明 Possion Kernel 是一族 good kernels.
+
+1. 归一化容易验证.
+2. 有界性: 换元 $\omega=re^{i\theta}$, 那么 $P_r(\theta)=\displaystyle\sum_{n=0}^\infty\omega^n+\displaystyle\sum_{n=1}^\infty\overline{\omega}^n=\displaystyle\frac{1-r^2}{1-2r\cos\theta+r^2}>0$.
+3. 在 $\delta\leq\|\theta\|\leq\pi$ 且 $r\to1^-$ 时, $P_r(\theta)$ 可以任意接近零.
+
+下面话题转入了另一种关于积分的收敛性: 对于 $f\in L^1(\mathbb{T})$, $\displaystyle\lim_{N\to\infty}\displaystyle\int_\alpha^\beta S_N(f)(\gamma)d\gamma=\displaystyle\int_\alpha^\beta f(\gamma)d\gamma$.
+
+构造函数 $g(\gamma)=\displaystyle\frac{1}{2\pi}\displaystyle\int_0^\gamma\left(f(\lambda)-\hat{f}[0]\right)d\lambda$, 我们有 $0=\displaystyle\int_0^{2\pi}\left(e^{-in\gamma}g(\gamma)\right)\'d\gamma$, 这是因为 $0=g(0)=e^{-2\pi in}g(2\pi)$. 展开得到
+
+$$
+0=\frac{1}{2\pi}\int_0^{2\pi}e^{-in\gamma}(f(\gamma)-\hat{f}[0])d\gamma-in\int_0^{2\pi}e^{-in\gamma}g(\gamma)d\gamma,
+$$
+
+所以我们有, 对于 $n\in\mathbb{Z}\backslash\\{0\\}$, $\hat{f}[n]=2\pi in\hat{g}[n]$. 这里其实是应用了等式 $\widehat{f\'}[n]=in\hat{f}[n]$, 因为 $g\'=\displaystyle\frac{1}{2\pi}f\'$.
+
+因为 $g(\gamma)$ 处处可导, 应用 Dirichlet Kernel 的收敛性定理, 我们有:
+
+$$
+\frac{1}{2\pi}\int_0^\gamma f(\lambda)d\lambda-\frac{\gamma}{2\pi}\hat{f}[0]=g(\gamma)=\hat{g}[0]+\sum_{n\in\mathbb{Z}\backslash\\{0\\}}\hat{g}[n]e^{in\gamma},
+$$
+
+取 $\gamma=0$, 得到 $-\hat{g}[0]=\displaystyle\sum_{n\in\mathbb{Z}\backslash\\{0\\}}\displaystyle\frac{\hat{f}[n]}{2\pi in}$, 这个结论与 $f$ 的具体形式无关.
+
+
 
 ---
 
