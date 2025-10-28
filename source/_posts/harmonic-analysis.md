@@ -1,7 +1,7 @@
 ---
 title: "[MATH3610] Harmonic Analysis"
 date: 2025-09-20 16:07:09
-updated: 2025-10-27 16:07:24
+updated: 2025-10-28 16:40:24
 home_cover: https://p.sda1.dev/27/3b163beb87dacac2e7af5d12fa1e5c27/cover.PNG
 post_cover: https://p.sda1.dev/27/112269185d77bddf4f1efd879257d4c2/post.JPG
 copyright_info: true
@@ -373,7 +373,7 @@ $$
 0=\frac{1}{2\pi}\int_0^{2\pi}e^{-in\gamma}(f(\gamma)-\hat{f}[0])d\gamma-in\int_0^{2\pi}e^{-in\gamma}g(\gamma)d\gamma,
 $$
 
-所以我们有, 对于 $n\in\mathbb{Z}\backslash\\{0\\}$, $\hat{f}[n]=2\pi in\hat{g}[n]$. 这里其实是应用了等式 $\widehat{f\'}[n]=in\hat{f}[n]$, 因为 $g\'=\displaystyle\frac{1}{2\pi}f\'$.
+所以我们有, 对于 $\underline{n\in\mathbb{Z}\backslash\\{0\\}, \hat{f}[n]=2\pi in\hat{g}[n]}$. 这里其实是应用了等式 $\widehat{f\'}[n]=in\hat{f}[n]$, 因为 $g\'=\displaystyle\frac{1}{2\pi}f\'$.
 
 因为 $g(\gamma)$ 处处可导, 应用 Dirichlet Kernel 的收敛性定理, 我们有:
 
@@ -381,9 +381,34 @@ $$
 \frac{1}{2\pi}\int_0^\gamma f(\lambda)d\lambda-\frac{\gamma}{2\pi}\hat{f}[0]=g(\gamma)=\hat{g}[0]+\sum_{n\in\mathbb{Z}\backslash\\{0\\}}\hat{g}[n]e^{in\gamma},
 $$
 
-取 $\gamma=0$, 得到 $-\hat{g}[0]=\displaystyle\sum_{n\in\mathbb{Z}\backslash\\{0\\}}\displaystyle\frac{\hat{f}[n]}{2\pi in}$, 这个结论与 $f$ 的具体形式无关.
+取 $\gamma=0$, 得到 $\underline{-\hat{g}[0]=\displaystyle\sum_{n\in\mathbb{Z}\backslash\\{0\\}}\displaystyle\frac{\hat{f}[n]}{2\pi in}}$, 这个结论与 $f$ 的具体形式无关.
 
+将 $g(\gamma)$ 展开并移项可以得到: $\displaystyle\frac{1}{2\pi}\displaystyle\int_0^\gamma f(\lambda)d\lambda = \hat{g}[0]+\sum_{n\in\mathbb{Z}\backslash\\{0\\}}\hat{g}[n]e^{in\gamma}+\displaystyle\frac{\gamma}{2\pi}\hat{f}[0]$. 对于级数的部分和, 我们有:
 
+$$
+\begin{aligned}
+\frac{1}{2\pi}\int_0^\gamma S_N(f)(\lambda)d\lambda&=\frac{1}{2\pi}\sum_{n=-N}^N\hat{f}[n]\int_0^\gamma e^{in\lambda}d\lambda\\\\
+&=\frac{\gamma}{2\pi}\hat{f}[0]+\sum_{|n|<N,n\neq0}\hat{f}[n]\frac{e^{in\gamma}-1}{2\pi in}\\\\
+&\to\frac{\gamma}{2\pi}\hat{f}[0]+\sum_{n\in\mathbb{Z}\backslash\\{0\\}}\frac{\hat{f}[n] e^{in\gamma}}{2\pi in} + \hat{g}[0]\\\\
+&=\frac{1}{2\pi}\int_0^\gamma f(\lambda)d\lambda.
+\end{aligned}
+$$
+
+下面我们的话题来到了等周不等式, 对于一个 arc-length parametrized 曲线 $\gamma:[0,2pi]\mapsto\mathbb{R}^2$, $\gamma(s)=(x(s), y(s))$, 满足 $\gamma(0)=\gamma(2\pi)$, 它的长度 $l=\displaystyle\int_0^{2\pi}\|x\'(s)\|ds=2\pi$.
+
+定义曲线围出的面积为 $Area=\displaystyle\frac{1}{2}\left\|\int_0^{2\pi}x(s)y\'(s)-x\'(s)y(s)ds\right\|$, 我们要找到它的最大值.
+
+由于曲线是连续的, 对 $x(s)$ 和 $y(s)$ 分别做傅里叶变换: $x(s)=\displaystyle\sum_na_ne^{ins}$, $y(s)=\displaystyle\sum_nb_ne^{ins}$.
+
+利用 $x\'(s)\sim\displaystyle\sum_na_iine^{ins}$, $y\'(s)\sim\displaystyle\sum_nb_iine^{ins}$, 展开等式 $1=\displaystyle\frac{1}{2\pi}\displaystyle\int_0^{2\pi}x\'(s)^2+y\'(s)^2ds$:
+
+$$
+1=\displaystyle\sum_n (|a_n|^2+|b_n|^2)|n|^2.
+$$
+
+而面积 $Area=\displaystyle\frac{1}{2}\left\|\int_0^{2\pi}x(s)y\'(s)-x\'(s)y(s)ds\right\|=\pi\left\|\displaystyle\sum_{n}n(a_nb_{-n}-a_{-n}b_n)\right\|=\pi\left\|\displaystyle\sum_{n}n(a_n\overline{b_n}-\overline{a_n}b_n)\right\|$.
+
+而 $|n|\leq n^2$, $|a_n\overline{b_n}-\overline{a_n}b_n|\leq 2|a_n||b_n|\leq |a_n|^2+|b_n|^2$. 所以有 $Area\leq \pi$. 取等条件也容易验证, 就是圆形.
 
 ---
 
