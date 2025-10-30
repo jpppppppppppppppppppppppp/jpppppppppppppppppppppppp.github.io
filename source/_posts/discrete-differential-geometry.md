@@ -1,7 +1,7 @@
 ---
 title: "Discrete Differential Geometry"
 date: 2025-10-23 21:20:51
-updated: 2025-10-24 23:44:39
+updated: 2025-10-30 17:29:06
 home_cover: https://p.sda1.dev/28/4758f7df8a1e40db126c60e74da62de0/cover.png
 post_cover: https://p.sda1.dev/28/c9db327e7e9ec33ba2973c63a6eed6f3/post.PNG
 copyright_info: true
@@ -49,4 +49,35 @@ $$
 
 这个反对称矩阵非常好理解, 可以把式子写成 $\dot{Q}=AQ$, 其中 $QQ^T=I$ 因为这是单位正交基, 所以 $\dot{Q}Q^T=-(\dot{Q}Q^T)^T$, 因此 $A$ 是反对称的.
 
+为了引出曲面的曲率, 现在我们先考虑曲面上曲线的曲率, 可以想象 $M$ 中的一条直线 $X$, 这个时候可以把 $f(X)$ 看做是一条曲线, 它在某点的曲率可以根据 $d{N}=-\kappa T+\tau B$ 来提取出来:
+$$
+\kappa_n(X)=\frac{df(X)\cdot dN(X)}{|df(X)|^2}.
+$$
 
+怎么理解这个式子我其实想了很久, 假设 $s$ 是 $f(X)$ 的弧长参数化, 那么 $T(X)=\displaystyle\frac{df}{ds}=\displaystyle\frac{df(X)}{ds/dt}=\displaystyle\frac{df(X)}{|df(X)|}$, 同样的 $\displaystyle\frac{dN(s)}{ds}=\displaystyle\frac{dN(X)}{ds/dt}=\displaystyle\frac{dN(X)}{|df(X)|}$. 这样可以理解为什么分布会带有平方, 因为 $dN(X)$ 也会收到 $|f(X)|$ 的拉伸而放缩.
+
+再观察公式 $dN=-\kappa T+\tau B$, 可以发现 $dN$ 一定落在曲面的切平面内的, 所以我们引入 Shape Operator $S:TM\mapsto TM$, 满足 $df(SX)=dN(X)$. Shape Operator 是一个线性映射, 因为方向导数可以表示成关于基的导数的线性组合.
+
+假设一点 $x\in M$ 的邻域用 $\\{u,v\\}$ 坐标系参数化为 $X(u,v):\mathbb{R}^2\mapsto\mathbb{R}^3$, 那么 $\\{x_u,x_v\\}$ 就是该点切空间 $T_xM$ 的一组基,根据定义: $df(Sx_u)=dN(u)$, $df(Sx_v)=dN(v)$. 由于 $(N,X_u)=(N,X_v)=0$, 分别对 $v,u$ 求导, 得到:
+
+$(dN(v),X_u)+(N,X_{uv})=0$, $(dN(u),X_v)+(N,X_{vu})=0$. 所以 $(dN(v), X_u) = (dN(u), X_v)$ 具有对称性.
+
+因为 Shape Operator 是一个二维的线性映射, 所以它有两个特征值 $\kappa_1,\kappa_2$, 叫做主曲率 (principal curvatures), 即 $SX_i=\kappa_i X_i$.
+
+根据上面的对称等式, 我们有 $(dN(X_1), df(X_2))=(dN(X_2), df(X_1))$. 而$dN(X_i)=df(SX_i)=\kappa_1df(X_i)$, 所以 $\kappa_1(df(X_1),df(X_2))=\kappa_2(df(X_1),df(X_2))$. 只要 $\kappa_1\neq\kappa_2$, 就有 $(df(X_1),df(X_2))=0$, 也就是说主曲率对应的切向量是垂直的.
+
+所以对于一般方向上的曲率, 可以表示成主曲率的线性组合. 假设 $df(Y)=\cos\theta df(X_1)+\sin\theta df(X_2)$, 那么:
+$$
+\begin{aligned}
+\kappa_n(Y)=(df(SY),df(Y))&=(\kappa_1\cos\theta df(X_1)+\kappa_2\sin\theta df(X_2),\cos\theta df(X_1)+\sin\theta df(X_2))\\\\
+&=\kappa_1\cos^2\theta+\kappa_2\sin^2\theta.
+\end{aligned}
+$$
+
+对于曲面的整体曲率, 可以定义平均曲率(mean curvature) $H=\displaystyle\frac{\kappa_1+\kappa_2}{2}$, 高斯曲率(Gaussian curvature) $K=\kappa_1\kappa_2$.
+
+总结一下就是两个对称式, 这分别叫做第一标准型和第二标准型:
+
+$$
+I(X,Y)=(df(X),df(Y)),\quad II(X,Y)=(dN(X),df(Y)).
+$$
