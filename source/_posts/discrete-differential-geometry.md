@@ -1,7 +1,7 @@
 ---
 title: "Discrete Differential Geometry"
 date: 2025-10-23 21:20:51
-updated: 2025-10-30 17:29:06
+updated: 2025-11-01 22:02:36
 home_cover: https://p.sda1.dev/28/4758f7df8a1e40db126c60e74da62de0/cover.png
 post_cover: https://p.sda1.dev/28/c9db327e7e9ec33ba2973c63a6eed6f3/post.PNG
 copyright_info: true
@@ -76,8 +76,53 @@ $$
 
 对于曲面的整体曲率, 可以定义平均曲率(mean curvature) $H=\displaystyle\frac{\kappa_1+\kappa_2}{2}$, 高斯曲率(Gaussian curvature) $K=\kappa_1\kappa_2$.
 
-总结一下就是两个对称式, 这分别叫做第一标准型和第二标准型:
+总结一下就是两个对称式, 这分别叫做第一基本形式和第二基本形式:
 
 $$
 I(X,Y)=(df(X),df(Y)),\quad II(X,Y)=(dN(X),df(Y)).
 $$
+
+对于一个曲面 $f:M\subset\mathbb{R}^2\mapsto\mathbb{R}^3$, 它的切向量 $df(X)=\displaystyle\lim_{h\to0}\displaystyle\frac{f(p+hX)-f(p)}{h}$ 可以写成雅可比矩阵的形式,
+$$
+J=\begin{bmatrix}
+    {\partial f^1}/{\partial x^1} & {\partial f^1}/{\partial x^2} \\\\
+    {\partial f^2}/{\partial x^1} & {\partial f^2}/{\partial x^2} \\\\
+    {\partial f^3}/{\partial x^1} & {\partial f^3}/{\partial x^2}
+\end{bmatrix},
+$$
+
+那么 $df(X)=JX=J\begin{bmatrix}X^1&X^2\end{bmatrix}^T$. 我们可以尝试把其他的几何对象也用矩阵表示, 比如第一基本形式: $I(X,Y)=(df(X),df(Y))$. 我们如果用矩阵 $I\in\mathbb{R}^{2\times2}$ 表示, 那么
+
+$$
+X^TIY=(JX)^T(JY),\quad I=J^TJ=\begin{bmatrix}
+E & F \\\\
+F & G
+\end{bmatrix}.
+$$
+
+我们定义了 Shape Operator $S:TM\mapsto TM$, 和第二基本形式 $II(X,Y)=(dN(X),df(Y))=I(SX,Y)$. 如果我们用矩阵 $S,II\in\mathbb{R}^{2\times2}$ 表示, 那么
+
+$$
+II=IS=\begin{bmatrix}
+e & f \\\\
+f & g
+\end{bmatrix}.
+$$
+
+其中每个元素可以写成: $II_{i,j}=(dN(X_i),df(X_j))=-(N, f_{ji})$. 最后我们可以通过矩阵来验证通过微分得到的结论, 比如 $\kappa_n(X)=\displaystyle\frac{II(X, X)}{I(X,X)}$, 我们可以重写为:
+$$
+\frac{X^TIIX}{X^TIX}=\frac{X^TISX}{X^TIX}=\frac{(JX)^T(JSX)}{(JX)^T(JX)}=\frac{df(X)\cdot dN(X)}{|df(X)|^2}.
+$$
+
+### A Quick and Dirty Introduction to Exterior Calculus
+
+外代数研究的基本对象是 k-vectors, 1-vector 就是向量, 2-vector 可以看做是一个有向的面积元, 写为 $u\wedge v$. 它的方向可以通过右手定则确定, 而其本身满足双线性条件. 即 $u\wedge v=-v\wedge u$, $(au_1+bu_2)\wedge v=a(u_1\wedge v)+b(u_2\wedge v)$.
+
+对于 3-vector $u\wedge v\wedge w$, 满足结合律 $(u\wedge v)\wedge w=u\wedge(v\wedge w)$.
+
+在线性空间中, 一个子空间的正交补是另一个子空间, 类似的, 一个 k-vector 的正交补是一个 (n-k)-vector, 用 Hodge star 符号表示. 因为 k-vector 的维数是 $\displaystyle{n\choose k}$, 而 (n-k)-vector 的维数是 $\displaystyle{n\choose{n-k}}$, Hodge star 在这两个空间上定义的对偶关系. 对于 $\mathbb{R}^n$ 中的标准正交基 $\\{e_1,\dots,e_n\\}$, 选取其中 $k$ 个 $u_1,\dots,u_k$, 定义: $(u_1\wedge\cdots\wedge u_k)\wedge\star(u_1\wedge\cdots\wedge u_k)=e_1\wedge\cdots\wedge e_n$. 而对于一般的 k-vector, 则由加性和齐次性推广: $\star(u+v)=\star u+\star v$.
+
+一个重要的例子是 $\mathbb{R}^2$ 中 1-vector, $\star u$ 就是原始向量逆时针旋转九十度. 而 $\mathbb{R}^3$ 中的 2-vector, $\star(u\wedge v)=u\times v$, 和上面的对偶思想类似.
+
+
+
