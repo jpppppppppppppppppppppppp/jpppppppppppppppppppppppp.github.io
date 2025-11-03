@@ -1,7 +1,7 @@
 ---
 title: "Discrete Differential Geometry"
 date: 2025-10-23 21:20:51
-updated: 2025-11-01 22:02:36
+updated: 2025-11-02 23:32:23
 home_cover: https://p.sda1.dev/28/4758f7df8a1e40db126c60e74da62de0/cover.png
 post_cover: https://p.sda1.dev/28/c9db327e7e9ec33ba2973c63a6eed6f3/post.PNG
 copyright_info: true
@@ -124,5 +124,31 @@ $$
 
 一个重要的例子是 $\mathbb{R}^2$ 中 1-vector, $\star u$ 就是原始向量逆时针旋转九十度. 而 $\mathbb{R}^3$ 中的 2-vector, $\star(u\wedge v)=u\times v$, 和上面的对偶思想类似.
 
+我们可以把线性代数里的内积引入到外代数中, 在这里叫做 k-form. 用 $\sharp$ 可以把 k-form 转换到 k-vector, 用 $\flat$ 可以把 k-vector 转换到 k-form. 在曲面上, 它们的定义是: $u^\flat(v)=I(u,v)$.
 
+在不引起混淆的情况下, 我们用这套符号表示坐标: 对于 vector, 表示为:
+$$
+v=v^1\frac{\partial}{\partial x^1}+\dots+v^n\frac{\partial}{\partial x^n},
+$$
+对于 1-form, 表示为:
+$$
+\alpha=\alpha_1dx^1+\dots+\alpha_ndx^n.
+$$
+
+一对基 $dx^i$ 和 $\displaystyle\frac{\partial}{\partial x^i}$ 有时也被称做对偶基, 满足 $dx^i\left(\displaystyle\frac{\partial}{\partial x^j}\right)=\delta_j^i$. 所以: $\alpha(v)=\displaystyle\sum_i \alpha_i v^i$.
+
+上面已经讨论过了一维向量的投影内积, 下面我们来看一下二维的情况. 假设有一个有向的平面元 $u\wedge v$, 我们想让它投影到 $\alpha\times\beta$ 上, 可以让；两条边分别投影到这个平面上: $u'=(\alpha(u),\beta(u))^T$, $v'=(\alpha(v),\beta(v))^T$. 所以投影后的平面元的面积由叉积的长度给出: $\alpha(u)\beta(v)-\alpha(v)\beta(u)$.
+
+这样我们推导出了二维 k-form 的操作:
+$$
+\alpha\wedge\beta(u,v)=\alpha(u)\beta(v)-\alpha(v)\beta(u).
+$$
+同样地, 这里的 $\wedge$ 也是满足双线性和反对称和结合律的. 具体地来说, 对于 k-form $\alpha$, l-form $\beta$:
+1. $\alpha\wedge\beta=(-1)^{kl}\beta\wedge\alpha$,
+2. $\alpha\wedge(\beta\wedge\gamma)=(\alpha\wedge\beta)\wedge\gamma$, 
+3. $\alpha\wedge(\beta+\gamma)=\alpha\wedge\beta+\alpha\wedge\gamma$.
+
+现在我们一直在讨论实值的向量, 实际上外代数可以讨论任何向量空间的值, 包括复数值和向量值. 比如向量值的情况: 我们的曲面映射 $f:M\mapsto\mathbb{R}^3$, 其本身 $f$ 就可以视为 0-form, 对于任一点 $p$, 不需要任何的输入, 就可以输出一个三维向量 $f(p)$. 类似地, 它的微分 $df$ 则是一个 1-form, 需要输入一个方向向量 $X$, 映射到一个三维向量 $df_p(X)$.
+
+更加一般的, 假设我们在向量空间 $E$ 上构建外代数, 考虑最简单的 2-form: $\alpha\wedge\beta(u,v)=\alpha(u)\beta(v)-\alpha(v)\beta(u)$, 此时 $\alpha(u)$ 和 $\beta(v)$ 都是 $E$ 中的向量, 要如何定义两个向量的乘法是一个问题. 并非每一个向量空间都有自然的乘法. 如果是复数空间, 可以用复数的乘法; 如果是 $\mathbb{R}^3$, 向量的叉积可以作为乘法.
 
