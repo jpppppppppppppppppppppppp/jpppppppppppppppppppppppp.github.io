@@ -1,7 +1,7 @@
 ---
 title: "Discrete Differential Geometry"
 date: 2025-10-23 21:20:51
-updated: 2025-11-02 23:32:23
+updated: 2025-11-03 14:13:31
 home_cover: https://p.sda1.dev/28/4758f7df8a1e40db126c60e74da62de0/cover.png
 post_cover: https://p.sda1.dev/28/c9db327e7e9ec33ba2973c63a6eed6f3/post.PNG
 copyright_info: true
@@ -151,4 +151,24 @@ $$
 现在我们一直在讨论实值的向量, 实际上外代数可以讨论任何向量空间的值, 包括复数值和向量值. 比如向量值的情况: 我们的曲面映射 $f:M\mapsto\mathbb{R}^3$, 其本身 $f$ 就可以视为 0-form, 对于任一点 $p$, 不需要任何的输入, 就可以输出一个三维向量 $f(p)$. 类似地, 它的微分 $df$ 则是一个 1-form, 需要输入一个方向向量 $X$, 映射到一个三维向量 $df_p(X)$.
 
 更加一般的, 假设我们在向量空间 $E$ 上构建外代数, 考虑最简单的 2-form: $\alpha\wedge\beta(u,v)=\alpha(u)\beta(v)-\alpha(v)\beta(u)$, 此时 $\alpha(u)$ 和 $\beta(v)$ 都是 $E$ 中的向量, 要如何定义两个向量的乘法是一个问题. 并非每一个向量空间都有自然的乘法. 如果是复数空间, 可以用复数的乘法; 如果是 $\mathbb{R}^3$, 向量的叉积可以作为乘法.
+
+曲面上的体积元. 回到空间上的曲面 $f:M\mapsto\mathbb{R}^3$, 如果选取 $M$ 中的两个垂直的单位向量 $u,v\in\mathbb{R}^2$, 简单的面积元 $dx^1\wedge dx^2(u,v)=1$ 是度量它们在平面上的面积, 如果想要度量它们在曲面上的面积, 我们可以计算扭曲后的面积大小:
+$$
+|df(u)\times df(v)|=\sqrt{I(u,u)I(v,v)-I(u,v)^2}=\sqrt{\det(I)}.
+$$
+
+所以在任何一个邻域上, 曲面的面积元和平面的面积元都只差一个缩放 $\sqrt{\det(I)}$, 例如:
+$$
+\star 1=\sqrt{\det(I)}dx^1\wedge\cdots\wedge dx^n:=\omega.
+$$
+
+在曲面中, 我们也可以在 k-form 上做 Hodge star: $\alpha\wedge\star\beta=\left<\alpha,\beta\right>\omega$. 通过这个表达式, 我们可以把欧氏空间的内积写成外代数的形式:
+$$
+u\cdot v=\star\left(u^\flat\wedge\star v^\flat\right),
+$$
+其中 $u,v\in\mathbb{R}^3$ 是三维空间的向量. 类似地, 向量的叉积也可以写成外代数的形式:
+$$
+u\times v=\left(\star\left(u^\flat\wedge v^\flat\right)\right)^\sharp.
+$$
+
 
