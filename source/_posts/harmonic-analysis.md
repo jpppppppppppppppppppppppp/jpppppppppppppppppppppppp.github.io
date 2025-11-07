@@ -1,7 +1,7 @@
 ---
 title: "[MATH3610] Harmonic Analysis"
 date: 2025-09-20 16:07:09
-updated: 2025-10-28 16:40:24
+updated: 2025-11-06 20:53:43
 home_cover: https://p.sda1.dev/27/3b163beb87dacac2e7af5d12fa1e5c27/cover.PNG
 post_cover: https://p.sda1.dev/27/112269185d77bddf4f1efd879257d4c2/post.JPG
 copyright_info: true
@@ -412,6 +412,23 @@ $$
 
 ---
 
+### 第六节课
+
+
+
+今天课上首先讲了一些傅里叶分析的一些应用. 第一个用到的等式是 Basel 等式: $\displaystyle\sum_{n=1}^\infty\displaystyle\frac{1}{n^2}=\displaystyle\frac{\pi^2}{6}$. 
+
+考虑锯齿函数 $f(x)=x$, 其中 $x\in[-\pi,\pi)$. 当 $n\neq0$ 时, $\hat{f}(n)=\displaystyle\frac{(-1)^n i}{n}$. 利用 Parseval 等式, 有:
+
+\begin{align*}
+\frac{\pi^2}{3}=\frac{1}{\pi}\int_0^\pi x^2 dx&=\frac{1}{2\pi}\int_{-\pi}^\pi |f(x)|^2dx\\\\
+&=\|\hat{f}\|\_2^2=\sum_{n=-\infty}^\infty |\hat{f}(n)|^2=2\sum_{n=1}^\infty \frac{1}{n^2}\\\\
+\end{align*}
+
+
+
+---
+
 ### 教材阅读
 
 #### 周期函数的傅里叶级数的收敛性:
@@ -661,7 +678,7 @@ $$
 
 #### 天堂之外
 
-这一章将放松对函数必须是 Schwartz Class 的要求, 讨论快速衰减的连续函数, 已经用分布的角度去看更加一般的函数.
+这一章将放松对函数必须是 Schwartz Class 的要求, 讨论快速衰减的连续函数, 以及用分布的角度去看更加一般的函数.
 
 ##### 快速衰减的连续函数
 
@@ -674,7 +691,7 @@ $p$ 更高时同理.
 
 ##### 缓增分布
 
-我不知道这个 ( Tempered Distribution ) 的中文名是什么, 只能机翻了, 后面都用分布来替代.
+我不知道这个 (Tempered Distribution) 的中文名是什么, 只能机翻了, 后面都用分布来替代.
 
 分布 $T:\mathcal{S}(\mathbb{R})\mapsto\mathbb{C}$ 是 Schwartz Class 上的一个连续线性泛函, 这个线性泛函构成的空间记为 $\mathcal{S}'(\mathbb{R})$, 这构成了 Schwartz 空间的对偶空间. 两个泛函在分布意义下相同是指对于所有的 $\phi\in\mathcal{S}(\mathbb{R})$, 有 $T(\phi)=U(\phi)$. 一列泛函在分布意义下收敛是指 $\displaystyle\lim_{n\to\infty}T_n(\phi)=T(\phi)$.
 
@@ -682,7 +699,7 @@ $p$ 更高时同理.
 
 从而定义泛函 $T$ 的连续性: 对于任意收敛到 $\phi\in\mathcal{S}(\mathbb{R})$ 的函数列 $\\{\phi_n\\}$, 都有 $\displaystyle\lim_{n\to\infty}T(\phi_n)=T(\phi)$.
 
-一个经典的分布构造是 $T_f(\phi)=\int_{\mathbb{R}}f(x)\phi(x)dx$. 这里只要求 $f$ 不是增长过快的函数即可. 如果 $f$ 是一个有界连续函数, 或者是多项式函数, 那么 $T_f$ 都是连续的, 从而构成一个分布. 并且由 $\varepsilon(f)=T_f$ 给出的映射 $\varepsilon:\mathcal{S}(\mathbb{R})\mapsto\mathcal{S}'(\mathbb{R})$ 是双射.
+一个经典的分布构造是 $T_f(\phi)=\displaystyle\int_{\mathbb{R}}f(x)\phi(x)dx$. 这里只要求 $f$ 不是增长过快的函数即可. 如果 $f$ 是一个有界连续函数, 或者是多项式函数, 那么 $T_f$ 都是连续的, 从而构成一个分布. 并且由 $\varepsilon(f)=T_f$ 给出的映射 $\varepsilon:\mathcal{S}(\mathbb{R})\mapsto\mathcal{S}'(\mathbb{R})$ 是双射.
 
 ##### 分布上的时域与频域的关系
 
