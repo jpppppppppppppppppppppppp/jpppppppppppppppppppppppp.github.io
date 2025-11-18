@@ -1,7 +1,7 @@
 ---
 title: "[MATH3610] Harmonic Analysis"
 date: 2025-09-20 16:07:09
-updated: 2025-11-06 20:53:43
+updated: 2025-11-17 23:14:33
 home_cover: https://p.sda1.dev/27/3b163beb87dacac2e7af5d12fa1e5c27/cover.PNG
 post_cover: https://p.sda1.dev/27/112269185d77bddf4f1efd879257d4c2/post.JPG
 copyright_info: true
@@ -414,18 +414,79 @@ $$
 
 ### 第六节课
 
+关于等周不等式的新的证明: 上节课我们是考虑从 x 轴, y 轴来参数化这个区域或曲线, 新的证明方法是用 suopport function 来参数化凸区域. Support function $h_K(\theta)$ 是指一个凸区域 $K$ 的支撑线到原点的有向距离. 通过 support function 可以把周长和面积写做: $P(K)=\displaystyle\int_0^{2\pi} h_K(\theta)d\theta$, $A(K)=\displaystyle\int_0^{2\pi}(h_K(\theta)^2+h'_K(\theta)^2)d\theta$.
 
-
-今天课上首先讲了一些傅里叶分析的一些应用. 第一个用到的等式是 Basel 等式: $\displaystyle\sum_{n=1}^\infty\displaystyle\frac{1}{n^2}=\displaystyle\frac{\pi^2}{6}$. 
-
-考虑锯齿函数 $f(x)=x$, 其中 $x\in[-\pi,\pi)$. 当 $n\neq0$ 时, $\hat{f}(n)=\displaystyle\frac{(-1)^n i}{n}$. 利用 Parseval 等式, 有:
-
+为了方便, 将 $h_K(\theta)$ 展开成三角级数:
 \begin{align*}
-\frac{\pi^2}{3}=\frac{1}{\pi}\int_0^\pi x^2 dx&=\frac{1}{2\pi}\int_{-\pi}^\pi |f(x)|^2dx\\\\
-&=\|\hat{f}\|\_2^2=\sum_{n=-\infty}^\infty |\hat{f}(n)|^2=2\sum_{n=1}^\infty \frac{1}{n^2}\\\\
+h_K(\theta)&\sim a_0+\displaystyle\sum_{k=1}^\infty a_k\cos k\theta+b_k\sin k\theta,\\\\
+h'\_K(\theta)&\sim \displaystyle\sum_{k=1}^\infty -k a_k\sin k\theta + k b_k\cos k\theta.
 \end{align*}
 
+那么 $P(K)=2\pi a_0$, $A(K)=\pi a_0^2-\displaystyle\frac{\pi}{2}\displaystyle\sum_{k=1}^\infty(k^2-1)(a_k^2+b_k^2)$. 所以 $P(K)^2-4\pi A(K)\geq0$.
 
+这个证明可以很快得到稳定性, 定义距离函数 $\delta(M,N)=\left(\displaystyle\int_0^{2\pi}(h_M-h_N)^2d\theta\right)^{1/2}$. 那么距离一个凸区域 $K$ 的最近的圆形区域 $B(K)$ 只需要截断高阶项, 而且残差可以得到估计: $P(K)^2-4\pi A(K)\geq6\pi\cdot\delta(K,B(K))^2$. 更多关于稳定性的内容可以参考论文: <a href="#ref4">A Stability Result for the Isoperimetric Inequality</a>.
+
+下面介绍了 Wiener 代数. 定义 $A(\mathbb{T})$ 是定义在 $\mathbb{T}=\mathbb{R}/2\pi\mathbb{Z}$ 上的连续函数构成的集合, 满足其傅里叶级数绝对收敛. 首先我们要在 $A(\mathbb{T})$ 上给一个范数, 让它成为 Banach 代数: $f\in A(\mathbb{T}),||f||\_A=\displaystyle\sum\_{n\in\mathbb{Z}}\|\hat{f}(n)\|$. 下面要验证这个范数满足 Banach 代数的性质: $||f\cdot g||\_A\leq||f||\_A\cdot||g||\_A$. 如果满足的话, 则可以说明 $A(\mathbb{T})$ 关于逐点乘是封闭的, 从而是一个代数结构.
+
+证明展开很像卷积的性质:
+\begin{align*}
+f(\theta)g(\theta)&=\sum_{m\in\mathbb{Z}}\hat{f}(m)e^{im\theta} \cdot \sum_{n\in\mathbb{Z}}\hat{g}(n)e^{in\theta}\\\\
+&=\sum_{n,m\in\mathbb{Z}}\hat{f}(m)\hat{g}(n)e^{i(m+n)\theta}\\\\
+&=\sum_{n\in\mathbb{Z}}e^{in\theta}\sum_{m\in\mathbb{Z}}\hat{f}(m)\hat{g}(n-m),
+\end{align*}
+
+因此:
+\begin{align*}
+||f\cdot g||\_A&=\sum_{n\in\mathbb{Z}}\left\|\sum_{m\in\mathbb{Z}}\hat{f}(m)\hat{g}(n-m)\right\|\\\\
+&\leq\sum_{n\in\mathbb{Z}}\sum_{m\in\mathbb{Z}}\|\hat{f}(m)\|\cdot\|\hat{g}(n-m)\|\\\\
+&=\left(\sum_{m\in\mathbb{Z}}\|\hat{f}(m)\|\right)\cdot\left(\sum_{k\in\mathbb{Z}}\|\hat{g}(k)\|\right)=||f||\_A\cdot||g||\_A.
+\end{align*}
+
+下面引入一个引理: 假设 $f\in L^1(\mathbb{T})$, 其导函数 $f'$ 有界, 那么 $||f||\_\infty\leq||f||\_A\leq||f||\_\infty+2||f'||\_\infty$.
+
+左边的不等式显然,
+
+\begin{align*}
+||f(\theta)||\_\infty=|\sum_{n\in\mathbb{Z}}\hat{f}(n)e^{in\theta}|\leq \sum_{n\in\mathbb{Z}}|\hat{f}(n)|=||f||\_A.
+\end{align*}
+
+对于右边的不等式, 我们需要对傅里叶级数的每一项做不等式, 首先是第零项, $|\hat{f}(0)|\leq ||f||_\infty$ 显然成立. 我们只需要证明 $\displaystyle\sum\_{n\neq0}|\hat{f}(n)|\leq 2||f'||\_\infty$. 使用 Cauchy-Schwarz 不等式:
+
+\begin{align*}
+\sum_{n\neq0}|\hat{f}(n)|\leq\left(\sum_{n\neq0}\frac{1}{n^2}\right)^{1/2}\cdot\left(\sum_{n\neq0}|\hat{f}(n)|^2 n^2\right)^{1/2}.
+\end{align*}
+
+Basel 等式告诉我们右边不等于正无穷: $\displaystyle\sum_{n=1}^\infty\displaystyle\frac{1}{n^2}=\displaystyle\frac{\pi^2}{6}$. 
+
+> 考虑锯齿函数 $f(x)=x$, 其中 $x\in[-\pi,\pi)$. 当 $n\neq0$ 时, $\hat{f}(n)=\displaystyle\frac{(-1)^n i}{n}$. 利用 Parseval 等式, 有:
+> \begin{align*}
+\frac{\pi^2}{3}=\frac{1}{\pi}\int_0^\pi x^2 dx&=\frac{1}{2\pi}\int_{-\pi}^\pi |f(x)|^2dx\\\\
+&=\|\hat{f}\|\_2^2=\sum_{n=-\infty}^\infty ||\hat{f}(n)||^2=2\sum_{n=1}^\infty \frac{1}{n^2}\\\\
+\end{align*}
+
+再使用 $\widehat{f'}(n)=in\hat{f}(n)$. 所以 $\displaystyle\sum_{n\neq0}|\hat{f}(n)|\leq \sqrt{\displaystyle\frac{\pi^2}{3}}\left(\displaystyle\sum_{n\in\mathbb{Z}}|\widehat{f'}(n)|^2\right)^{1/2}$, 再使用 Parseval 等式, 有:
+\begin{align*}
+\sum_{n\neq0}|\hat{f}(n)|\leq \sqrt{\frac{\pi^2}{3}}\left(\frac{1}{2\pi}\int_{-\pi}^\pi |f'(\theta)|^2 d\theta\right)^{1/2}\leq 2||f'||_\infty.
+\end{align*}
+
+通过这个引理, 我们可以证明 Wieber Inversion Theorem: 对于 $f\in A(\mathbb{T})$, 且 $f$ 处处不等于零, 那么 $\displaystyle\frac{1}{f}\in A(\mathbb{T})$. 不妨假设 $\displaystyle\min_{\theta}|f(\theta)|=1$. 我们可以取一个逼近的足够好的部分和, 取 $N$, 使得 $||S_N-f||\_A\leq \displaystyle\frac{1}{3}$, 那么 $|S_N(\theta)|\geq\displaystyle\frac{2}{3}$. 那么
+
+\begin{align*}
+\frac{1}{f(\theta)}&=\frac{1}{S_N(\theta)-(S_N(\theta)-f(\theta))}\\\\
+&=\frac{1}{S_N(\theta)}\cdot\frac{1}{1-\frac{S_N(\theta)-f(\theta)}{S_N(\theta)}}\\\\
+&=\sum_{n=0}^\infty\frac{(S_N(\theta)-f(\theta))^{n}}{S_N(\theta)^{n+1}}.
+\end{align*}
+
+那么根据三角不等式:
+\begin{align*}
+||\frac{1}{f}||\_A&\leq\sum_{n=0}^\infty||\frac{(S_N-f)^{n}}{S_N^{n+1}}||\_A\\\\
+&\leq\sum_{n=0}^\infty ||S_N-f||\_A^{n}\cdot||\frac{1}{S_N^{n+1}}||\_A\\\\
+&\leq\sum_{n=0}^\infty (\frac{1}{3})^n\cdot ||\frac{1}{S_N^{n+1}}||\_A
+\end{align*}
+
+我们把 $\displaystyle\frac{1}{S_N^{n+1}}$ 视为引理中的 $f$, 则 $||(\displaystyle\frac{1}{S_N^{n+1}})'||\_\infty=||\displaystyle\frac{-(n+1)S_N'}{S_N^{n+2}}||\_\infty\leq C\cdot (n+1)\cdot (\frac{3}{2})^{n+2}$, 其中 $C=||S_N'||\_\infty$. 带入得到: $||\displaystyle\frac{1}{f}||\_A\leq\displaystyle\sum_{n=0}^\infty 3\cdot (\frac{1}{2})^{n+1}+2\cdot C\cdot (n+1)\cdot 9 \cdot (\frac{1}{2})^{n+2}<+\infty$. 因此 $\displaystyle\frac{1}{f}\in A(\mathbb{T})$.
+
+下面约定 $\mathbb{T}=\mathbb{R}/\mathbb{Z}$, 一个实值偶函数 $K\in C(\mathbb{T})$ 是正定的, 是指对于任意函数 $f\in L^1(\mathbb{T})$, 都有 $\displaystyle\int_0^1\displaystyle\int_0^1f(x)K(x-y)\overline{f(y)}dxdy\geq0$.
 
 ---
 
@@ -766,11 +827,11 @@ $$
 
 ### 推荐阅读:
 
-- <span id="ref1"></span> Pereyra, M. C., & Ward, L. A. (2012). <a href="https://fig.if.usp.br/~marchett/fismat2/harmonic-analysis-fourier-wavelet_pereyra-ward.pdf"> Harmonic analysis: from Fourier to wavelets (Vol. 63).</a> American Mathematical Soc.
+- <span id="ref1"></span> Pereyra, M. C., & Ward, L. A. (2012). <a href="https://fig.if.usp.br/~marchett/fismat2/harmonic-analysis-fourier-wavelet_pereyra-ward.pdf"> Harmonic analysis: from Fourier to wavelets (Vol. 63).</a>
 
 - <span id="ref2"></span> Carleson, L. (1966). <a href="https://projecteuclid.org/journals/acta-mathematica/volume-116/issue-none/On-convergence-and-growth-of-partial-sums-of-Fourier-series/10.1007/BF02392815.full">On convergence and growth of partial sums of Fourier series.</a>
 
-- Lacey, M., & Thiele, C. (2000). <a href="https://archive.intlpress.com/site/pub/files/_fulltext/journals/mrl/2000/0007/0004/MRL-2000-0007-0004-a001.pdf">A proof of boundedness of the Carleson operator.</a> Mathematical Research Letters, 7(4), 361-370.
+- Lacey, M., & Thiele, C. (2000). <a href="https://archive.intlpress.com/site/pub/files/_fulltext/journals/mrl/2000/0007/0004/MRL-2000-0007-0004-a001.pdf">A proof of boundedness of the Carleson operator.</a>
 
-
+- <span id="ref4"></span> Fuglede, Bent. (1986). <a href="https://math.univ-lyon1.fr/~santambrogio/fuglede.pdf">Stability in the isoperimetric problem.</a>
 
