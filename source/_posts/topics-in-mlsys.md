@@ -394,7 +394,7 @@ __global__ void reduce_v5(float* g_idata, float* g_odata, int n) {
 
 <img src="https://p.sda1.dev/28/3dec8286d8312492a977843b839c56cf/07-mega-kernel_page-0008.jpg" />
 
-第一个要考虑的问题是算子的排序和数据依赖, 通过提前对任务绘制依赖图, 可以通过这个来决定是否参与调度. 可以参考这篇文章<a href="https://arxiv.org/abs/2405.05751">Mirage: A Multi-Level Superoptimizer for Tensor Programs</a>.
+第一个要考虑的问题是算子的排序和数据依赖, 通过提前对任务绘制依赖图, 可以通过这个来决定是否参与调度. 可以参考这篇文章 <a href="https://arxiv.org/abs/2405.05751">Mirage: A Multi-Level Superoptimizer for Tensor Programs</a>.
 
 <img src="https://p.sda1.dev/28/6292a350f894a6b2930e8b3e5cd69d1f/07-mega-kernel_page-0025.jpg" />
 

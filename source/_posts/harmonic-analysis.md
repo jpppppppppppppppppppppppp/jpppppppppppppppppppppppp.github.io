@@ -1,7 +1,7 @@
 ---
 title: "[MATH3610] Harmonic Analysis"
 date: 2025-09-20 16:07:09
-updated: 2025-11-17 23:14:33
+updated: 2025-11-21 22:14:18
 home_cover: https://p.sda1.dev/27/3b163beb87dacac2e7af5d12fa1e5c27/cover.PNG
 post_cover: https://p.sda1.dev/27/112269185d77bddf4f1efd879257d4c2/post.JPG
 copyright_info: true
@@ -207,7 +207,7 @@ $$
 
 另一个有趣的结论是, 如果把卷积算子写成矩阵形式 $R_h$, 它的迹可以用结论 (3) 来计算: $\text{trace}(R_h)=\displaystyle\sum_{\psi\in\hat{G}}\hat{h}(\psi)=h(0)$.
 
-下面话题进入了离散的泊松求和公式, 是在描述在一个 lattice 上定义的函数求和的一些性质. 首先 $A$ 是一个有限的阿贝尔群, $B\leq A$ 是它的一个子群, 对于商群 $A/B$ 上的函数 $f\in L(A/B)$, 可以把它提升到 $A$ 上, $\tilde{f}=f\circ\pi$, 其中 $\pi;A\mapsto A/B$ 是自然的投影映射. 
+下面话题进入了离散的泊松求和公式, 是在描述在一个 lattice 上定义的函数求和的一些性质. 首先 $A$ 是一个有限的阿贝尔群, $B\leq A$ 是它的一个子群, 对于商群 $A/B$ 上的函数 $f\in L(A/B)$, 可以把它提升到 $A$ 上, $\tilde{f}=f\circ\pi$, 其中 $\pi;A\mapsto A/B$ 是自然的投影映射.
 
 ```tikz
 \usepackage{tikz-cd}
@@ -456,7 +456,7 @@ f(\theta)g(\theta)&=\sum_{m\in\mathbb{Z}}\hat{f}(m)e^{im\theta} \cdot \sum_{n\in
 \sum_{n\neq0}|\hat{f}(n)|\leq\left(\sum_{n\neq0}\frac{1}{n^2}\right)^{1/2}\cdot\left(\sum_{n\neq0}|\hat{f}(n)|^2 n^2\right)^{1/2}.
 \end{align*}
 
-Basel 等式告诉我们右边不等于正无穷: $\displaystyle\sum_{n=1}^\infty\displaystyle\frac{1}{n^2}=\displaystyle\frac{\pi^2}{6}$. 
+Basel 等式告诉我们右边不等于正无穷: $\displaystyle\sum_{n=1}^\infty\displaystyle\frac{1}{n^2}=\displaystyle\frac{\pi^2}{6}$.
 
 > 考虑锯齿函数 $f(x)=x$, 其中 $x\in[-\pi,\pi)$. 当 $n\neq0$ 时, $\hat{f}(n)=\displaystyle\frac{(-1)^n i}{n}$. 利用 Parseval 等式, 有:
 > \begin{align*}
@@ -486,9 +486,52 @@ Basel 等式告诉我们右边不等于正无穷: $\displaystyle\sum_{n=1}^\inft
 
 我们把 $\displaystyle\frac{1}{S_N^{n+1}}$ 视为引理中的 $f$, 则 $||(\displaystyle\frac{1}{S_N^{n+1}})'||\_\infty=||\displaystyle\frac{-(n+1)S_N'}{S_N^{n+2}}||\_\infty\leq C\cdot (n+1)\cdot (\frac{3}{2})^{n+2}$, 其中 $C=||S_N'||\_\infty$. 带入得到: $||\displaystyle\frac{1}{f}||\_A\leq\displaystyle\sum_{n=0}^\infty 3\cdot (\frac{1}{2})^{n+1}+2\cdot C\cdot (n+1)\cdot 9 \cdot (\frac{1}{2})^{n+2}<+\infty$. 因此 $\displaystyle\frac{1}{f}\in A(\mathbb{T})$.
 
-下面约定 $\mathbb{T}=\mathbb{R}/\mathbb{Z}$, 一个实值偶函数 $K\in C(\mathbb{T})$ 是正定的, 是指对于任意函数 $f\in L^1(\mathbb{T})$, 都有 $\displaystyle\int_0^1\displaystyle\int_0^1f(x)K(x-y)\overline{f(y)}dxdy\geq0$.
+下面约定 $\mathbb{T}=\mathbb{R}/\mathbb{Z}$, 一个实值偶函数 $K\in C(\mathbb{T})$ 是正定的, 是指对于任意函数 $f\in L^1(\mathbb{T})$, 都有 $\displaystyle\int_0^1\displaystyle\int_0^1f(x)K(x-y)\overline{f(y)}dxdy\geq0$. 那么类比正定矩阵的特征值都是非负的, 我们可以猜测: $K$ 是正定的当且仅当 $K\in A(\mathbb{T})$ 且对于任意 $n$ 都有 $\hat{K}(n)\geq0$.
+
+$\implies:$ 我们只需要取一些比较好的函数 $f$, 例如 $e(-nx)=e^{-2\pi inx}$, 这也叫做维诺格拉多夫 (Vinogradov) 符号. 代入得到:
+
+$$
+\begin{align*}
+0&\leq\int_0^1\int_0^1 f(x)K(x-y)\overline{f(y)}dxdy\\\\
+&=\int_0^1\int_0^1K(x-y)e(-n(x-y))dxdy\\\\
+&=\int_0^1 \hat{K}(n)dy=\hat{K}(n).
+\end{align*}
+$$
+
+另一个注意的点是积分式一定是实数, 因为 $K$ 是实值函数, 对二重积分取共轭还是自己. 下面要证明 $K\in A(\mathbb{T})$. 因为 $K$ 是连续函数, 所以 Ces&agrave;ro 求和 $\sigma_N(x)$ 一致收敛于 $K(x)$. $\sigma_N(x)=\displaystyle\sum_{|n|\leq N}\left(1-\displaystyle\frac{|n|}{N}\right)\hat{K}(n)e(nx)$, 取 $x=0$, 有:
+$$
+\sum_{|n|\leq N}\left(1-\frac{|n|}{N}\right)\hat{K}(n)\to K(0).
+$$
+
+同时 $\hat{K}(n)\geq0$, 所以对于任意小的 $\varepsilon>0$, 且任意大的整数 $M$, 取 $N\geq\displaystyle\frac{M}{\varepsilon}$, 则有
+$$
+\sum_{|n|\leq N}\left(1-\frac{|n|}{N}\right)\hat{K}(n)\geq(1-\varepsilon)\sum_{|n|\leq M}\hat{K}(n).
+$$
+
+两边对 $N,M$ 取极限, 得到傅里叶系数和绝对收敛, 因此属于 $A(\mathbb{T})$.
+
+$\impliedby:$
+
+$$
+\begin{align*}
+\int_0^1\int_0^1f(x)K(x-y)\overline{f(y)}dxdy&=\sum_{n\in\mathbb{Z}}\hat{K}(n)\int_0^1\int_0^1f(x)e(n(x-y))\overline{f(y)}dxdy\\\\
+&=\sum_{n\in\mathbb{Z}}\hat{K}(n)\hat{f}(-n)\overline{\hat{f}(-n)}\geq 0.
+\end{align*}
+$$
 
 ---
+
+### 第七节课
+
+这门课是从有限阿贝尔群上开始讲, 讲到一维的 torus 单位圆周, 但是今天要回到有限阿贝尔群, 甚至是最简单的群, hypercube $\mathbb{Z}_2^n$. 在最简单的群上, 能否有一些意料之外的结果. 今天的主题是 Boolean function 的 property testing, 比如是否是线性函数. $x=(x_1,\dots,x_n)\mapsto f(x)=\displaystyle\sum a_ix_i$. 当然如果要确定一个函数是否是线性函数, 需要将 $2^n$ 种输入全试一遍, 我们要引入概率方法.
+
+为了方便, 我们使用 $\{\pm1\}$ 替换 $\mathbb{Z}_2$, 原本的加法变成了乘法. 我们要估计概率 $\displaystyle\Pr\_{x,y}(f(x\odot y)=f(x)\cdot f(y))$.
+
+
+
+
+
+
 
 ### 教材阅读
 
