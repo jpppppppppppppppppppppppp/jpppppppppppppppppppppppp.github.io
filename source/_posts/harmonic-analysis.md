@@ -1,7 +1,7 @@
 ---
 title: "[MATH3610] Harmonic Analysis"
 date: 2025-09-20 16:07:09
-updated: 2025-11-21 22:14:18
+updated: 2025-11-23 0:22:12
 home_cover: https://p.sda1.dev/27/3b163beb87dacac2e7af5d12fa1e5c27/cover.PNG
 post_cover: https://p.sda1.dev/27/112269185d77bddf4f1efd879257d4c2/post.JPG
 copyright_info: true
@@ -525,13 +525,27 @@ $$
 
 这门课是从有限阿贝尔群上开始讲, 讲到一维的 torus 单位圆周, 但是今天要回到有限阿贝尔群, 甚至是最简单的群, hypercube $\mathbb{Z}_2^n$. 在最简单的群上, 能否有一些意料之外的结果. 今天的主题是 Boolean function 的 property testing, 比如是否是线性函数. $x=(x_1,\dots,x_n)\mapsto f(x)=\displaystyle\sum a_ix_i$. 当然如果要确定一个函数是否是线性函数, 需要将 $2^n$ 种输入全试一遍, 我们要引入概率方法.
 
-为了方便, 我们使用 $\{\pm1\}$ 替换 $\mathbb{Z}_2$, 原本的加法变成了乘法. 我们要估计概率 $\displaystyle\Pr\_{x,y}(f(x\odot y)=f(x)\cdot f(y))$.
+为了方便, 我们使用 $\{\pm1\}$ 替换 $\mathbb{Z}_2$, 原本的加法变成了乘法. 这是为了可以把这个函数试做一般地复值函数, 让函数分解的可能性更大. 我们要估计概率 $\displaystyle\Pr\_{x,y}(f(x\odot y)=f(x)\cdot f(y))$.
 
 
+所以现在我们讨论的范围扩大为函数 $f:\{\pm1\}^n\mapsto\mathbb{C}$. 在这个 hypercube 上的傅里叶分解是: $f(x)=\displaystyle\sum_{S\subseteq[n]}\hat{f}(S)x^S$, 这里 $\chi_S(x)=x^S=\displaystyle\prod_{i\in S}x_i$. 同样的, 傅里叶系数可以通过期望的方式求出: $\hat{f}(S)=\mathbb{E}[f\overline{\chi_S}]=\mathbb{E}[f\chi_S]$.
 
+定义 $\delta_f=\displaystyle\Pr_{x,y}(f(x)\cdot f(y)\neq f(x\odot y))$. 不难发现 $\mathbb{1}_{[f(x)\cdot f(y)\neq f(x\odot y)]}=\displaystyle\frac{1-f(x)f(y)f(x\odot y)}{2}$.
 
+$$
+\delta_f=\Pr_{x,y}(f(x)\cdot f(y)\neq f(x\odot y))=\mathbb{E}\_{x,y}\left[\frac{1-f(x)f(y)f(x\odot y)}{2}\right].
+$$
 
+代入傅里叶展开, 并代入 Parseval 等式放缩, 有:
 
+$$
+\begin{align*}
+\mathbb{E}\_{x,y}[f(x)f(y)f(x\odot y)]&=\mathbb{E}\_{x,y}\left[\left(\sum_{S\subseteq[n]}\hat{f}(S)\chi_S(x)\right)\left(\sum_{T\subseteq[n]}\hat{f}(T)\chi_T(y)\right)\left(\sum_{U\subseteq[n]}\hat{f}(U)\chi_U(x\odot y)\right)\right]\\\\
+&=\mathbb{E}\_{x,y}\sum_{S,T,U\subseteq[n]}\hat{f}(S)\hat{f}(T)\hat{f}(U)\chi_S(x)\chi_U(x)\chi_T(u)\chi_U(y)\\\\
+&=\sum_{S,T,U\subseteq[n]}\hat{f}(S)\hat{f}(T)\hat{f}(U)\left<\chi_S,\chi_U\right>\left<\chi_T,\chi_U\right>\\\\
+&=\sum_{S\subseteq[n]}\hat{f}(S)^3\leq\left(\max_{S\subseteq[n]}\hat{f}(S)\right)\sum_{S\subseteq[n]}\hat{f}(S)^2=\max_{S\subseteq[n]}\hat{f}(S).
+\end{align*}
+$$
 
 ### 教材阅读
 
