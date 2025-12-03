@@ -1,7 +1,7 @@
 ---
 title: "[MATH3610] Harmonic Analysis"
 date: 2025-09-20 16:07:09
-updated: 2025-11-23 0:22:12
+updated: 2025-12-2 22:34:53
 home_cover: https://p.sda1.dev/27/3b163beb87dacac2e7af5d12fa1e5c27/cover.PNG
 post_cover: https://p.sda1.dev/27/112269185d77bddf4f1efd879257d4c2/post.JPG
 copyright_info: true
@@ -268,7 +268,7 @@ $$
 
 通过这个可以推出 $L_p$ 空间的包含关系: 即 $1\leq p<q<\infty$, 那么 $h\in L^q(I)\Rightarrow h\in L^p(I)$. 这是因为 $\|h\|\_{p}\leq |I|^{\frac{1}{p}-\frac{1}{q}}\|h\|\_{q}$.
 
-另一个不等式是 Young's Convolution 不等式: $f\in L^p(\mathbb{R}^n), g\in L^q(\mathbb{R}^n)$, 那么 $f*g\in L^r(\mathbb{R}^n)$, 需要满足关系 $\displaystyle\frac{1}{r}=\frac{1}{p}+\frac{1}{q}-1$. 这说明可以把 $L^1(I)$ 看成一个代数结构, 它关于卷积是封闭的.
+另一个不等式是 Young\'s Convolution 不等式: $f\in L^p(\mathbb{R}^n), g\in L^q(\mathbb{R}^n)$, 那么 $f*g\in L^r(\mathbb{R}^n)$, 需要满足关系 $\displaystyle\frac{1}{r}=\frac{1}{p}+\frac{1}{q}-1$. 这说明可以把 $L^1(I)$ 看成一个代数结构, 它关于卷积是封闭的.
 
 考虑一维的 torus $\mathbb{T}=\mathbb{R}/2\pi\mathbb{Z}$, 它的对偶群是 $\mathbb{T}^\*=\mathbb{Z}$. 函数 $f$ 的傅里叶级数部分和:
 
@@ -525,10 +525,10 @@ $$
 
 这门课是从有限阿贝尔群上开始讲, 讲到一维的 torus 单位圆周, 但是今天要回到有限阿贝尔群, 甚至是最简单的群, hypercube $\mathbb{Z}_2^n$. 在最简单的群上, 能否有一些意料之外的结果. 今天的主题是 Boolean function 的 property testing, 比如是否是线性函数. $x=(x_1,\dots,x_n)\mapsto f(x)=\displaystyle\sum a_ix_i$. 当然如果要确定一个函数是否是线性函数, 需要将 $2^n$ 种输入全试一遍, 我们要引入概率方法.
 
-为了方便, 我们使用 $\{\pm1\}$ 替换 $\mathbb{Z}_2$, 原本的加法变成了乘法. 这是为了可以把这个函数试做一般地复值函数, 让函数分解的可能性更大. 我们要估计概率 $\displaystyle\Pr\_{x,y}(f(x\odot y)=f(x)\cdot f(y))$.
+为了方便, 我们使用 $\\{\pm1\\}$ 替换 $\mathbb{Z}_2$, 原本的加法变成了乘法. 这是为了可以把这个函数试做一般地复值函数, 让函数分解的可能性更大. 我们要估计概率 $\displaystyle\Pr\_{x,y}(f(x\odot y)=f(x)\cdot f(y))$.
 
 
-所以现在我们讨论的范围扩大为函数 $f:\{\pm1\}^n\mapsto\mathbb{C}$. 在这个 hypercube 上的傅里叶分解是: $f(x)=\displaystyle\sum_{S\subseteq[n]}\hat{f}(S)x^S$, 这里 $\chi_S(x)=x^S=\displaystyle\prod_{i\in S}x_i$. 同样的, 傅里叶系数可以通过期望的方式求出: $\hat{f}(S)=\mathbb{E}[f\overline{\chi_S}]=\mathbb{E}[f\chi_S]$.
+所以现在我们讨论的范围扩大为函数 $f:\\{\pm1\\}^n\mapsto\mathbb{R}$. 在这个 hypercube 上的傅里叶分解是: $f(x)=\displaystyle\sum_{S\subseteq[n]}\hat{f}(S)x^S$, 这里 $\chi_S(x)=x^S=\displaystyle\prod_{i\in S}x_i$. 同样的, 傅里叶系数可以通过期望的方式求出: $\hat{f}(S)=\mathbb{E}[f\overline{\chi_S}]=\mathbb{E}[f\chi_S]$.
 
 定义 $\delta_f=\displaystyle\Pr_{x,y}(f(x)\cdot f(y)\neq f(x\odot y))$. 不难发现 $\mathbb{1}_{[f(x)\cdot f(y)\neq f(x\odot y)]}=\displaystyle\frac{1-f(x)f(y)f(x\odot y)}{2}$.
 
@@ -546,6 +546,98 @@ $$
 &=\sum_{S\subseteq[n]}\hat{f}(S)^3\leq\left(\max_{S\subseteq[n]}\hat{f}(S)\right)\sum_{S\subseteq[n]}\hat{f}(S)^2=\max_{S\subseteq[n]}\hat{f}(S).
 \end{align*}
 $$
+
+从这里可以引出 Blum-Luby-Rubinfeld 线性测试算法, 这里就不再继续展开了.
+
+而如果定义两个函数的距离为 $\operatorname{dist}(f,g)=\Pr(f\neq g)$, 那么显然那有
+$$
+\hat{f}(S)=\mathbb{E}[f\chi_S]=\mathbb{E}[1-2\cdot\mathbb{1}_{[f(x)\neq\chi_S(x)]}]=1-2\operatorname{dist}(f,\chi_S).
+$$
+
+所以:
+$$
+\delta_f\geq\displaystyle\frac{1-\displaystyle\max_{S\subseteq[n]}\hat{f}(S)}{2}=\displaystyle\min_{S\subseteq[n]}\operatorname{dist}(f,\chi_S).
+$$
+
+注意 $\chi_S$ 本身就是满足线性条件的函数, 到这一族函数的距离是 $\delta_f$ 的下界.
+
+我们用 sign degree 刻画 Boolean function 的复杂度, 是指 $\displaystyle\min\\{\operatorname{deg}(p):f=\operatorname{sgn}(p)\\}$. $f$ 的傅里叶展开式告诉我们总能找到一个多项式用正负号来表示一个 Boolean function. 这种表示在现实中有若干例子, 比如多数函数 majority: $\operatorname{Maj}(x)=\operatorname{sgn}(\displaystyle\frac{x_1+\dots+x_n}{n}-0.5)$, 例如对等函数 parity: $\chi_{[n]}=x_1\cdots x_n$. 很显然 $\operatorname{Maj}(x)$ 的 degree 就是 1, 不能更小了. 对于 $\chi_{[n]}$, 它的 degree 是 $n$. 这是因为当 degree 小于 $n$ 时, 必须满足 $\left<f,p\right>>0$, 对 $p$ 做傅里叶分解即可产生矛盾.
+
+下面引入离散的微分: $D_i f(x)=\displaystyle\frac{f(x^{i\to1})-f(x^{i\to-1})}{2}$, 这里 $x^{i\to1}$ 是指将 $x$ 的第 $i$ 位变为 $1$. $D\_i x^S=\mathbb{1}\_{[i\in S]}x^{S\backslash\\{i\\}}$ 是一个容易验证的例子. 对于函数 $f(x)=\displaystyle\sum_{S\subseteq[n]}\hat{f}(S)x^S$, 它的导数 $D_if(x)=\displaystyle\sum_{i\in S}\hat{f}(S)x^{S\backslash\\{i\\}}$.
+
+定义影响 $\operatorname{Inf}_i[f]=\left<D_i f,D_i f\right>=\mathbb{E}[D_i f(x)^2]$. 如果把 $f$ 限定为 Boolean function 的话, 等价于 $\displaystyle\Pr[f(x)\neq f(x\oplus e_i)]$. 定义 $\operatorname{I}[f]=\displaystyle\sum\_{i}\operatorname{Inf}\_i[f]$.
+
+下面要介绍一个很弱的不等式, Poincare 不等式: 对于函数 $f:\\{\pm1\\}^n\mapsto\mathbb{R}$, 有 $\operatorname{Var}[f]\leq\operatorname{I}[f]$. 这里 $\operatorname{Var}[f]=\mathbb{E}[(f-\mathbb{E}[f])^2]$.
+
+根据 Parseval 等式, 有 $\operatorname{Var}[f]=E[f^2]-(E[f])^2=(\displaystyle\sum_{S\subseteq[n]}\hat{f}(S)^2)-\hat{f}(\varnothing)^2=\displaystyle\sum_{S\neq\varnothing}\hat{f}(S)^2$.
+
+一个很显然的放缩是 $\displaystyle\sum_{S\neq\varnothing}\hat{f}(S)^2\leq\displaystyle\sum_{S\subseteq[n]}|S|\hat{f}(S)^2=\displaystyle\sum_{i\in[n]}\sum_{i\in S}\hat{f}(S)^2$. 回顾 $D_i f(x)=\displaystyle\sum_{i\in S}\hat{f}(S)x^{S\backslash\\{i\\}}$, 那么 $\operatorname{Inf}\_i[f]=\displaystyle\sum_{i\in S}\hat{f}(S)^2$. 因此 $\operatorname{Var}[f]\leq \operatorname{I}[f]$.
+
+那么取等条件是所有 $|S|>1$ 的 $\hat{f}(S)$ 都为零, 可以写成 $f(x)=a+\displaystyle\sum_{i\in[n]}a_ix_i$. 如果我们再要求 $f$ 是 Boolean function 的话, 那么只能是 $f(x)=\pm x_i$ 或者 $f(x)=\pm1$.
+
+下面定义 Noise operator (Bonami-Beckner operator): 对于 $f:\\{\pm1\\}^n\mapsto\mathbb{R}$, 定义 $T_\rho f(x)=\mathbb{E}\_{y\sim N_\rho(x)}[f(y)]$, 这里 $N_\rho(x)$ 是指对 $x$ 的每一位以概率 $\displaystyle\frac{1-\rho}{2}$ 翻转得到的随机变量.
+
+我们先观察 $T_\rho$ 作用在 $\chi_S$ 上.
+$$
+\begin{align*}
+T\_\rho \chi_S(x)&=\mathbb{E}\_{y\sim N_\rho(x)}[y^S]\\\\
+&=\prod_{i\in S}\mathbb{E}[y_i]=\rho^{|S|}\chi_S(x).
+\end{align*}
+$$
+
+因此 $T_\rho f(x)=\displaystyle\sum_{S\subseteq[n]}\rho^{|S|}\hat{f}(S)\chi_S(x)$. 因为 $\rho\in[0,1]$, 所以 Noise operator 会给高频项一个衰减, 更加光滑. 定义函数 $f$ 的稳定性 $\operatorname{Stab}\_\rho[f]=\left<f,T_\rho f\right>=\mathbb{E}[f T_\rho f]=\displaystyle\sum_{S\subseteq[n]}\rho^{|S|}\hat{f}(S)^2\geq0$. 因为如果在噪声的微扰下发生的翻转, 会降低期望. 但是它一定不会变成负数.
+
+Arrow\'s impossibility theorem. 假设现在有三个人参加选举, 分别是 A, B, C 三个候选人. 公理一: 选举的规则不允许选票出现环, 即一定是一个全序关系, 可以如下建模. 选票可以认为是 $\\{\pm1\\}^3\backslash\\{1^3,(-1)^3\\}$. 
+
+```tikz
+\usepackage{tikz-cd}
+\begin{document}
+\begin{tikzpicture}[>=stealth, node distance=2cm]
+    \node (a) at (90:2) {$A$};
+    \node (b) at (210:2) {$B$};
+    \node (c) at (330:2) {$C$};
+    \draw[->] (a) -- node[left]  {$(\pm 1)$} (b);
+    \draw[->] (b) -- node[below] {$(\pm 1)$} (c);
+    \draw[->] (c) -- node[right] {$(\pm 1)$} (a);
+\end{tikzpicture}
+\end{document}
+```
+
+对于 $n$ 个人参与投票, 每个人的投票 $v_i=(x_i,y_i,z_i)\in\operatorname{NAE}_3$, (not all equal). 公理二: 那么选举结果可以认为是一个函数 $f:\\{\pm1\\}^n\mapsto\\{\pm1\\}$, 其中 $f(x)$ 表示最终 $a\to b$ 的方向翻转情况, 其余类似. 也就是说其他两对关系的结果不会影响另一对关系的结果, 所以三对关系可以用同一个函数来表示.
+
+公理三: 选举的最终结果应该是合理的, $(f(x), f(y), f(z))\in\operatorname{NAE}_3$. 公理四: 如果所有人都选择同一个选项, 比如 $(1,1,-1)$, 那么最终结果也应该是 $(1,1,-1)$.
+
+如果同时满足以上四个公理, 那么 Arrow\'s impossibility theorem 告诉我们, 这个选举制度一定是独裁的, 即存在某个人 $i$, 使得对于任意的投票 $v_1,\dots,v_n$, 最终结果都等于 $v_i$.
+
+定义函数 $\operatorname{NAE}\_n(x_1, \dots, x_n)=\mathbb{1}\_{[(x_1, \dots, x_n)\in\operatorname{NAE}\_n]}$, 那么它的傅里叶展开为:
+$$
+\operatorname{NAE}\_n(x_1, \dots, x_n)=\sum_{S\subseteq[n]}\frac{1}{2^n}\sum\_{y\in\operatorname{NAE}\_n}(x\cdot y)^S.
+$$
+
+例如 $\operatorname{NAE}_3(x, y, z)=\displaystyle\frac34-\displaystyle\frac14(xy + yz + zx)$.
+
+对于随机变量 $(x,y,z)\sim\operatorname{NAE}_3$, 有 $\mathbb{E}[x]=\mathbb{E}[y]=\mathbb{E}[z]=0$, 且 $\mathbb{E}[xy]=\mathbb{E}[yz]=\mathbb{E}[zx]=-1/3$, 这也被叫做 $-1/3$ 相关, 我们可以认为 $y\sim N\_{-1/3}(x)$.
+
+现在考虑公理三, 并代入傅里叶展开, 有
+$$
+\begin{align*}
+1&=\mathbb{E}[\operatorname{NAE}_3(f(x),f(y),f(z))]\\\\
+&=\mathbb{E}[\frac{3}{4}-\frac{1}{4}(f(x)f(y) + f(y)f(z) + f(z)f(x))].
+\end{align*}
+$$
+
+考虑到相关性, 有
+$$
+\begin{align*}
+1&=\frac{3}{4}-\frac{3}{4}\operatorname{Stab}_{-1/3}[f]\\\\
+&=\frac{3}{4}-\frac{3}{4}\sum\_{S\subseteq[n]}(-\frac{1}{3})^{|S|}\hat{f}(S)^2\\\\
+&\leq\frac{3}{4}-\frac{3}{4}\sum\_{S\subseteq[n]}(-\frac{1}{3})\hat{f}(S)^2=\frac{3}{4}+\frac{1}{4}\sum\_{S\subseteq[n]}\hat{f}(S)^2=1.
+\end{align*}
+$$
+
+两边夹逼得到, $\hat{f}(S)$ 的非零项只能是 $|S|\leq1$. 而根据上文的讨论, 这只能是 $f(x)=x_i$.
+
+---
 
 ### 教材阅读
 
