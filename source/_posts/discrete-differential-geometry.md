@@ -1,7 +1,7 @@
 ---
 title: "Discrete Differential Geometry"
 date: 2025-10-23 21:20:51
-updated: 2025-11-03 14:13:31
+updated: 2025-12-05 0:28:17
 home_cover: https://p.sda1.dev/28/4758f7df8a1e40db126c60e74da62de0/cover.png
 post_cover: https://p.sda1.dev/28/c9db327e7e9ec33ba2973c63a6eed6f3/post.PNG
 copyright_info: true
@@ -171,4 +171,38 @@ $$
 u\times v=\left(\star\left(u^\flat\wedge v^\flat\right)\right)^\sharp.
 $$
 
+下面我们要仔细讨论什么是微分, 对于一个标量函数, $\phi:\mathbb{R}^n\mapsto\mathbb{R}$, 可以认为它是一个 0-form, 它的梯度 $\nabla\phi$ 是一个向量场, 第一种定义梯度的方式是指这唯一的向量场, 使得对于任意向量 $X$, $\left<\nabla\phi, X\right>=D_X\phi$ 它们的内积等于方向导数, 另一种则是把微分看做 1-form, 使得 $d\phi(X)=D_X\phi$. 这里的区别则是在于后者不依赖内积的定义, 而是把微分直接看做是一个 $\Omega^k\mapsto\Omega^{k+1}$ 的映射, 这里 $\Omega^k$ 是指所有 k-form 构成的集合. 因此对于梯度, 我们有 $\nabla\phi=(d\phi)^\sharp$.
 
+下面要递归地定义其他 k-form 上的微分, 对于一个 k-form $\alpha$, $d(\alpha\wedge\beta)=d\alpha\wedge\beta+(-1)^k\alpha\wedge d\beta$.
+
+例如, 对于一个三维空间的 1-form $\alpha=\alpha_1dx^1+\alpha_2dx^2+\alpha_3dx^3$, 它的微分: $d\alpha=d(\alpha_1 dx^1+\alpha_2 dx^2+\alpha_3 dx^3)$. 对于 $d(\alpha_1 dx^1)$, 我们可以视 $\alpha_1$ 为一个 0-form, $dx^1$ 是一个 1-form 的基, 所以
+
+$$
+\begin{aligned}
+d(\alpha_1\wedge dx^1)&=d\alpha_1\wedge dx^1-\alpha_1\wedge ddx^1=d\alpha_1\wedge dx^1\\\\
+&=\frac{\partial\alpha_1}{\partial x^1} dx^1\wedge dx^1+\frac{\partial\alpha_1}{\partial x^2} dx^2\wedge dx^1+\frac{\partial\alpha_1}{\partial x^3} dx^3\wedge dx^1.
+\end{aligned}
+$$
+
+完整展开后计算, 会发现这个和计算旋度是一样的, 我们得到: $\nabla\times X=(\star dX^\flat)^\sharp$. 向量场 $X$ 首先通过 $\flat$ 转换成 1-form, 然后通过微分算子 $d$ 得到 2-form, 再通过 Hodge star 得到 1-form, 最后通过 $\sharp$ 转换回向量场.
+
+下面一个性质是 correctness: $d\circ d=0$. 有点类似于梯度的旋度是零, $d\circ dX=(\nabla\times(\nabla X))^\flat=0$.
+
+类似地, 我们可以对 1-form $\alpha$ 取 Hodge star, 得到一个 (n-1)-form 后计算它的微分
+$$
+\begin{aligned}
+d\star\alpha&=d(\alpha_1 dx^2\wedge dx^3)+d(\alpha_2 dx^3\wedge dx^1)+d(\alpha_3 dx^1\wedge dx^2)\\\\
+&=(\frac{\partial\alpha_1}{dx^1}+\frac{\partial\alpha_2}{dx^2}+\frac{\partial\alpha_3}{dx^3})dx^1\wedge dx^2\wedge dx^3.
+\end{aligned}
+$$
+
+所以散度可以写成: $\nabla\cdot X=\star d\star X^\flat$. 也有一些人喜欢定义 codifferential $\delta=\star d\star$. 我们可以画出下面的图来总结这些算子之间的关系:
+
+<center>
+<img src="https://i.upmath.me/svgb/hZDNCoJAFIX3PsXFhW0mMqVd9gpB267B6Fx1aBzjeqVIfPcolHa1Pt_54WBBtfWj2OuzNFOAx5ZqfYkD1Mzd_bxfHxQwMysIsRfN4UpBQd4A27qRfOE-gAkV9I2tBBxVkkMQAUQwR25hYb9BrutuCoztRfuSsoRaBdZnSbpT0A2SpfHuZ8OiOfeeZ8iJ_jUhgX88IuJsabU0RTGepg0KPWTsB650SVOA5M3y1ws" width="40%" />
+</center>
+
+综上, 外微分是唯一一个 $\Omega^k\mapsto\Omega^{k+1}$ 的线性算子, 满足:
+1. $k=0$ 时, $d\phi(X)=D_X\phi$,
+2. $d(\alpha\wedge\beta)=d\alpha\wedge\beta+(-1)^k\alpha\wedge d\beta$,
+3. $d\circ d=0$.
