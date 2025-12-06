@@ -1,7 +1,7 @@
 ---
 title: "Discrete Differential Geometry"
 date: 2025-10-23 21:20:51
-updated: 2025-12-05 0:28:17
+updated: 2025-12-06 0:11:43
 home_cover: https://p.sda1.dev/28/4758f7df8a1e40db126c60e74da62de0/cover.png
 post_cover: https://p.sda1.dev/28/c9db327e7e9ec33ba2973c63a6eed6f3/post.PNG
 copyright_info: true
@@ -204,5 +204,27 @@ $$
 
 综上, 外微分是唯一一个 $\Omega^k\mapsto\Omega^{k+1}$ 的线性算子, 满足:
 1. $k=0$ 时, $d\phi(X)=D_X\phi$,
-2. $d(\alpha\wedge\beta)=d\alpha\wedge\beta+(-1)^k\alpha\wedge d\beta$,
+2. 对于 $\alpha\in\Omega^k$, $d(\alpha\wedge\beta)=d\alpha\wedge\beta+(-1)^k\alpha\wedge d\beta$,
 3. $d\circ d=0$.
+
+在传统的微积分学中, 积分和微分是通过牛顿-莱布尼兹基本定理联系起来的, 而在外微分中, 则是由斯托克斯定理联系起来, 我们的最终目的是在 Mesh 上得到离散外微分算子.
+
+$$
+\int_\Omega d\alpha=\int_{\partial\Omega}\alpha
+$$
+
+式子的左边是在 k-dim 的区域 $\Omega$ 上对 k-form $d\alpha$ 做积分, 右边是在 k-1-dim 的边界 $\partial\Omega$ 上对 k-1-form $\alpha$ 做积分.
+
+一个例子是散度定理. $\displaystyle\int_{\Omega}\nabla\cdot XdA=\displaystyle\int_{\partial\Omega}n\cdot X dl$.
+
+定义 1-form $\alpha=X^\flat$, 散度 $\nabla\cdot X=\star d\star \alpha$, 但是写成 2-form 则是 $d\star\alpha$. 所以运用 Stokes 定理:
+$$
+\int_\Omega d\star\alpha=\int_{\partial\Omega}\star\alpha=\int_{\partial\Omega}n\cdot X dl.
+$$
+
+另一个例子是 Green 公式: $\displaystyle\int_\Omega \nabla\times XdA=\displaystyle\int_{\partial\Omega}t\cdot Xdl$.
+
+同样的, 定义 1-form $\alpha=X^\flat$, 旋度 $\nabla\times X=(\star d\alpha)^\sharp$, 但是写成 2-form 则是 $d\alpha$. 所以运用 Stokes 定理:
+$$
+\int_\Omega d\alpha=\int_{\partial\Omega}\alpha=\int_{\partial\Omega}t\cdot X dl.
+$$
