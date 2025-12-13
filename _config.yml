@@ -9,7 +9,7 @@ description: '/dev/null'
 keywords: Yu Jiang
 author: Yu Jiang
 language: en
-timezone: 'CST6CDT'
+timezone: 'Asia/Shanghai'
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'

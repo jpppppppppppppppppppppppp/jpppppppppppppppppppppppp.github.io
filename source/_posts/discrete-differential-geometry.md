@@ -1,7 +1,7 @@
 ---
 title: "Discrete Differential Geometry"
 date: 2025-10-23 21:20:51
-updated: 2025-12-06 0:11:43
+updated: 2025-12-13 19:01:03
 home_cover: https://p.sda1.dev/28/4758f7df8a1e40db126c60e74da62de0/cover.png
 post_cover: https://p.sda1.dev/28/c9db327e7e9ec33ba2973c63a6eed6f3/post.PNG
 copyright_info: true
@@ -228,3 +228,34 @@ $$
 $$
 \int_\Omega d\alpha=\int_{\partial\Omega}\alpha=\int_{\partial\Omega}t\cdot X dl.
 $$
+
+在连续光滑的情况, 我们已经见到了很多算子, 而在离散情况下, 想要计算这些微分方程, 最常见的算子是离散微分算子 $d_k$ 和离散 Hodge star $\star_k$. 最终我们要在单纯形网格中去计算它们, 使用的是稀疏的邻接矩阵. 基本的流程是: load mesh -> 构建一些矩阵 -> 求解线性系统. 将连续和离散系统联系起来的是两个操作: 离散化和插值.
+
+离散化的过程并不是简单的采样, 这并不能让我们还原出更多的信息, 我们选择在 k 维的单纯形上对 k-form 做积分, 记为 $\hat{\omega}\_\sigma=\displaystyle\int\_\sigma\omega$. 从连续 form 映射到离散 form 的过程叫做离散化或者 de Rham map, 记为 $R:\Omega^k\mapsto C^{|K|}$, 这里 $C^{|K|}$ 是所有离散 k-form 构成的空间.
+
+以直线段为例, 在实践中我们往往通过采样的方式来近似积分, $\hat{\alpha}\_e=\displaystyle\int\_e \alpha\approx\frac{|e|}{N}\displaystyle\sum_{i=1}^N\alpha_{p_i}(T)$.
+
+首先对于单纯形定义有向的边界: 对于一个有向的 k 维单纯形 $\sigma=(v_0, \dots, v_k)$, 它的边界是由 k-1 维的单纯形组成的链: $\partial\sigma=\displaystyle\sum_{p=0}^k (-1)^p (v_0, \dots, \cancel{v_p}, \dots, v_k)$. 自然地, 我们可以把边界算子扩展到链空间 $\partial\displaystyle\sum c_i\sigma_i=\displaystyle\sum c_i\partial\sigma_i$. 一个 k 维的有向单纯形的上边缘是所有包含它的 k+1 维单纯形, 它们有着相同的相对方向.
+
+和 covector 类似, k 维的 cochain 是一个输入 k 维单纯形链, 输出实数的线性映射. $\alpha(c_1\sigma_1+\dots+c_n\sigma_n)=\displaystyle\sum c_i\alpha(\sigma_i)$. 一个离散化的 k-form 就是一个 k-cochain. 简单地来说, differential k-form 的离散化就是在每一个定向的 k 维单纯形上赋予一个值, 定向的改变会影响值的符号.
+
+有了离散化下面要介绍插值. 0-form 的离散化是在每个顶点上赋值, 它的插值就是利用质心坐标进行线性插值, $u(x)=\displaystyle\sum_{i\in V}u_i\phi_i(x)$. 其中 $\phi_i$ 是针对顶点 $i$ 的 hat function. 这个线性插值通过一组基, 把离散的 form 转为连续的 form. 对于更高维的情况, 比如 1-form, 每一条有向边定义一个基函数, $\phi_{ij}=\phi_id\phi_j-\phi_jd\phi_i$. 这个基函数本身也满足有向的性质, $\phi_{ji}=-\phi_{ij}$, 一个离散 1-form 的插值可以得出: $\displaystyle\sum_{ij}\hat{\omega}\_{ij}\phi_{ij}$. 对于更高维的情况, 基函数是这样定义的: 对于 k 维的单纯形 $(i_0,\dots,i_k)$, 基函数为 $\displaystyle\sum_{p=0}^k(-1)^p\phi_{i_p}d\phi_{i_0}\wedge\dots\wedge\cancel{d\phi_{i_p}}\wedge\dots\wedge d\phi_{i_k}$. 这个基函数叫做 Whitney form. 为什么选取这个为基, 是因为对于任意一个离散的 k-form, 通过 Whitney form 插值后, 再通过 de Rham map 离散化, 可以还原出原始的离散 k-form.
+
+在离散 form 上的微分算子, 通过 Stokes 定理, 可以转变为多个离散值之间的求和. 如果把所有 k 维单纯形对应的离散 k-form 写成向量 $\hat{e}_k$, 微分算子 $\hat{d_k}:\hat{e}\_k\mapsto\hat{e}\_{k+1}$ 写成矩阵形式就是一个有向的邻接矩阵. 同样的, 离散微分算子也满足 $\hat{d}\circ\hat{d}=0$.
+
+```tikz
+\usepackage{tikz-cd}
+\begin{document}
+\Large
+\begin{tikzcd}[column sep=huge, row sep=huge]
+    \alpha \arrow[r, "d"] \arrow[d, "\int"'] & d\alpha \arrow[d, "\int"] \\
+    \hat{\alpha} \arrow[r, "\hat{d}"'] & \widehat{d\alpha}
+\end{tikzcd}
+\end{document}
+```
+
+为了在离散 form 下定义 Hodge star, 首先要在 mesh 上定义对偶. 一个 mesh 的对偶是指每个单纯形的对偶. n 维空间的 k 维单纯形的对偶是一个 n-k 维的形状 (这个单纯形并不一定在一个 n-k 维的子空间). 而离散 form 的对偶就是对每个单纯形的对偶赋予一个值. 和离散 form 不一样的是, 在对偶离散 form 中, 基函数不能用 hat function 来定义, 因为每个面不一定是单纯形, 甚至不一定是凸的形状.
+
+在微分算子中, 我们只需要 mesh 的连接性, 或者说拓扑, 而在 Hodge star 中, 我们还需要 mesh 的几何信息. 最一般地, 我们利用外心来定义单纯形的对偶中顶点的位置. 考虑 k 维单纯形 $\sigma$ 和它的对偶 $\sigma^\star$, k form $\alpha$ 在 $\sigma$ 上的积分值为 $\hat{\alpha}$, 它的对偶 n-k form 在 $\sigma^\star$ 上的积分值为 $\widehat{\star\alpha}$. 很显然没有任何定理能够描述这两个值之间的关系, 如果 $\alpha$ 是常值, 那么很显然, 他们的比值和体积成正比, 再假设 form 足够光滑或者 mesh 足够精细, 我们可以近似地认为这个比例关系成立: $\displaystyle\frac{\widehat{\star\alpha}}{\hat{\alpha}}=\displaystyle\frac{|\sigma^\star|}{|\sigma|}$. 这种定义方式也叫做 *diagonal Hodge star*, 这是因为写作矩阵形式的话是一个对角矩阵. 这些体积的比值一般只和角度和长度有关, 并不需要真正地计算体积.
+
+<img src="https://p.sda1.dev/29/46fa40785e17e4e2e936ab4107b8a56d/3d_example_hodge_star.jpg" />
