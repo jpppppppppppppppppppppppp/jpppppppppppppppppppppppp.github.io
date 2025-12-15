@@ -1,7 +1,7 @@
 ---
 title: "[MATH3610] Harmonic Analysis"
 date: 2025-09-20 16:07:09
-updated: 2025-12-2 22:34:53
+updated: 2025-12-15 14:00:53
 home_cover: https://p.sda1.dev/27/3b163beb87dacac2e7af5d12fa1e5c27/cover.PNG
 post_cover: https://p.sda1.dev/27/112269185d77bddf4f1efd879257d4c2/post.JPG
 copyright_info: true
@@ -641,9 +641,31 @@ $$
 
 ### 第八节课
 
+花了好几节课在介绍实数集上的傅里叶变换和 Schwartz Class, 姑且跳过. 下面记录一下 Heisenberg 不确定性原理的证明.
 
+函数 $f\in S(\mathbb{R})$ 且 $\|\|f\|\|_2=1$, 那么有
+$$
+\left(\int\_\mathbb{R} x^2|f(x)|^2dx\right) \left(\int\_\mathbb{R}\xi^2|\hat{f}(\xi)|^2d\xi\right) \geq \frac{1}{16\pi^2}.
+$$
 
+因为 $\|\|f\|\|_2=\|\|\hat{f}\|\|=1$, 可以把 $f$ 和 $\hat{f}$ 看成概率分布函数, 这个不等式可以写成 $\operatorname{Var}(f)^2\cdot\operatorname{Var}(\hat{f})^2\geq\displaystyle\frac{1}{16\pi^2}$. 证明的过程使用以下两个算子: $A=i\displaystyle\frac{d}{dx}$ 和 $B=x$. 计算它们的对易子:
+$$
+\begin{aligned}
+\left[A,B\right]f&=ABf-BAf\\\\
+&=i\frac{d}{dx}(x\cdot f)-x\cdot i\cdot\frac{d}{dx}f\\\\
+&=if+ix\cdot\frac{df}{dx}-ix\cdot\frac{df}{dx}=if.
+\end{aligned}
+$$
 
+因此 $[A,B]=i$. 下面再用到两个事实: $\left<Af,g\right>=\left<f,Ag\right>$, $\left<Bf,g\right>=\left<f,Bg\right>$. 那么:
+$$
+\begin{aligned}
+1&=\left<f,f\right>=\left<-i(AB-BA)f,f\right>\\\\
+&=-i\left<Bf,Af\right>+i\left<Af,Bf\right>\\\\
+&=2\operatorname{Re}(i\left<Af,Bf\right>)\leq2|\left<Af,Bf\right>|\leq 2\cdot \left<Af,Af\right>^{1/2}\left<Bf,Bf\right>^{1/2}\\\\
+&=4\pi\operatorname{Var}(f)\cdot\operatorname{Var}(\hat{f}).
+\end{aligned}
+$$
 
 ---
 
