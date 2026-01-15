@@ -414,7 +414,7 @@ $$
 
 ### 第六节课
 
-关于等周不等式的新的证明: 上节课我们是考虑从 x 轴, y 轴来参数化这个区域或曲线, 新的证明方法是用 suopport function 来参数化凸区域. Support function $h_K(\theta)$ 是指一个凸区域 $K$ 的支撑线到原点的有向距离. 通过 support function 可以把周长和面积写做: $P(K)=\displaystyle\int_0^{2\pi} h_K(\theta)d\theta$, $A(K)=\displaystyle\int_0^{2\pi}(h_K(\theta)^2+h'_K(\theta)^2)d\theta$.
+关于等周不等式的新的证明: 上节课我们是考虑从 x 轴, y 轴来参数化这个区域或曲线, 新的证明方法是用 support function 来参数化凸区域. Support function $h_K(\theta)$ 是指一个凸区域 $K$ 的支撑线到原点的有向距离. 通过 support function 可以把周长和面积写做: $P(K)=\displaystyle\int_0^{2\pi} h_K(\theta)d\theta$, $A(K)=\displaystyle\int_0^{2\pi}(h_K(\theta)^2+h'_K(\theta)^2)d\theta$.
 
 为了方便, 将 $h_K(\theta)$ 展开成三角级数:
 \begin{align*}
@@ -666,6 +666,8 @@ $$
 &=4\pi\operatorname{Var}(f)\cdot\operatorname{Var}(\hat{f}).
 \end{aligned}
 $$
+
+后面提到了一些抽象函数, 比如 Fourier Multipliers 和 Hilbert Transform. 教材上都有, 就不继续展开记录了.
 
 ---
 

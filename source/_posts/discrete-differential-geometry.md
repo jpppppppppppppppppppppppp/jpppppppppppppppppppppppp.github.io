@@ -54,7 +54,7 @@ $$
 \kappa_n(X)=\frac{df(X)\cdot dN(X)}{|df(X)|^2}.
 $$
 
-怎么理解这个式子我其实想了很久, 假设 $s$ 是 $f(X)$ 的弧长参数化, 那么 $T(X)=\displaystyle\frac{df}{ds}=\displaystyle\frac{df(X)}{ds/dt}=\displaystyle\frac{df(X)}{|df(X)|}$, 同样的 $\displaystyle\frac{dN(s)}{ds}=\displaystyle\frac{dN(X)}{ds/dt}=\displaystyle\frac{dN(X)}{|df(X)|}$. 这样可以理解为什么分布会带有平方, 因为 $dN(X)$ 也会收到 $|f(X)|$ 的拉伸而放缩.
+怎么理解这个式子我其实想了很久, 假设 $s$ 是 $f(X)$ 的弧长参数化, 那么 $T(X)=\displaystyle\frac{df}{ds}=\displaystyle\frac{df(X)}{ds/dt}=\displaystyle\frac{df(X)}{|df(X)|}$, 同样的 $\displaystyle\frac{dN(s)}{ds}=\displaystyle\frac{dN(X)}{ds/dt}=\displaystyle\frac{dN(X)}{|df(X)|}$. 这样可以理解为什么分母会带有平方, 因为 $dN(X)$ 也会收到 $|f(X)|$ 的拉伸而放缩.
 
 再观察公式 $dN=-\kappa T+\tau B$, 可以发现 $dN$ 一定落在曲面的切平面内的, 所以我们引入 Shape Operator $S:TM\mapsto TM$, 满足 $df(SX)=dN(X)$. Shape Operator 是一个线性映射, 因为方向导数可以表示成关于基的导数的线性组合.
 
@@ -259,3 +259,8 @@ $$
 在微分算子中, 我们只需要 mesh 的连接性, 或者说拓扑, 而在 Hodge star 中, 我们还需要 mesh 的几何信息. 最一般地, 我们利用外心来定义单纯形的对偶中顶点的位置. 考虑 k 维单纯形 $\sigma$ 和它的对偶 $\sigma^\star$, k form $\alpha$ 在 $\sigma$ 上的积分值为 $\hat{\alpha}$, 它的对偶 n-k form 在 $\sigma^\star$ 上的积分值为 $\widehat{\star\alpha}$. 很显然没有任何定理能够描述这两个值之间的关系, 如果 $\alpha$ 是常值, 那么很显然, 他们的比值和体积成正比, 再假设 form 足够光滑或者 mesh 足够精细, 我们可以近似地认为这个比例关系成立: $\displaystyle\frac{\widehat{\star\alpha}}{\hat{\alpha}}=\displaystyle\frac{|\sigma^\star|}{|\sigma|}$. 这种定义方式也叫做 *diagonal Hodge star*, 这是因为写作矩阵形式的话是一个对角矩阵. 这些体积的比值一般只和角度和长度有关, 并不需要真正地计算体积.
 
 <img src="https://p.sda1.dev/29/46fa40785e17e4e2e936ab4107b8a56d/3d_example_hodge_star.jpg" />
+
+### Curvature of Discrete Surfaces
+
+在连续的情况下, 法向量是容易定义的, 在离散情况下, 法向量是不确定的, 例如非平面的多边形和顶点. 
+
