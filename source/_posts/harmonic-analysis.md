@@ -1,7 +1,7 @@
 ---
 title: "[MATH3610] Harmonic Analysis"
 date: 2025-09-20 16:07:09
-updated: 2025-12-15 14:00:53
+updated: 2026-04-10 14:48:10
 home_cover: https://p.sda1.dev/27/3b163beb87dacac2e7af5d12fa1e5c27/cover.PNG
 post_cover: https://p.sda1.dev/27/112269185d77bddf4f1efd879257d4c2/post.JPG
 copyright_info: true
@@ -13,6 +13,11 @@ mathjax: true
 tikzjax: true
 excerpt: 出于纯粹的好奇心, 选了吴耀琨老师的调和分析课程, 谨做笔记.
 ---
+
+本课程已顺利结课, 课程报告一并附于此处.
+
+期中作业: <a href="https://acm.sjtu.edu.cn/~jy_15924374500/HA_mid_Project.pdf">link</a>, 介绍了多种 Uncertainty Principle.
+期末作业: <a href="https://acm.sjtu.edu.cn/~jy_15924374500/HA_final_Project.pdf">link</a>, 阅读了关于 Boolean Function Property Testing 的论文, 侧重其 Booleanity and Sparsity.
 
 ### 第一节课
 
