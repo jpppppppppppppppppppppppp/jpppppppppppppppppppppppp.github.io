@@ -1,7 +1,7 @@
 ---
 title: "Discrete Differential Geometry"
 date: 2025-10-23 21:20:51
-updated: 2025-12-13 19:01:03
+updated: 2026-04-10 14:48:44
 home_cover: https://p.sda1.dev/28/4758f7df8a1e40db126c60e74da62de0/cover.png
 post_cover: https://p.sda1.dev/28/c9db327e7e9ec33ba2973c63a6eed6f3/post.PNG
 copyright_info: true
@@ -11,7 +11,7 @@ categories:
     - Notes
 mathjax: true
 tikzjax: true
-excerpt: "[Keenan Crane] Discrete Differential Geometry"
+excerpt: "[Keenan Crane] Discrete Differential Geometry."
 ---
 
 Homepage: <a href="https://www.cs.cmu.edu/~kmcrane/Projects/DDG/">Discrete Differential Geometry: An Applied Introduction</a>
@@ -260,7 +260,40 @@ $$
 
 <img src="https://p.sda1.dev/29/46fa40785e17e4e2e936ab4107b8a56d/3d_example_hodge_star.jpg" />
 
-### Curvature of Discrete Surfaces
+### The Laplacian
 
-在连续的情况下, 法向量是容易定义的, 在离散情况下, 法向量是不确定的, 例如非平面的多边形和顶点. 
+在讨论离散化之前, 先建立对 Laplacian 和标准 Poisson 方程的基本理解: $\Delta\phi=\rho$.
+
+函数 $\phi:M\mapsto\mathbb{R}$ 满足 $\Delta\phi=0$ 则称为 harmonic. 在无边界的环面上, harmonic function 只有常值函数.
+
+我们首先需要使用散度定理: $\displaystyle\int_\Omega \nabla\cdot XdA=\displaystyle\int_{\partial\Omega}n\cdot Xdl$. 取两个函数 $\psi,\phi$, 并令 $X=\psi\nabla\phi$. 那么 $\nabla\cdot(\psi\nabla\phi)=\psi\Delta\phi+\nabla\psi\cdot\nabla\phi$.
+
+这一步同样可以用外微分得到: $d\star(\psi\wedge d\phi)=d(\psi\wedge\star d\phi)=d\psi\wedge\star d\phi+\psi\wedge d\star d\phi$.
+
+所以我们得到 $\displaystyle\int_\Omega\nabla\cdot(\psi\nabla\phi)dA=\displaystyle\int_{\Omega}\psi\Delta\phi+\nabla\psi\cdot\nabla\phi dA=\displaystyle\int_{\partial\Omega}n\cdot(\psi\nabla\phi)dl=0$.
+
+并带入 $\psi=\phi$, 且 $\Delta\phi=0$. 我们得到 $\displaystyle\int_{\Omega}|\nabla\phi|^2dA=0$. 所以 $\phi$ 是常值函数.
+
+这个结论说明对于 Poisson 方程的解, 加上任意常数仍然是解. 另一个比较直接的结论是在无边界的环面上, 常值函数不是 Laplacian 的像, 即不存在满足 $\Delta\phi=c$ 的函数. 当我们讨论一个 Poisson 方程时, 可以在 $\rho$ 不为常值函数的情况下讨论. 在一些特殊的情况下, 可以在保证有意义的条件下减去一个常数, 例如求解 $\Delta\phi=\rho-\bar{\rho}$. 当然, 这需要在特殊的问题上保证有意义.
+
+对于函数定义内积 $\langle f,g\rangle=\displaystyle\int_\Omega f(x)g(x)dA$, 对向量场定义内积 $\langle X,Y\rangle=\displaystyle\int_\Omega X\cdot YdA$.
+
+上面得到的结论可以写为: $\langle\Delta f,g\rangle=-\langle\nabla f,\nabla g\rangle+\langle N\cdot\nabla f,g\rangle_\partial$.
+
+如果在无边界的环面上, Laplacian 是一个半负定的算子:
+$$
+\langle\Delta f,f\rangle=-\langle\nabla f,\nabla f\rangle\leq0.
+$$
+
+当我们尝试求解方程 $\Delta u=f$ 时, 如何判断函数 $\tilde{u}$ 是否是解? 我们通过一系列测试函数 $\langle\Delta\tilde{u}, \phi_j\rangle=0$, 我们选取 hat function 作为测试函数. 那么:
+$$
+\langle\Delta u,\phi_j\rangle=\sum_k\langle\Delta u,\phi_j\rangle_{\sigma_k}=-\sum_k\langle\nabla u,\nabla\phi_j\rangle_{\sigma_k}+\sum_k\langle N\cdot\nabla u,\phi_j\rangle_{\partial\sigma_k}.
+$$
+
+如果最终的边界为空集, 那么只剩下 $\langle\nabla u,\nabla\phi_j\rangle$ 这一项. 对 $u$ 展开成线性表达式:
+$$
+\langle\nabla u,\nabla\phi_j\rangle=\sum_i u_i\langle\nabla\phi_i,\nabla\phi_j\rangle.
+$$
+
+接下来是需要构建矩阵 $A_{ij}=\langle\phi_i,\phi_j\rangle$ 并求解方程 $Au=b$, 这里 $b_i=\langle f,\phi_i\rangle$.
 
