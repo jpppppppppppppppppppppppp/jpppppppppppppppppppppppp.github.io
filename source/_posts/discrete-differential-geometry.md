@@ -14,7 +14,9 @@ tikzjax: true
 excerpt: "[Keenan Crane] Discrete Differential Geometry."
 ---
 
-Homepage: <a href="https://www.cs.cmu.edu/~kmcrane/Projects/DDG/">Discrete Differential Geometry: An Applied Introduction</a>
+Homepage: <a href="https://www.cs.cmu.edu/~kmcrane/Projects/DDG/">Discrete Differential Geometry: An Applied Introduction.</a>
+
+学习的初衷是为了看懂文章: <a href="https://openreview.net/forum?id=jjEnTBsffi">\"Guaranteed Simply Connected Mesh Reconstruction from an Unorganized Point Cloud.\"</a> 已经在同学的帮助下理解了该文章, 故不再继续更新.
 
 ### A Quick and Dirty Introduction to Differential Geometry
 
