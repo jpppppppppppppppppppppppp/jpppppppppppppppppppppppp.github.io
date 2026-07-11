@@ -107,4 +107,17 @@ $$
 
 $A=\begin{pmatrix}1 & 0 \\\\ 0 & 0\end{pmatrix}, \quad B=\begin{pmatrix}0 & 1 \\\\ 0 & 0\end{pmatrix}$. 则 $AB=\begin{pmatrix}0 & 1 \\\\ 0 & 0\end{pmatrix}$, $BA=\begin{pmatrix}0 & 0 \\\\ 0 & 0\end{pmatrix}$. 它们的特征多项式都是 $\lambda^2$, 但是不相似.
 
+实对称矩阵的复数推广是 Hermite 矩阵, 记为 $A^\*=A$. Hermite 矩阵的特征值均为实数, 且可以酉对角化, 即存在酉矩阵 $U$ 使得 $U^\*AU$ 为对角矩阵. 设 $A$ 为半正定矩阵, 那么存在唯一的半正定矩阵 $P$ 使得 $A=P^\*P=P^2$, 矩阵 $P$ 也被称为 $A$ 的平方根, 记为 $\sqrt{A}$ 或 $A^{1/2}$.
+
+证明: 设 $r = \operatorname{rank}(A)$. 知存在 $\sigma_1\geq\cdots\geq\sigma_r>0$ 和对角矩阵 $D=\operatorname{diag}(\sigma_1^2,\dots,\sigma_r^2,0,\dots,0)$ 与酉矩阵 $U$, 使得 $A=UDU^\*$. 令 $P=UD^{1/2}U^\*$, 则 $P$ 为半正定矩阵, 且 $A=P^\*P$.
+
+再证明唯一性. 设 $P, Q$ 均为秩为 $r$ 的半正定矩阵, 且 $A=Q^2=P^2$. 设酉矩阵 $W$ 使得 $W^\*QW=\begin{pmatrix}\Lambda & 0 \\\\ 0 & 0\end{pmatrix}$, 其中 $\Lambda$ 为 $r$ 阶正定对角矩阵. 则 $W^\*Q^2W=\begin{pmatrix}\Lambda^2 & 0 \\\\ 0 & 0\end{pmatrix}=(W^\*PW)^\*(W^\*PW)$. 上式表明 $W^*PW$ 的后 $n-r$ 列均为 $0$, 而由于其半正定性, 其后 $n-r$ 行也为 $0$, 所以可以写为 $W^\*PW=\begin{pmatrix}R & 0 \\\\ 0 & 0\end{pmatrix}$, 这里 $R$ 为 $r$ 阶半正定矩阵. 于是 $\Lambda^2=R^2$, 所以 $\Lambda=R$, 因为 $\Lambda$ 是正定的, 所以 $P=Q$.
+
+一道习题: (Ky Fan Inequality) 设 $A, B$ 均为正定矩阵, $\alpha, \beta \geq 0, \alpha+\beta=1$, 则 $\operatorname{det}(\alpha A+\beta B) \geq \operatorname{det}(A)^\alpha \operatorname{det}(B)^\beta$.
+
+$A$ 正定, 所以存在平方根 $A^{1/2}$, 同样存在 $A^{-1/2}$. 设 $C=A^{-1/2}BA^{-1/2}$, 则 $C$ 也是正定矩阵. 于是 $\alpha A+\beta B=A^{1/2}(\alpha I+\beta C)A^{1/2}$.
+
+两边取行列式, 得到 $\operatorname{det}(\alpha A+\beta B)=\operatorname{det}(A)\operatorname{det}(\alpha I+\beta C)$. 设 $C$ 的特征值为 $\lambda_1,\dots,\lambda_n>0$. 又因为 $C$ 是正定矩阵可以酉对角化, 所以 $\operatorname{det}(\alpha I+\beta C)=\displaystyle\prod_{i=1}^n (\alpha+\beta\lambda_i)$. 对右边依次放缩 $\alpha\cdot1+\beta\lambda_i\geq1^\alpha\lambda_i^\beta$.
+
+所以 $\operatorname{det}(\alpha A+\beta B)\geq \operatorname{det}(A)\operatorname{det}\(C)^\beta=\operatorname{det}(A)^\alpha \operatorname{det}(B)^\beta$.
 
