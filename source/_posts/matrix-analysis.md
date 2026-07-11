@@ -1,7 +1,7 @@
 ---
 title: "Matrix Analysis"
 date: 2026-04-24 23:22:22
-updated: 2026-07-03 0:31:14
+updated: 2026-07-12 1:40:22
 home_cover: https://p.sda1.dev/32/4b7f08b1be244fdbffa12865bec5f918/cover.jpg
 post_cover: https://p.sda1.dev/32/fc5f5ce56aa068a6fecf50b560c26bf9/post.jpg
 copyright_info: true
