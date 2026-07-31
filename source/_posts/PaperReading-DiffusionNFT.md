@@ -1,7 +1,7 @@
 ---
 title: 'PaperReading: DiffusionNFT'
 date: 2026-07-30 23:21:28
-updated: 2026-07-30 23:21:28
+updated: 2026-07-31 22:40:23
 home_cover: https://p.sda1.dev/34/21f46e32fba900619c2ac475bbe619d9/cover.jpg
 post_cover: https://p.sda1.dev/34/b54abdf7b0deb3a21c19309b43e508d8/post.jpg
 copyright_info: true
