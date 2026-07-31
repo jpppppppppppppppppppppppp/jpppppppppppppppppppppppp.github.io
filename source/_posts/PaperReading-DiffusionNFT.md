@@ -30,7 +30,7 @@ $$
 $$
 \begin{aligned}
 v_\theta^*(x_t,t,c)&=\mathbb{E}\left[\dot{x_t}\|x_t, t, c\right]\\\\
-&=\mathbb{E}\left[\dot{\alpha}x_0 + \dot{\sigma_t}\frac{x_t-\alpha_t x_0}{\sigma_t} \| x_t, t, c \right]\\\\
+&=\mathbb{E}\left[\dot{\alpha_t}x_0 + \dot{\sigma_t}\frac{x_t-\alpha_t x_0}{\sigma_t} \| x_t, t, c \right]\\\\
 &=\frac{\dot{\sigma_t}}{\sigma_t} x_t + (\dot{\alpha_t}-\frac{\alpha_t\dot{\sigma_t}}{\sigma_t})\cdot\underset{x_0\sim\pi(x_0|x_t,c)}{\mathbb{E}}[x_0]
 \end{aligned}
 $$
