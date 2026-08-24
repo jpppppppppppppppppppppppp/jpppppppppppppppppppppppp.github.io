@@ -1,7 +1,7 @@
 ---
 title: "Matrix Analysis"
 date: 2026-04-24 23:22:22
-updated: 2026-07-12 1:40:22
+updated: 2026-08-23 23:05:52
 home_cover: https://p.sda1.dev/32/4b7f08b1be244fdbffa12865bec5f918/cover.jpg
 post_cover: https://p.sda1.dev/32/fc5f5ce56aa068a6fecf50b560c26bf9/post.jpg
 copyright_info: true
@@ -121,3 +121,40 @@ $A$ 正定, 所以存在平方根 $A^{1/2}$, 同样存在 $A^{-1/2}$. 设 $C=A^{
 
 所以 $\operatorname{det}(\alpha A+\beta B)\geq \operatorname{det}(A)\operatorname{det}\(C)^\beta=\operatorname{det}(A)^\alpha \operatorname{det}(B)^\beta$.
 
+### 第二章: 线性空间与线性变换
+
+一些重要的线性变化: 设 $P$ 是 $n$ 阶可逆矩阵, $Q$ 是 $m$ 阶可逆矩阵, 那么
+
+$$
+X\mapsto PXQ
+$$
+是矩阵空间 $\mathbb{F}^{m\times n}$ 的一个自同构, 称为相抵变化.
+
+$$
+X\mapsto P^{-1}XP
+$$
+是矩阵空间 $M_n(\mathbb{F})$ 的一个自同构, 称为由 $P$ 诱导的相似变换.
+
+$$
+X\mapsto P^{T}XP
+$$
+是矩阵空间 $M_n(\mathbb{F})$ 的一个自同构, 称为由 $P$ 诱导的合同变换.
+
+设 $A\in\mathbb{F}^{m\times m}, B\in\mathbb{F}^{n\times n}, C\in\mathbb{F}^{m\times n}$, 则矩阵线性方程 $AX-XB=C$ 有唯一解当且仅当 $A$ 与 $B$ 无公共特征值.
+
+定义 $\sigma\in \operatorname{End}(\mathbb{F}^{m\times n})$ 如下:
+$$
+\sigma: X\mapsto AX-XB,
+$$
+容易证明 $\sigma$ 是自同构 $\Leftrightarrow$ $A$ 与 $B$ 无公共特征值.
+
+其推论为 $\begin{pmatrix}A & C \\\\ O & B\end{pmatrix}$ 与 $\begin{pmatrix}A & O \\\\ O & B\end{pmatrix}$ 相似.
+
+因为 $\begin{pmatrix}I & M \\\\ O & I\end{pmatrix} \begin{pmatrix}A & C \\\\ O & B\end{pmatrix} = \begin{pmatrix}A & O \\\\ O & B\end{pmatrix} \begin{pmatrix}I & M \\\\ O & B\end{pmatrix}$, 其中 $AM-MB=C$.
+
+设 $V=\mathbb{Q}[x]$ 是有理数域上的一元多项式空间, $\mathbb{Q}[[x]]$ 是有理数域上的一元形式幂级数空间, 定义
+$$
+\phi: V^\*\mapsto\mathbb{Q}[[x]],\quad \phi(f)=\sum_{i=0}^\infty f(x^i) x^i, \quad \forall f\in V^\*.
+$$
+
+容易说明 $\phi$ 是同构, 因此 $V^\*\cong \mathbb{Q}[[x]]$, 而由于 $\mathbb{Q}[x]$ 是可数集合, $\mathbb{Q}[[x]]$ 是不可数集和, 因此 $V=\mathbb{Q}[x]\not\cong \mathbb{Q}[[x]]=V^\*$.
