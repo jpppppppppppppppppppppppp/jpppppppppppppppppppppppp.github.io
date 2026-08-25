@@ -1,7 +1,7 @@
 ---
 title: "Matrix Analysis"
 date: 2026-04-24 23:22:22
-updated: 2026-08-23 23:05:52
+updated: 2026-08-24 20:34:19
 home_cover: https://p.sda1.dev/32/4b7f08b1be244fdbffa12865bec5f918/cover.jpg
 post_cover: https://p.sda1.dev/32/fc5f5ce56aa068a6fecf50b560c26bf9/post.jpg
 copyright_info: true
@@ -158,3 +158,18 @@ $$
 $$
 
 容易说明 $\phi$ 是同构, 因此 $V^\*\cong \mathbb{Q}[[x]]$, 而由于 $\mathbb{Q}[x]$ 是可数集合, $\mathbb{Q}[[x]]$ 是不可数集和, 因此 $V=\mathbb{Q}[x]\not\cong \mathbb{Q}[[x]]=V^\*$.
+
+华罗庚半同态定理: 设 $V=\mathbb{F}^{n\times n}$, $\mathbb{H}=\\{f: V\mapsto V | f(X+Y)=f(X)+f(Y), \forall X,Y\in V\\}$, 那么 $\forall X,Y, [f(XY)=f(X)f(Y) \wedge f(XY)=f(Y)f(X)] \Rightarrow [\forall X,Y, f(XY)=f(X)f(Y)]\wedge[\forall X,Y, f(XY)=f(Y)f(X)]$.
+
+内积的 Riesz 表示定理: 设 $(V, (\cdot,\cdot))$ 是 $n$ 维内积空间, $\forall f\in V^\*,\exists v_0\in V$ 使得 $f(v)=(v,v_0)$.
+
+在内积空间 $V$ 中, 映射 $\varphi:V\mapsto V^\*,\varphi(v)(u)=(v,u)$ 是一个线性同构. 而在一般的线性空间 $V$ 中, $V$ 和 $V^\*$ 之间不存在普通的线性映射.
+
+书中用 "泛性质" 的语言定义了什么是张量积: 设 $U_1,U_2,V$ 是三个线性空间, $t:U_1\times U_2\mapsto V$ 是双线性映射. 如果对于任意线性空间 $W$ 与任意双线性映射 $f:U_1\times U_2\mapsto W$, 均存在唯一的线性变换 $u:V\mapsto W$ 使得 $u\circ t=f$, 则称 $(V,t)$ 是 $U_1,U_2$ 的张量积.
+
+这里 $t$ 既不是单射, 也不是满射, 比如并非所有的用 $U_1\otimes U_2$ 的基表示的向量都可以表示为 $x\otimes y$, 而多个 $x\otimes y$ 也可以写成相同的形式. 真正一一对应的是原本空间上的双线性变换和新空间上的线性变换一一对应. 张量积的意义就是把双线性线性化的最小空间.
+
+直和和张量积可以认为是线性空间的加法和乘法, 商空间可以认为是线性空间的减法.
+
+
+
