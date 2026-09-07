@@ -1,7 +1,7 @@
 ---
 title: "Oriented Matroids"
 date: 2026-08-26 20:52:47
-updated: 2026-09-06 16:34:31
+updated: 2026-09-07 00:21:29
 home_cover: https://p.sda1.dev/34/a02d8ca62759e5d9983ed95a3e822782/cover.jpg
 post_cover: https://p.sda1.dev/34/1f2656e074b6bfc49e46aed500b4d614/post.jpg
 copyright_info: true
@@ -45,7 +45,31 @@ We denote the resulting oriented matroid by $\mathcal{M}_D=\mathcal{M}(E)=(E,\ma
 
 A second description uses minimal cuts. Given a partition $V=V^1\dot\cup V^2$ of the vertex set, the arcs between $V^1$ and $V^2$ form a **minimal cut** if removing them increases the number of connected components of the underlying undirected graph by one. Let $Y^+$ consist of the arcs directed from $V^1$ to $V^2$, and let $Y^-$ consist of those directed from $V^2$ to $V^1$. The resulting signed sets $Y=(Y^+,Y^-)$ are called the **signed cocircuits** of $D$. We write
 $$
-\mathcal{C}^*=\\{Y=(Y^+,Y^-):Y\text{ is a signed cocircuit of }D\\}.
+\mathcal{C}^\*=\\{Y=(Y^+,Y^-):Y\text{ is a signed cocircuit of }D\\}.
 $$
 
+Properties of $D$ can be expressed in terms of the collections $\mathcal{C}$ and $\mathcal{C}^\*$. For example, the digraph $D$ is acyclic—that is, it contains no directed cycle—if and only if $\mathcal{C}$ contains no positive circuit, where a circuit $X$ is positive if $X^-=\emptyset$. The same property can be characterized in terms of cocircuits: $D$ is acyclic if and only if every arc belongs to a positive cocircuit. In other words, for every $e\in E$, there exists a cocircuit $Y=(Y^+,\emptyset)$ such that $e\in Y^+$.
 
+<details>
+    <summary>Sketch of Proof.</summary>
+
+Suppose that $D$ is acyclic, and fix an arc $e=(u,v)\in E$. Let $S=\\{x\in V:x\leadsto u\\}$ be the set of vertices from which $u$ is reachable. Since $D$ is acyclic, $v\notin S$; otherwise, a path from $v$ to $u$, together with the arc $(u,v)$, would form a directed cycle. Hence, $e$ belongs to the cut induced by the partition $V=S\mathbin{\dot\cup}(V\setminus S)$. Moreover, no arc enters $S$: if $(x,y)$ were an arc with $x\notin S$ and $y\in S$, then $y\leadsto u$ would imply $x\leadsto u$, contradicting $x\notin S$. Thus, this cut is positive. By restricting it to a minimal cut containing $e$, we obtain a positive cocircuit $Y=(Y^+,\emptyset)$ with $e\in Y^+$.
+
+</details>
+
+We now introduce the dual oriented matroid, whose collection of circuits is $\mathcal{C}^\*$. To motivate this definition, suppose that $D$ is a planar digraph. There is a canonical way to orient its dual graph $D^\*$ such that the circuits $\mathcal{C}(D^\*)$ of the dual graph correspond exactly to the cocircuits $\mathcal{C}^\*(D)$ of the original graph, and conversely.
+
+The next important property is **orthogonality**: if a directed cycle crosses a cut in one direction, then it must also cross the cut in the opposite direction.
+
+- If $X\in\mathcal{C}$ is a circuit and $Y\in\mathcal{C}^\*$ is a cocircuit of an oriented matroid, then
+$$
+ (X^+\cap Y^+)\cup(X^-\cap Y^-)\neq\emptyset
+ \quad\Longleftrightarrow\quad
+ (X^+\cap Y^-)\cup(X^-\cap Y^+)\neq\emptyset.
+$$
+
+For two signed sets $X$ and $Y$, let
+$$
+S(X,Y)=(X^+\cap Y^-)\cup(X^-\cap Y^+)
+$$
+denote their **separation set**. The orthogonality condition can then be written as $X\perp Y$ for every $X\in\mathcal{C}$ and every $Y\in\mathcal{C}^\*$.
