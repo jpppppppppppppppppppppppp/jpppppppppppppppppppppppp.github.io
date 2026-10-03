@@ -1,7 +1,7 @@
 ---
 title: "AI4MathProof: Notes from a Research Experiment"
 date: 2026-10-03 11:21:35
-updated: 2026-10-03 11:33:55
+updated: 2026-10-03 16:18:29
 home_cover: https://p.sda1.dev/35/6d898d019e35e0841a210d079ac509e3/cover.jpeg
 post_cover: https://p.sda1.dev/35/66da01baaf6af4f63bc10521e5782f53/post.jpeg
 copyright_info: true
