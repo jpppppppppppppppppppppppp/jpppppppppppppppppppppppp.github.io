@@ -1,7 +1,7 @@
 ---
 title: "Oriented Matroids"
 date: 2026-08-26 20:52:47
-updated: 2026-09-07 00:21:29
+updated: 2026-10-10 01:09:20
 home_cover: https://p.sda1.dev/34/a02d8ca62759e5d9983ed95a3e822782/cover.jpg
 post_cover: https://p.sda1.dev/34/1f2656e074b6bfc49e46aed500b4d614/post.jpg
 copyright_info: true
@@ -73,3 +73,48 @@ $$
 S(X,Y)=(X^+\cap Y^-)\cup(X^-\cap Y^+)
 $$
 denote their **separation set**. The orthogonality condition can then be written as $X\perp Y$ for every $X\in\mathcal{C}$ and every $Y\in\mathcal{C}^\*$.
+
+### 1.2 Point configurations and hyperplane arrangements
+
+#### Vector configurations
+
+Linear dependence and independence in vector spaces provide alternative ways to view oriented matroids. Given a finite set of vectors that spans a vector space of dimension $r$ over an arbitrary field, the minimal linear dependences yield the circuits of a matroid of rank $r$. Over $\mathbb{R}$, a minimal linear dependence may be written as
+$$
+\sum_{i=1}^n \lambda_i \boldsymbol{v}_i=\boldsymbol{0}
+$$
+with $\lambda_i\in\mathbb{R}$, not all zero. Here the sets $\underline{X}=\\{i:\lambda_i\neq0\\}$ are the circuits of the underlying matroid. For the associated oriented matroid, we consider the signed sets $X=(X^+,X^-)$.
+
+This yields the oriented matroid $\mathcal{M}=(E,\mathcal{C})$ of a vector configuration $E=\\{\boldsymbol{v}_1,\dots,\boldsymbol{v}_n\\}\subsetneq \mathbb{R}^r$ in terms of its collection $\mathcal{C}$ of signed circuits.
+
+If $E$ provides the same list of signed circuits for a given oriented matroid $\mathcal{M}_0$, we say $E$ is a realization of $\mathcal{M}_0$.
+
+The basis orientation or chirotope of a vector configuration is given by the signs of the determinants of ordered $r$-subsets of $E$.
+$$
+\chi(i_1,\dots,i_r)=\operatorname{sign} \operatorname{det} (\boldsymbol{v}\_{i_1},\dots,\boldsymbol{v}\_{i_r})\in\\{+,-,0\\}.
+$$
+The function $\chi$ is antisymmetric.
+
+In addition to antisymmetry, the determinants of a configuration of vectors also satisfy Grassmann-Pl&uuml;cker relations. To describe these relations, consider the Pl&uuml;cker embedding $\eta$ of the Grassmannian of $k$-dimensional subspaces of an $n$-dimensional vector space $V$ into the projectivization of the $k$-th exterior power of $V$.
+$$
+\eta:\quad\begin{gather}
+\operatorname{Gr}(k,V)\to \mathbb{P}(\wedge^k V)\\\\
+\operatorname{Span}(w_1,\dots,w_k)\mapsto [w_1\wedge\dots\wedge w_k]
+\end{gather}
+$$
+Here $w_1,\dots,w_k$ form a basis of the chosen subspace. The homogeneous coordinates of the image under this embedding satisfy a simple set of homogeneous quadratic relations. After choosing a basis of $V$, let $[w]$ be the $n\times k$ matrix whose columns are the coordinates of $w_1,\dots,w_k$, and define $\Delta_{i_1,\dots,i_k}$ to be the determinant of the $k\times k$ submatrix obtained by selecting rows $i_1,\dots,i_k$ in that order. Then for any two ordered sequences
+$$
+1\leq\quad\begin{gather}
+    i_1<i_2<\dots<i_{k-1}\\\\
+    j_1<j_2<\dots<j_{k+1}
+\end{gather}\quad\leq n,
+$$
+we have
+$$
+\sum_{l=1}^{k+1}(-1)^l\Delta_{i_1,\dots,i_{k-1},j_l}\Delta_{j_1,\dots,\hat{j}\_l,\dots,j_{k+1}}=0.
+$$
+
+For example, in rank $3$, with $i=(1,2)$ and $j=(1,3,4,5)$, and writing determinants in brackets, we have
+$$
+-\underbrace{[121]}_{=0}[345]+[123][145]-[124][135]+[125][134]=0.
+$$
+The corresponding oriented matroid axiom thus requires that the six signs of the brackets on the left-hand side allow the equality to hold, even when the actual scalars are not given. In other words, the three terms $[123][145]$, $-[124][135]$, and $[125][134]$ must either all be zero or include both a positive and a negative term.
