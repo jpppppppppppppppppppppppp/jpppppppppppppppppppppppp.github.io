@@ -1,7 +1,7 @@
 ---
 title: 'PaperReading: DiffusionNFT'
 date: 2026-07-30 23:21:28
-updated: 2026-07-31 22:40:23
+updated: 2026-10-13 00:49:23
 home_cover: https://p.sda1.dev/34/21f46e32fba900619c2ac475bbe619d9/cover.jpg
 post_cover: https://p.sda1.dev/34/b54abdf7b0deb3a21c19309b43e508d8/post.jpg
 copyright_info: true
@@ -15,6 +15,11 @@ excerpt: "[2025.09.19] DiffusionNFT: Online Diffusion Reinforcement with Forward
 ---
 
 Link: <a href="https://arxiv.org/abs/2509.16117v2">DiffusionNFT: Online Diffusion Reinforcement with Forward Process</a>.
+Link: <a href="https://www.cs.utexas.edu/~lqiang/notes/taylor_diffusion_nft.pdf">DiffusionNFT as Taylor Approximation</a>.
+
+---
+
+### 一编 DiffusionNFT
 
 DiffusionNFT 提出了一种在 forward process 中用 RL 训练 Diffusion Model 的方法, 在除了数据收集阶段, 不需要任何 reverse process. 所以不依赖任何 Solver 求解 ODE. 由于本人对于 Diffusion Model 的了解还非常的浅层, 也希望能够在未来回过头来继续补充本篇.
 
@@ -114,7 +119,7 @@ $$
 
 从而, 为了实现 $v^*\leftarrow v^{\text{old}} + \displaystyle\frac{1}{\beta}\Delta$, 我们可以同时利用 $v^+$ 和 $v^-$:
 
-$$
+<span id="2"></span>$$
 \begin{gathered}
 \mathcal{L}(\theta)=\underset{c,t,\pi^{\text{old}}(x_0|c)}{\mathbb{E}}\left[ r\|\| v_\theta^+(x_t,c,t)-v \|\|\_2^2 + (1-r) \|\| v\_\theta^-(x_t,c,t)-v \|\|_2^2 \right],
 \\\\
@@ -145,7 +150,7 @@ $$
 
 对内部的期望进行改造:
 
-$$
+<span id="3"></span>$$
 \begin{aligned}
 \textcolor{red}{\pi^{\text{old}}\_{0|t}(x_0|x_t,c)}r(x_0, c) &=
 \textcolor{blue}{r(x_0,c) \cdot} \frac{\textcolor{blue}{\pi^{\text{old}}(x_0|c)} \pi(x_t|x_0) }{\pi^{\text{old}}\_t(x_t|c)} \\\\
@@ -153,6 +158,7 @@ $$
 &=\textcolor{blue}{p(o=1|c)\frac{\pi^+\_t(x_t|c)}{\pi^{\text{old}}\_t(x_t|c)}}\cdot \pi^+\_{0|t}(x_0|x_t,c) \\\\
 &=\alpha(x_t) \cdot \pi^+\_{0|t}(x_0|x_t,c).
 \end{aligned}
+\tag{3}
 $$
 
 同理 $\pi^{\text{old}}\_{0|t}(x_0|x_t,c)[1-r(x_0, c)] = [1-\alpha(x_t)]\cdot\pi^-\_{0|t}(x_0|x_t,c)$. 因此内部的期望可以重写为
@@ -207,3 +213,46 @@ w(t)\Vert v\_\theta(x_t,c,t)-v \Vert_2^2\leftarrow \frac{\Vert x\_\theta(x_t,c,t
 $$
 
 训练采用 $r=32$ 的 LoRA 微调, 每个 epoch 采样 48 个 prompts, 每个 prompt 采样 24 张图片.
+
+### 二编 DiffusionNFT
+
+近期阅读了很多关于 Diffusion Model 后训练的文章, 偶然翻阅到 Qiang Liu 老师对 DiffusionNFT 的评述, 对其 learning object 作出了一定的解释. 因此我用自己的语言重新讲解一下老师的近似思想.
+
+我们已经知道了在式 <a href="#2">(2)</a> 中, 优化 $\mathcal{L}(\theta)$ 得到的最优速度场为 $v_\theta^*(x_t,c,t)=v^{\text{old}}(x_t,c,t)+\displaystyle\frac{2}{\beta}\Delta(x_t,c,t)$, 并且其中
+$$
+\Delta=\alpha(x_t)\left[v^+(x_t,c,t)-v^{\text{old}}(x_t,c,t)\right],
+\quad v^+(x_t,c,t)=\underset{\pi^+}{\mathbb{E}}[v(x_t,c,t)]=
+\frac{\underset{x_0\sim\pi^{\text{old}}\_{0|t}(x_0|x_t,c,t)}{\mathbb{E}}[r(x_0, c)v(x_t,c,t)]}{\underset{x_0\sim\pi^{\text{old}}\_{0|t}(x_0|x_t,c,t)}{\mathbb{E}}[r(x_0,c)]}.
+$$
+
+从式 <a href="#3">(3)</a> 中可以得到 $\alpha(x_t)$ 的更加精确的含义:
+$$
+\pi^{\text{old}}\_{0|t}(x_0|x_t,c)r(x_0, c)=\alpha(x_t) \cdot \pi^+\_{0|t}(x_0|x_t,c)
+\overset{\text{Integrate on }x_0}{\Rightarrow}
+\alpha(x_t)=\underset{x_0\sim\pi^{\text{old}}\_{0|t}(x_0|x_t,c)}{\mathbb{E}}[r(x_0, c)].
+$$
+
+也就是说 $\tilde{r}=\underset{x_0\sim\pi^{\text{old}}(x_0|c)}{\mathbb{E}}[r(x_0,c)]$ 是在给定 prompt $c$ 的条件下, 模型获得的 reward 的期望, 那么 $\alpha(x_t)$ 就是既给定 $c$ 又给定中间时刻 $x_t$ 的条件下, 模型能获得的 reward 的期望.
+
+因此我们简写为 $\Delta(x_t,c,t)=\mathbb{E}[rv]-\mathbb{E}[r]\mathbb{E}[v]=\underset{x_0\sim\pi^{\text{old}}(x_0|x_t,c,t)}{\operatorname{Cov}}(v,r)$.
+
+$v^{\pm}\_t$ 是分别从 $\pi^{\pm}$ 上得到的理想速度场, 而 $\pi^{\pm}$ 又是 $r(x_0,c)$ 和 $\pi$ 加权得到的, 而我们学习得到的 $v^\*\_t$ 虽然是 $v^{\pm}\_t$ 的线性组合, 这并不意味着由此得到的数据分布 $\pi^\*$ 也是 $\pi^{\pm}$ 的线性组合. Qiang Liu 老师用指数函数加权构造了新的数据分布 $\pi^\lambda$, 并得到 $v^*\_t$ 是 $v^\lambda\_t$ 的一阶近似.
+
+具体地, 构造如下指数加权分布:
+$$
+\pi^\lambda(x_0|c)=\frac{\pi^{\text{old}}(x_0|c)\cdot\exp(\lambda\cdot r(x_0,c))}{\hat{Z_\lambda}},\quad\hat{Z}_\lambda=\int \pi^{\text{old}}(x_0|c)\cdot\exp(\lambda\cdot r(x_0,c)) dx_0.
+$$
+
+当 $\lambda$ 从 $0$ 变化到 $1$ 时, $\pi^\lambda$ 从 $\pi^{\text{old}}$ 变化到 $\pi^+$. 类似的, 这里导出的理想速度场为 $v^\lambda\_t=\displaystyle\frac{\mathbb{E}[v\_t\cdot e^{\lambda r}]}{\mathbb{E}[e^{\lambda r}]}$.
+
+因此,
+$$
+\frac{\partial v^\lambda\_t}{\partial\lambda}=\frac{\mathbb{E}[v\_tr\cdot e^{\lambda r}]\mathbb{E}[e^{\lambda r}]-\mathbb{E}[v\_t\cdot e^{\lambda r}]\mathbb{E}[r\cdot e^{\lambda r}]}{\mathbb{E}[e^{\lambda r}]^2},\quad
+\left.\frac{\partial v^\lambda\_t}{\partial\lambda}\right|_{\lambda=0}=\mathbb{E}[v\_tr]-\mathbb{E}[v\_t]\mathbb{E}[r]=\Delta.
+$$
+
+根据一阶 Taylor 近似, 我们有 $v^\pm\_t\approx v^{\pm2}\_t$ 和 $v^\*\_t\approx v^{2/\beta}\_t$. 因此 $\pi^\pm\approx\pi^{\pm2}$ 和 $\pi^\*\approx\pi^{2/\beta}$. 并且这里的近似程度与步长和 reward 的分布程度有关.
+
+例如 $r(x\_0,c)=r\_\*\(c\)+\eta f(x\_0,c)$, 其中 $|f(x\_0,c)|\leq1$, 那么近似误差可以 bound 为 $O\left(\displaystyle\frac{4\eta^2}{\beta^2}\right)$.
+
+文中指出了一个问题, 既然通过 DiffusionNFT 得到的理想速度场和分布有一个 close-form 的近似解, 那为什么不直接用 $\pi^\lambda$ 作为训练目标, 更一般地, 给定一个非负函数 $\Phi\(r\)$, 定义 $\pi^\Phi\sim\pi^{\text{old}}(\cdot)\Phi\(r\)$, 可以通过 $\mathcal{L}\_\Phi=\mathbb{E}[\Phi\(r\)\\|v\_\theta-v\\|^2]$ 加权的方式直接训练出来. 文中提出: 与这种加权的直接训练相比, 双分支具体提供了什么额外的信息收益? 文中并没有回答这个问题.

@@ -118,3 +118,13 @@ $$
 -\underbrace{[121]}_{=0}[345]+[123][145]-[124][135]+[125][134]=0.
 $$
 The corresponding oriented matroid axiom thus requires that the six signs of the brackets on the left-hand side allow the equality to hold, even when the actual scalars are not given. In other words, the three terms $[123][145]$, $-[124][135]$, and $[125][134]$ must either all be zero or include both a positive and a negative term.
+
+We can also interpret the cocircuits of a vector configuration: consider any linear hyperplane $H$ spanned by a subset of $E$, and let $Y_H^+$ and $Y_H^-$ be the sets of vectors in $E$ on either side of $H$. These signed sets are the cocircuits of the configuration. However, this is hard to visualize, which motivates the passage to affine space to reduce the dimension by one.
+
+#### Point configurations
+
+Every vector configuration in $\mathbb{R}^r\backslash\\{0\\}$ corresponds to an affine point configuration in an $(r-1)$-dimensional affine space. We choose a linear form $l_0$ such that $l_0(\boldsymbol{v}_i)\neq 0$ for all $\boldsymbol{v}_i$, define
+$$
+\mathbb{A}^{r-1}=\\{\boldsymbol{x}\in\mathbb{R}^r:l_0(\boldsymbol{x})=1\\},
+$$
+as our affine space of dimension $r-1$, and associate with every vector $\boldsymbol{v}_i$ the point $\frac{1}{l_0(\boldsymbol{v}_i)}\boldsymbol{v}_i\in\mathbb{A}^{r-1}$.
