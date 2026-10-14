@@ -1,7 +1,7 @@
 ---
 title: "Oriented Matroids"
 date: 2026-08-26 20:52:47
-updated: 2026-10-10 01:09:20
+updated: 2026-10-14 13:33:39
 home_cover: https://p.sda1.dev/34/a02d8ca62759e5d9983ed95a3e822782/cover.jpg
 post_cover: https://p.sda1.dev/34/1f2656e074b6bfc49e46aed500b4d614/post.jpg
 copyright_info: true
@@ -128,3 +128,81 @@ $$
 \mathbb{A}^{r-1}=\\{\boldsymbol{x}\in\mathbb{R}^r:l_0(\boldsymbol{x})=1\\},
 $$
 as our affine space of dimension $r-1$, and associate with every vector $\boldsymbol{v}_i$ the point $\frac{1}{l_0(\boldsymbol{v}_i)}\boldsymbol{v}_i\in\mathbb{A}^{r-1}$.
+
+```tikz
+\usetikzlibrary{decorations.markings}
+\begin{document}
+\begin{tikzpicture}[
+    x=1.3cm, y=1.3cm, font=\large, line width=1.2pt,
+    directed/.style={
+        decoration={markings, mark=at position 0.5 with {\arrow[scale=1.8]{stealth}}},
+        postaction={decorate}
+    }
+]
+    \coordinate (v1) at (0,0);
+    \coordinate (v2) at (4,0);
+    \coordinate (v3) at (2,1.15);
+    \coordinate (v4) at (2,3.45);
+
+    \draw[directed] (v1) -- node[below=5pt] {$1$} (v2);
+    \draw[directed] (v1) -- node[pos=0.4, below right=2pt] {$2$} (v3);
+    \draw[directed] (v1) -- node[pos=0.4, left=5pt] {$3$} (v4);
+    \draw[directed] (v2) -- node[pos=0.6, above right=2pt] {$4$} (v3);
+    \draw[directed] (v2) -- node[pos=0.4, right=5pt] {$5$} (v4);
+    \draw[directed] (v3) -- node[pos=0.25, left=5pt] {$6$} (v4);
+
+    \fill (v1) circle (3.5pt) node[left=3pt] {$v_1$};
+    \fill (v2) circle (3.5pt) node[right=3pt] {$v_2$};
+    \fill (v3) circle (3.5pt) node[below=3pt] {$v_3$};
+    \fill (v4) circle (3.5pt) node[above=3pt] {$v_4$};
+\end{tikzpicture}
+\end{document}
+```
+
+For example, let $E=(\boldsymbol{v}\_1,\dots,\boldsymbol{v}\_6)$ be the vectors in $\mathbb{R}^3$ given by the columns of the matrix $A=\begin{pmatrix}1&1&1&0&0&0\\\\0&1&1&1&1&0\\\\0&0&1&0&1&1\end{pmatrix}$. From $A$ we get an oriented matroid of rank $3$ with signed circuits $1\overline{2}4,1\overline{2}5\overline{6}$, and so on. This vector configuration has the same signed circuits as the digraph shown above, with column $i$ corresponding to arc $i$. Thus, $A$ is a realization of the oriented matroid of this digraph.
+
+With $l_0(\boldsymbol{x})=x_1+x_2+x_3$, we get the point configuration in the affine plane, $\overline{A}=\begin{pmatrix}0&\frac12&\frac13&1&\frac12&0\\\\0&0&\frac13&0&\frac12&1\end{pmatrix}$, which is obtained by deleting the first coordinates from the vectors $\frac{1}{l_0(\boldsymbol{v}_i)}\boldsymbol{v}_i$.
+
+```tikz
+\begin{document}
+\begin{tikzpicture}[x=4.8cm, y=4.8cm, >=stealth, font=\normalsize]
+    % Coordinates are (x_2,x_3), the columns of the normalized matrix.
+    \coordinate (p1) at (0,0);
+    \coordinate (p2) at (0.5,0);
+    \coordinate (p3) at ({1/3},{1/3});
+    \coordinate (p4) at (1,0);
+    \coordinate (p5) at (0.5,0.5);
+    \coordinate (p6) at (0,1);
+
+    \draw[->, gray!70] (-0.07,0) -- (1.17,0) node[right] {$x_2$};
+    \draw[->, gray!70] (0,-0.07) -- (0,1.17) node[above] {$x_3$};
+
+    % The four collinear triples are 124, 456, 135, and 236.
+    \draw[black, thick] (p1) -- (p4);
+    \draw[black, thick] (p4) -- (p6);
+    \draw[black, thick] (p1) -- (p5);
+    \draw[black, thick] (p2) -- (p6);
+
+    \fill (p1) circle (2.5pt) node[below left] {$1$};
+    \fill (p2) circle (2.5pt) node[below] {$2$};
+    \fill (p3) circle (2.5pt) node[right, xshift=2pt] {$3$};
+    \fill (p4) circle (2.5pt) node[below] {$4$};
+    \fill (p5) circle (2.5pt) node[above right] {$5$};
+    \fill (p6) circle (2.5pt) node[left] {$6$};
+\end{tikzpicture}
+\end{document}
+```
+
+Note that signed circuits have a simple geometric interpretation in the affine plane. Every circuit is a minimal signed set of points such that the convex hull of the positive elements intersects the convex hull of the negative elements. Mathematically speaking, the signed circuits of an affine point configuration are exactly the minimal Radon partitions of the point set. For example, from $1\overline{2}4$ we see that point $2$ must lie on the open line segment $\overset{\frown}{14}$. Similarly, from $2\overline{34}5$ we see that the open line segments $\overset{\frown}{25}$ and $\overset{\frown}{34}$ must intersect (in the ambient real affine plane, not necessarily in the oriented matroid itself).
+
+The sign patterns of arbitrary (not necessarily minimal) dependences can be derived by composing circuits. The composition of two signed sets is defined as
+$$
+\begin{gather}
+X\circ Y=(X^+\cup(Y^+\backslash X^-),X^-\cup(Y^-\backslash X^+)).\\\\
+(X\circ Y)_e=\begin{cases}
+    X_e & \text{if }X_e\neq0,\\\\
+    Y_e & \text{otherwise}.
+\end{cases}
+\end{gather}
+$$
+For example, if $X=(+,+,-,0)$ and $Y=(-,-,0,+)$, then $X\circ Y=(+,+,-,+)$. The signed sets obtained by repeated composition of circuits are called the vectors of this oriented matroid. Note that a dependent set may correspond to different vectors: $Y\circ X=(-,-,-,+)$ has the same support as $X\circ Y$, but a different sign pattern.
