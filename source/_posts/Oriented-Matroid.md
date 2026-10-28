@@ -1,7 +1,7 @@
 ---
 title: "Oriented Matroids"
 date: 2026-08-26 20:52:47
-updated: 2026-10-14 13:33:39
+updated: 2026-10-28 00:32:29
 home_cover: https://p.sda1.dev/34/a02d8ca62759e5d9983ed95a3e822782/cover.jpg
 post_cover: https://p.sda1.dev/34/1f2656e074b6bfc49e46aed500b4d614/post.jpg
 copyright_info: true
