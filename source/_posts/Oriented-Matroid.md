@@ -206,3 +206,135 @@ X\circ Y=(X^+\cup(Y^+\backslash X^-),X^-\cup(Y^-\backslash X^+)).\\\\
 \end{gather}
 $$
 For example, if $X=(+,+,-,0)$ and $Y=(-,-,0,+)$, then $X\circ Y=(+,+,-,+)$. The signed sets obtained by repeated composition of circuits are called the vectors of this oriented matroid. Note that a dependent set may correspond to different vectors: $Y\circ X=(-,-,-,+)$ has the same support as $X\circ Y$, but a different sign pattern.
+
+By cutting the point configuration with an arbitrary affine hyperplane (not necessarily spanned by points of this configuration), we can record which points lie on the positive side, on the negative side, or on the hyperplane itself, assigning them the signs $+$, $-$, or $0$, respectively. The resulting sign patterns are called covectors and can be obtained by repeated compositions of cocircuits.
+
+The chirotope records the orientation of an ordered $r$-tuple of points. Writing the affine coordinates of the configuration as column vectors $\bar{\boldsymbol{v}}_1,\dots,\bar{\boldsymbol{v}}_n$, we have
+$$
+\chi(i_1,\dots,i_r)=\operatorname{sign}\det\begin{pmatrix}
+1 & \cdots & 1\\\\
+\bar{\boldsymbol{v}}\_{i\_1} & \cdots  & \bar{\boldsymbol{v}}\_{i\_r}
+\end{pmatrix}.
+$$
+
+Thus, for example, $\chi(2,3,4)=-$.
+
+#### Hyperplane arrangements
+
+Let $\mathcal{A}=\\{H_1,\dots,H_n\\}$ be a real hyperplane arrangement, which is a finite set of hyperplanes through the origin in $\mathbb{R}^r$. Each hyperplane $H_i$ is defined by $l_i(\boldsymbol{x})=0$, where $l_i(\boldsymbol{x})=\boldsymbol{a}_i^T\boldsymbol{x}$ is a linear function. We can interpret the $l_i$ as vectors in the dual space $(\mathbb{R}^r)^\*$, where they form a vector configuration.
+
+In fact, once we choose $l_i$, we orient each hyperplane $H_i$ by specifying its positive side $H_i^+=\\{\boldsymbol{x}:l_i(\boldsymbol{x})\geq0\\}$. Equivalently, by taking $S_i^+=H_i^+\cap S^{r-1}$, we get an arrangement of hemispheres on the sphere $S^{r-1}$ that represents the oriented matroid.
+
+```tikz
+\begin{document}
+\begin{tikzpicture}[x=1.3cm, y=1.3cm, font=\small,
+    line width=0.9pt, every node/.style={inner sep=1.5pt},
+    positive side/.style={->, >=stealth, line width=0.8pt}]
+    % Equator and the five hyperplane traces in the upper hemisphere.
+    \coordinate (T) at (0,4);
+    \coordinate (B) at (0,-4);
+    \coordinate (L) at (-4,0);
+    \coordinate (R) at (4,0);
+    \coordinate (U) at ({-sqrt(8)},{sqrt(8)});
+    \coordinate (S) at ({sqrt(8)},{-sqrt(8)});
+    \coordinate (O) at (0,0);
+    \coordinate (P) at (-1.52,0);
+    \coordinate (Q) at (0,-1.52);
+    \coordinate (D) at ({1.52/sqrt(1+1.52*1.52/16)},
+                            {-1.52/sqrt(1+1.52*1.52/16)});
+
+    \draw (0,0) circle (4);
+    \draw (T) -- (B);
+    \draw (L) -- (R);
+    \draw (U) -- (S);
+    \draw (L) arc[start angle=180, end angle=360,
+                  x radius=4, y radius=1.52];
+    \draw (U) .. controls (-2.8,1.75) and (-2.08,0.7) .. (P)
+        .. controls (-1.05,-0.6) and (-0.58,-1.08) .. (Q)
+        .. controls (0.95,-2.25) and (1.95,-2.73) .. (S);
+
+    % Coorientations: one normal arrow points into each positive hemisphere.
+    % These are not tangent arrows giving a direction of travel on the curves.
+    \draw[positive side] (0,-2.8) -- (0.5,-2.8);
+    \node at (0.46,-2.61) {$1$};
+    \draw[positive side] (2.45,-2.45) -- (2.8,-2.1);
+    \node at (2.89,-1.94) {$2$};
+    % Evaluate the cubic and its normal at t=0.4 so the arrow starts on it.
+    \pgfmathsetmacro{\curveX}{3*0.6*0.6*0.4*0.95+3*0.6*0.4*0.4*1.95+0.4*0.4*0.4*sqrt(8)}
+    \pgfmathsetmacro{\curveY}{0.6*0.6*0.6*(-1.52)+3*0.6*0.6*0.4*(-2.25)+3*0.6*0.4*0.4*(-2.73)-0.4*0.4*0.4*sqrt(8)}
+    \pgfmathsetmacro{\tangentX}{3*0.6*0.6*0.95+6*0.6*0.4*(1.95-0.95)+3*0.4*0.4*(sqrt(8)-1.95)}
+    \pgfmathsetmacro{\tangentY}{3*0.6*0.6*(-2.25+1.52)+6*0.6*0.4*(-2.73+2.25)+3*0.4*0.4*(-sqrt(8)+2.73)}
+    \pgfmathsetmacro{\tangentLength}{sqrt(\tangentX*\tangentX+\tangentY*\tangentY)}
+    \draw[positive side] (\curveX,\curveY) --
+        ({\curveX-0.45*\tangentY/\tangentLength},
+         {\curveY+0.45*\tangentX/\tangentLength});
+    \node at (1.53,-1.98) {$3$};
+    \draw[positive side] (2.9,0) -- (2.9,0.5);
+    \node at (3.08,0.45) {$4$};
+    % The ellipse normal (-dy/dx,1) points toward the positive fifth side.
+    \pgfmathsetmacro{\ellipseY}{-1.52*sqrt(1-2.8*2.8/16)}
+    \pgfmathsetmacro{\ellipseSlope}{1.52*2.8/(16*sqrt(1-2.8*2.8/16))}
+    \pgfmathsetmacro{\normalLength}{sqrt(1+\ellipseSlope*\ellipseSlope)}
+    \draw[positive side] (2.8,\ellipseY) --
+        ({2.8-0.45*\ellipseSlope/\normalLength},
+         {\ellipseY+0.45/\normalLength});
+    \node at (2.52,-0.57) {$5$};
+    \draw[positive side] ({-sqrt(8)},{-sqrt(8)}) --
+        ({-sqrt(8)+0.34},{-sqrt(8)+0.34});
+    \node at (-2.34,-2.62) {$6$};
+
+    % Two-dimensional cells: all six signs are nonzero.
+    \node at (1.8,1.3) {$123456$};
+    \node at (-1,2.3) {$\overline{1}23456$};
+    \node at (-3.05,0.9) {$\overline{123}456$};
+    \node at (-1.5,0.9) {$\overline{12}3456$};
+    \node at (-2.2,-0.62) {$\overline{1234}56$};
+    \node at (-0.48,-0.44) {$\overline{12}3\overline{4}56$};
+    \node at (1.96,-0.62) {$123\overline{4}56$};
+    \node at (0.58,-1.25) {$1\overline{2}3\overline{4}56$};
+    \node at (2.65,-1.5) {$123\overline{45}6$};
+    \node at (1.7,-2.24) {$1\overline{2}3\overline{45}6$};
+    \node at (-1.8,-2.08) {$\overline{12345}6$};
+    \node at (0.9,-3.1) {$1\overline{2345}6$};
+
+    % One-dimensional cells on the equator (the sixth sign is zero).
+    \node[rotate=-45] at (2.65,2.72) {$12345$};
+    \node[rotate=20] at (-1.45,3.43) {$\overline{1}2345$};
+    \node[rotate=65] at (-3.9,1.55) {$\overline{123}45$};
+    \node[rotate=-58] at (-3.2,-2.12) {$\overline{12345}$};
+    \node[rotate=20] at (1.46,-3.47) {$1\overline{2345}$};
+    \node[rotate=65] at (3.45,-1.65) {$123\overline{45}$};
+
+    % One-dimensional cells on the interior traces.
+    \node[rotate=-90] at (0.16,2.08) {$23456$};
+    \node[rotate=-90] at (0.17,-0.7) {$\overline{2}3\overline{4}56$};
+    \node[rotate=-90] at (-0.17,-2.6) {$\overline{2345}6$};
+    \node at (-3.55,0.2) {$\overline{123}56$};
+    \node at (-0.83,0.2) {$\overline{12}356$};
+    \node at (1.93,0.2) {$12356$};
+    \node[rotate=-45] at (-1.22,1.48) {$\overline{1}3456$};
+    \node[rotate=-45] at (0.87,-0.6) {$13\overline{4}56$};
+    \node[rotate=-45] at (2.15,-1.86) {$13\overline{45}6$};
+    \node[rotate=-67] at (-2.32,1.55) {$\overline{12}456$};
+    \node[rotate=-45] at (-0.96,-0.93) {$\overline{124}56$};
+    \node[rotate=-25] at (1,-2.4) {$1\overline{245}6$};
+    \node[rotate=-20] at (-2.1,-1.4) {$\overline{1234}6$};
+    \node at (0.85,-1.72) {$1\overline{2}3\overline{4}6$};
+    \node[rotate=35] at (3.26,-0.56) {$123\overline{4}6$};
+
+    % Zero-dimensional cells; omitted digits have sign zero.
+    \fill (T) circle (2.7pt) node[below right=4pt] {$2345$};
+    \fill (B) circle (2.7pt) node[above left=4pt] {$\overline{2345}$};
+    \fill (L) circle (2.7pt) node[left=5pt] {$\overline{123}$};
+    \fill (R) circle (2.7pt) node[above left=4pt] {$123$};
+    \fill (U) circle (2.7pt) node[right=6pt] {$\overline{1}45$};
+    \fill (S) circle (2.7pt) node[above=7pt] {$1\overline{45}$};
+    \fill (O) circle (2.7pt) node[above right=4pt] {$356$};
+    \fill (P) circle (2.7pt) node[above left=5pt] {$\overline{12}56$};
+    \fill (Q) circle (2.7pt) node[below left=5pt] {$\overline{24}6$};
+    \fill (D) circle (2.7pt) node[above right=5pt] {$13\overline{4}6$};
+\end{tikzpicture}
+\end{document}
+```
+
+Reading the basis orientations is simple when $r=3$. The rule is that $[i,j,k]=+$ if the boundary arcs labeled $i,j,k$ occur in counterclockwise order around the spherical triangle $S_i^+\cap S_j^+\cap S_k^+$, $[i,j,k]=-$ if they occur in clockwise order, and $[i,j,k]=0$ if they do not determine a triangle. For example, $[1,2,6]=+$, $[2,3,5]=-$, and $[2,3,6]=0$.
